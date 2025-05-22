@@ -34,7 +34,7 @@ app.use(
     cookie: {
       secure: true, // only works with HTTPS
       sameSite: "lax",
-      domain: "app.lbayms.in", // your production domain
+      domain: "app.learnbay.co", // your production domain
     },
   })
 );
