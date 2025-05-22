@@ -1,0 +1,233 @@
+/* Dashboard.module.css */
+.dashboardLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0070f3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.mainContent {
+  display: flex;
+  flex: 1;
+  position: relative;
+  margin-top: 60px; /* Height of navbar */
+}
+
+.contentArea {
+  flex: 1;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  /* background-color: #fff; */
+  min-height: calc(100vh - 60px);
+}
+/* Add this to your existing CSS */
+/* .tesimonals {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background: red;
+  padding: 0;
+  margin-top: 0 !important;
+}
+
+.tesimonals > div {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  padding: 0;
+} */
+
+/* Only targets the testimonials wrapper */
+.tesimonals {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 0;
+  margin-top: 0 !important;   /* Removes top margin */
+  padding-top: 0 !important;  /* Removes top padding */
+  /* Red background (optional) */
+}
+
+/* Ensures SuccessStories content stays centered */
+.tesimonals > div {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  padding: 0;            /* Restores side/bottom padding */
+}
+
+.withSidebar {
+  margin-left: 280px;
+  max-width: 1121px;
+    margin: 30px auto;
+    position: relative;
+    left:10%;
+
+}
+
+/* Section Containers */
+.sectionContainer {
+  padding: 20px;
+}
+
+/* UI Components */
+.downloadLink {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #0070f3;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.downloadLink:hover {
+  background-color: #005bb5;
+}
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.videoThumbnail {
+  background-color: #eee;
+  border-radius: 8px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.featuresList {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.featuresList li {
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  position: relative;
+  padding-left: 35px;
+}
+
+.featuresList li:before {
+  content: "✓";
+  position: absolute;
+  left: 15px;
+  color: #0070f3;
+  font-weight: bold;
+}
+
+.supportCard {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.contactMethods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.contactLink {
+  color: #0070f3;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contactLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width:1381px) {
+  .withSidebar {
+  max-width: 1000px;
+
+  }
+}
+
+@media (max-width:1281px) {
+  .withSidebar {
+  max-width: 940px;
+  left: 11%;
+
+  }
+}
+@media (max-width:1181px) {
+  .withSidebar {
+  max-width: 850px;
+  left: 11%;
+
+  }
+}
+@media (max-width:1024px) {
+  .withSidebar {
+  max-width: 780px;
+        left: 10%;
+
+
+  }
+}
+/* Responsive Adjustments */
+@media (max-width: 862px) {
+  .contentArea {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  
+  .withSidebar {
+    margin-left: 0;
+    left: 0;
+    margin-top: 20px;
+    margin-bottom: 50px;
+  }
+  .sectionContainer{
+    padding: 0;
+  }
+  .tesimonals{
+    margin-left: -53vw;
+  }
+}

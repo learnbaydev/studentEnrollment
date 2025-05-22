@@ -1,0 +1,219 @@
+.topInfoSection {
+    border-radius: 15.91px;
+    background: #FFF;
+    padding: 28px;
+    margin-bottom: 24px;
+    
+
+  }
+  
+  .topInfoSection h2 {
+    font-size: 30px;
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+  
+  .main {
+    grid-template-columns: 56% 41%;
+    align-items: center;
+    gap: 30px;
+    margin-top: 30px;
+    display: grid;
+    /* background: #fff; */
+    /* padding: 18px; */
+    border-radius: 10px;
+  }
+  
+  .leftdiv {
+    background: #fff;
+    border: .5px solid #8b8888;
+    border-radius: 10px;
+    grid-template-columns: 50% 50%;
+    gap: 16px;
+    width: 100%;
+    padding: 24px 40px;
+    display: grid
+;
+    align-items: center;
+
+    /* min-width: 280px; */
+  }
+  .infoCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 10px;
+    border: 0.5px solid transparent;
+    padding: 16px;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); */
+    transition: all 0.3s ease;
+    overflow: scroll;
+    scrollbar-width: 0px;
+  }
+  
+  .infoCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    cursor:wait
+  }
+  
+  
+  .iconBox {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .textBox p {
+    margin: 0;
+    color: #0f172a;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  
+  .textBox span {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .sliderSection {
+    border-radius: 10px;
+    border: 0.5px solid #8B8888;
+    background: #FFF;
+    padding: 20px;
+  }
+  .sliderSection{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+ 
+  
+  /* Testimonial card styles remain same */
+  .sliderContainer {
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
+  
+  .sliderTrack {
+    display: flex;
+    gap: 16px;
+    transition: scroll 10s ease-in-out;
+    scroll-behavior: smooth;
+  }
+  
+  .testimonialCard {
+    min-width: 300px; /* Adjust card width */
+    flex: 0 0 auto;
+  }
+  
+  .testimonialCard {
+    min-width: 280px;
+    max-width: 320px;
+    flex: 0 0 auto;
+    border-radius: 10px;
+    border: 0.5px solid #8B8888;
+    background: #FFF;
+    padding: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  }
+  
+
+  .top {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .top h4 {
+    color: #000;
+text-align: center;
+font-size: 23.057px;
+font-style: normal;
+font-weight: 700;
+line-height: 147.182%; /* 39.823px */
+  }
+  .top p {
+    color: #000;
+font-size: 16.148px;
+font-style: normal;
+font-weight: 500;
+line-height: 147.182%; /* 28.183px */
+  }
+  .top img {
+    border-radius: 87.037px;
+    border: 4.093px solid #0383FF;
+    border-radius: 50%;
+  }
+
+  .hike {
+    border-radius:14px;
+border: 1px solid #ffe7c4;
+background: #FFF6E7;
+padding: 2px 10px;
+width: fit-content;
+margin: 20px 10px;
+  }
+  .hike span {
+    color: #F91500;
+font-size: 12.378px;
+font-style: normal;
+font-weight: 700;
+line-height: 148.5%; /* 21.352px */
+  }
+
+  .desc {
+    color: #908A8A;
+font-size: 14.148px;
+font-style: italic;
+font-weight: 600;
+line-height: 147.182%; /* 28.183px */
+  }
+
+  @media(max-width: 768px){
+.main{
+  display: flex
+;
+    flex-direction: column;
+
+}
+.topInfoSection{
+  padding: 0;
+  background: none;
+}
+
+.leftdiv {
+  padding: 10px;
+  overflow-x: scroll;
+  grid-template-columns: 64% 70%;
+ 
+}
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+.leftdiv::-webkit-scrollbar {
+  width: 8px; /* width of the scrollbar */
+  height: 8px; /* height for horizontal scrollbar */
+}
+
+.leftdiv::-webkit-scrollbar-track {
+  background: transparent; /* track color */
+}
+
+.leftdiv::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #93cff9 0%, #0271d9d4 100%); /* scrollbar color */
+  border-radius: 4px; /* rounded ends */
+}
+
+.leftdiv::-webkit-scrollbar-thumb:hover {
+  background: darkblue; /* color on hover */
+}
+.topInfoSection h2 {
+  font-size: 26px;
+}
+  }

@@ -1,0 +1,51 @@
+.progressContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px auto;
+    max-width: 500px;
+  }
+  
+  .stepItem {
+    position: relative;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .circle {
+    width: 40px;
+    height: 40px;
+    background: #ccc;
+    border-radius: 50%;
+    line-height: 40px;
+    color: white;
+    font-weight: bold;
+    margin: auto;
+    z-index: 1;
+  }
+  
+  .active {
+    background: #4caf50;
+  }
+  
+  .label {
+    margin-top: 8px;
+    display: block;
+    font-size: 14px;
+  }
+  
+  .activeLabel {
+    color: #4caf50;
+    font-weight: bold;
+  }
+  
+  .line {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 100%;
+    height: 3px;
+    background: #ccc;
+    z-index: 0;
+  }
+  

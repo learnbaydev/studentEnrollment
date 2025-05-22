@@ -1,0 +1,319 @@
+
+/* ===== Ultra-Modern Base Styles ===== */
+.container {
+    position: relative;
+    padding: 8rem 2rem;
+    background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  
+  /* ===== Particle Background ===== */
+  .particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.3;
+  }
+  
+  /* ===== 3D Card Effect ===== */
+  .featureCard {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .featureCard:hover {
+    transform: translateY(-10px) rotateX(5deg);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* ===== Glow Border Effect ===== */
+  .glowBorder {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  
+  .glowBorder::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  
+  .featureCard:hover .glowBorder::before {
+    opacity: 0.7;
+  }
+  
+  /* ===== Progress Ring ===== */
+  .progressRing {
+    --progress: 70;
+    width: 80px;
+    height: 80px;
+    background: conic-gradient(#6a11cb calc(var(--progress) * 3.6deg), #e0e7ff 0deg);
+    mask: radial-gradient(transparent 65%, #000 66%);
+  }
+  
+  /* ===== Instructor Spotlight ===== */
+  .instructorCard {
+    background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  
+  /* ===== Pricing Toggle ===== */
+  .pricingToggle {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+  }
+  
+  .pricingToggle::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 50%;
+    height: calc(100% - 4px);
+    background: white;
+    border-radius: 9999px;
+    transition: transform 0.3s ease;
+  }
+  
+  .pricingToggle.monthly::after {
+    transform: translateX(0);
+  }
+  
+  .pricingToggle.yearly::after {
+    transform: translateX(100%);
+  }
+
+
+.container {
+    position: relative;
+    padding: 4rem 1rem;
+    background: linear-gradient(to bottom, #f9fafb, #ffffff);
+    overflow: hidden;
+  }
+  
+  .topBorder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(#0380f8 -32.61%, #02509b 128.33%);
+  }
+  
+  .decorativeBlobRight {
+    position: absolute;
+    top: 50%;
+    right: -5rem;
+    width: 16rem;
+    height: 16rem;
+    background-color: #bfdbfe;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+    filter: blur(48px);
+    opacity: 0.2;
+  }
+  
+  .decorativeBlobLeft {
+    position: absolute;
+    bottom: 0;
+    left: -5rem;
+    width: 16rem;
+    height: 16rem;
+    background-color: #c7d2fe;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+    filter: blur(48px);
+    opacity: 0.2;
+  }
+  
+  .content {
+    position: relative;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 9999px;
+    background-color: #e0e7ff;
+    color: #02509b;
+    margin-bottom: 1rem;
+  }
+  
+  .title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 1rem;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image:linear-gradient(#0380f8 -32.61%, #02509b 128.33%);
+    color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 1.25rem;
+    color: #4b5563;
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+  
+  .featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .featuresGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .featuresGrid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .featureCard {
+    position: relative;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .featureCard:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+  }
+  
+  .featureIconContainer {
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .featureCard:hover .featureIconContainer {
+    transform: scale(1.1);
+  }
+  
+  .featureTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .featureDescription {
+    color: #4b5563;
+  }
+  
+  .featureBorder {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #6366f1, #a855f7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .featureCard:hover .featureBorder {
+    opacity: 1;
+  }
+  
+  .ctaContainer {
+    margin-top: 4rem;
+    text-align: center;
+  }
+  
+  .ctaButton {
+    position: relative;
+    padding: 1rem 2rem;
+    font-weight: 500;
+    color: white;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: linear-gradient(#0380f8 -32.61%, #02509b 128.33%);
+  }
+  
+  .ctaButton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(#0380f8 -32.61%, #02509b 128.33%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .ctaButton:hover::before {
+    opacity: 1;
+  }
+  
+  .ctaButton span {
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Color variants for feature cards */
+  .indigo {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+  }
+  
+  .blue {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+  }
+  
+  .green {
+    background-color: #dcfce7;
+    color: #15803d;
+  }
+  
+  .purple {
+    background-color: #f3e8ff;
+    color: #02509b;
+  }
+  
+  .amber {
+    background-color: #fef3c7;
+    color: #b45309;
+  }
+  
+  .rose {
+    background-color: #ffe4e6;
+    color: #e11d48;
+  }

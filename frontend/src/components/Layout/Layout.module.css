@@ -1,0 +1,78 @@
+/* components/Layout/Layout.module.css */
+
+/* Base Layout Styles */
+.layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    background-color: #f8fafc;
+  }
+  
+  /* Main Content Area */
+  .mainContent {
+    flex: 1;
+    padding: 1.5rem;
+    margin-top: 60px; /* Navbar height */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: calc(100vh - 60px);
+  }
+  
+  /* Desktop Styles - Sidebar Open */
+  @media (min-width: 768px) {
+    .mainContent {
+      margin-left: 280px; /* Sidebar width */
+    }
+  }
+  
+  /* Mobile Styles - Sidebar Open */
+  .mainContent.shifted {
+    transform: translateX(280px);
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+  
+  /* Overlay for Mobile */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Smooth Transitions */
+  .mainContent,
+  .sidebar {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 767px) {
+    .mainContent {
+      padding: 1rem;
+      width: 100vw;
+    }
+    
+    .mainContent.shifted {
+      transform: translateX(240px);
+    }
+  }
+  
+  /* Print Styles */
+  @media print {
+    .mainContent {
+      margin-left: 0 !important;
+      margin-top: 0 !important;
+    }
+  }
