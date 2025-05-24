@@ -579,48 +579,49 @@ export default function Steps({
   // };
 
   // Update the getStepStatus function to handle auto-approval
-const getStepStatus = (stepNumber) => {
-  const stepKey = `step${stepNumber}`;
-  let currentStatus = enrollmentStatus[stepKey];
-
-  if (stepNumber === 1) {
-    // Check if 2 minutes have passed since creation
-    if (currentStatus === 'pending' && enrollmentStatus.timestamps?.step1) {
-      const createdAt = new Date(enrollmentStatus.timestamps.step1);
-      const now = new Date();
-      const elapsedSeconds = Math.floor((now - createdAt) / 1000);
-      
-      if (elapsedSeconds >= 120) {
-        return 'approved';
+  const getStepStatus = (stepNumber) => {
+    const stepKey = `step${stepNumber}`;
+    let currentStatus = enrollmentStatus[stepKey];
+  
+    if (stepNumber === 1) {
+      if (currentStatus === 'pending' && enrollmentStatus.timestamps?.step1) {
+        const createdAt = new Date(enrollmentStatus.timestamps.step1);
+        const now = new Date();
+        const elapsedSeconds = Math.floor((now - createdAt) / 1000);
+        
+        if (elapsedSeconds >= 120) {
+          return 'approved';
+        }
+        return 'in_progress';
       }
-      return 'in_progress';
+      return currentStatus || 'pending';
     }
-    return currentStatus || 'pending';
-  }
-
-  // Rest of the logic remains the same...
-  if (stepNumber === 2) {
-    if (enrollmentStatus.step1 !== 'approved') return 'locked';
-    if (meetingData?.completed) return 'approved';
-    if (meetingData?.exists) return 'in_progress';
-    return 'pending';
-  }
-
-  if (stepNumber === 3) {
-    if (enrollmentStatus.step3 === 'approved') return 'approved';
-    if (meetingData?.completed) return 'pending';
+  
+    if (stepNumber === 2) {
+      if (enrollmentStatus.step1 !== 'approved') return 'locked';
+      if (meetingData?.completed) return 'approved';
+      if (meetingData?.exists) return 'in_progress';
+      return 'pending';
+    }
+  
+    if (stepNumber === 3) {
+      // Check if offer letter exists in user data
+      if (user?.offer_letter_path) return 'approved';
+      if (enrollmentStatus.step3 === 'approved') return 'approved';
+      if (meetingData?.completed) return 'pending';
+      return 'locked';
+    }
+  
+    if (stepNumber === 4) {
+      // Step 4 should be pending if step 3 is approved
+      if (enrollmentStatus.step3 === 'approved' || user?.offer_letter_path) {
+        return enrollmentStatus.step4 || 'pending';
+      }
+      return 'locked';
+    }
+  
     return 'locked';
-  }
-
-  if (stepNumber === 4) {
-    if (enrollmentStatus.step3 !== 'approved') return 'locked';
-    if (enrollmentStatus.step4 === 'approved') return 'approved';
-    if (enrollmentStatus.step4 === 'in_progress') return 'in_progress';
-    return 'pending';
-  }
-
-  return 'locked';
-};
+  };
   
   const steps = [
     {
@@ -673,7 +674,7 @@ const getStepStatus = (stepNumber) => {
           >
             <circle cx="7.00949" cy="7.72818" r="6.9094" fill="#F99600" />
           </svg>
-          <span>Progress: {enrollmentStatus.progress}% completed</span>
+          <span>Progress: {enrollmentStatus.progress} completed</span>
         </div>
       </div>
 
@@ -758,7 +759,7 @@ const getStepStatus = (stepNumber) => {
                 </div>
               )}
 
-              {number === 4 && status === "approved" && (
+              {number === 4 && status === "pending" && (
                 <button 
                   onClick={() => window.open("https://razorpay.com/payment-link/plink_QWKwR1uZjHH8UG", "_blank")}
                   className={styles.completedButton}

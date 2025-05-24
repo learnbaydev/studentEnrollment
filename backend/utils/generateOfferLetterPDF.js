@@ -1,8 +1,10 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
+const { uploadFile } = require('./s3Storage');
 
-const generateOfferLetterPDF = async (userData, filePath) => {
+const generateOfferLetterPDF = async (userData) => {
+  let browser;
   try {
     // Read HTML template
     const templatePath = path.join(__dirname, 'templates/scholarship-letter.html');
@@ -13,13 +15,11 @@ const generateOfferLetterPDF = async (userData, filePath) => {
                .replace(/<<Program Name>>/g, userData.program_name || userData.program_name)
                .replace(/<<Domain Name>>/g, userData.domain)
                .replace(/<<Program Fee>>/g, userData.program_fee)
-              //  .replace(/<<Scholarship Percentage>>/g, userData.scholarship_percentage)
-              //  .replace(/<<Scholarship Fee>>/g, userData.scholarship_fee)
                .replace(/<<Validity>>/g, userData.validity)
                .replace(/<<Signature>>/g, userData.signature || 'Scholarship & Admissions Team');
     
     // Launch puppeteer
-    const browser = await puppeteer.launch({
+    browser = await puppeteer.launch({
       headless: 'new',
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
@@ -30,9 +30,8 @@ const generateOfferLetterPDF = async (userData, filePath) => {
       waitUntil: 'networkidle0'
     });
     
-    // Generate PDF
-    await page.pdf({
-      path: filePath,
+    // Generate PDF buffer instead of saving to file
+    const pdfBuffer = await page.pdf({
       format: 'A4',
       margin: {
         top: '40px',
@@ -43,32 +42,36 @@ const generateOfferLetterPDF = async (userData, filePath) => {
       printBackground: true
     });
     
-    await browser.close();
+    // Create a temporary file
+    const tempFileName = `offer_${userData.id}_${Date.now()}.pdf`;
+    const tempFilePath = path.join(__dirname, '../temp', tempFileName);
     
-    console.log(`PDF generated successfully at ${filePath}`);
-    return true;
+    // Ensure temp directory exists
+    if (!fs.existsSync(path.join(__dirname, '../temp'))) {
+      fs.mkdirSync(path.join(__dirname, '../temp'));
+    }
+    
+    // Write to temp file
+    fs.writeFileSync(tempFilePath, pdfBuffer);
+    
+    // Upload to S3
+    const s3Key = `offer-letters/${tempFileName}`;
+    const s3Url = await uploadFile(tempFilePath, s3Key);
+    
+    // Clean up temp file
+    fs.unlinkSync(tempFilePath);
+    
+    console.log(`PDF generated and uploaded to S3 at ${s3Url}`);
+    return { s3Key, s3Url };
     
   } catch (err) {
     console.error('Error generating PDF:', err);
     throw err;
+  } finally {
+    if (browser) {
+      await browser.close();
+    }
   }
 };
-
-// Example usage:
-/*
-const userData = {
-  full_name: "John Doe",
-  program_name: "Data Science Program",
-  program_fee: "1,00,000",
-  scholarship_percentage: "20",
-  scholarship_fee: "80,000",
-  validity: "30 days from the date of issue",
-  signature: "Scholarship & Admissions Team"
-};
-
-generateScholarshipLetterPDF(userData, './scholarship-letter.pdf');
-*/
-
-
 
 module.exports = generateOfferLetterPDF;
