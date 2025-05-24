@@ -86,11 +86,11 @@
 }
 
 .withSidebar {
-  margin-left: 280px;
   max-width: 1121px;
-    margin: 30px auto;
+    margin: 1px auto;
     position: relative;
-    left:10%;
+    left: 10%;
+    padding: 0;
 
 }
 

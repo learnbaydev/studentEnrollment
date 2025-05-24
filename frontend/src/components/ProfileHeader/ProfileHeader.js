@@ -39,7 +39,7 @@ export default function ProfileHeader({ user }) {
 
             <div className={styles.profileModalContent}>
               <div className={styles.profilePicLarge}>
-                <img src="/profile-placeholder.png" alt="Profile" />
+                <img src="/icons/3d-avater.webp" alt="Profile" />
               </div>
               <div className={styles.profileDetails}>
                 <p>
@@ -49,7 +49,7 @@ export default function ProfileHeader({ user }) {
                   <strong>Email:</strong> {user?.email || 'No email'}
                 </p>
                 <p>
-                  <strong>Joined:</strong> {user?.joinedDate || 'N/A'}
+                  {/* <strong>Joined:</strong> {user?.joinedDate || 'N/A'} */}
                 </p>
               </div>
               <div className={styles.profileActions}>

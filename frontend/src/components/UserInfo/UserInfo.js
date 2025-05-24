@@ -70,36 +70,36 @@ const UserInfo = ({ user }) => {
 
   const testimonials = [
     {
-      name: 'Arvind Kumar',
-      title: 'Project Manager',
+      name: 'Shravanthi A',
+      title: 'Data Scientist',
       rating: '⭐⭐⭐⭐⭐',
       hike: '120% Salary Hike',
-      message: '“The mentorship and job support were fantastic. Landed a role at Amazon after just 6 months!”',
-      image: '/rahul.webp',
+      message: '“Learnbay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team”',
+      image: 'https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/shravanthi_a.webp',
     },
     {
-      name: 'Sneha Roy',
-      title: 'Frontend Developer',
+      name: 'Saurabh Kumar',
+      title: 'Data Scientist',
       rating: '⭐⭐⭐⭐',
-      hike: '80% Salary Hike',
-      message: '“Got into Flipkart as a React developer thanks to the structured learning path.”',
-      image: '/rahul.webp',
+      hike: '135% Salary Hike',
+      message: '“The course structure is excellent with emphasis on concept building and tools & software at the same time. The support team is excellent and supportive and quite agile to respond to doubts”',
+      image: 'https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/saurabh-round.webp',
     },
     {
-      name: 'Rahul Singh',
+      name: 'Preksha Mishra',
       title: 'Backend Engineer',
       rating: '⭐⭐⭐⭐⭐',
-      hike: '150% Salary Hike',
-      message: '“Learned MERN stack in 4 months and cracked an interview at Swiggy!”',
-      image: '/rahul.webp',
+      hike: '120% Salary Hike',
+      message: 'The course structure is excellent with emphasis on concept building and tools & software at the same time. The support team is excellent and supportive and quite agile to respond to doubts”.',
+      image: 'https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/preksha-round.webp',
     },
     {
-      name: 'Anjali Verma',
-      title: 'Full Stack Dev',
+      name: 'Mohd. Israr',
+      title: 'Data Scientist',
       rating: '⭐⭐⭐⭐',
       hike: '110% Salary Hike',
-      message: '“Doubt-solving and mock interviews really helped me prepare well.”',
-      image: '/rahul.webp',
+      message: 'Thanks to the Learnbay data science course & excellent guidance, I was able to ace the TCS interview and secure a job with a 210% pay raise. The real-world time projects helped me develop my concepts as a data scientist.',
+      image: 'https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/mohd-round.webp',
     },
     {
       name: 'Kunal Mehta',
@@ -113,9 +113,10 @@ const UserInfo = ({ user }) => {
 
   return (
     <div className={styles.topInfoSection}>
-      <h2>Personalized Admission Process</h2>
+      {/* <h2>Personalized Admission Process</h2> */}
+      <h2>Words From Our Alumni      </h2>
       <div className={styles.main}>
-        <div className={styles.leftdiv}>
+        {/* <div className={styles.leftdiv}>
           {infoCards.map((card, index) => (
             <div
               className={styles.infoCard}
@@ -142,7 +143,7 @@ const UserInfo = ({ user }) => {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
         <div className={styles.sliderContainer} ref={sliderRef}>
           <div className={styles.sliderTrack}>
             {testimonials.map((testimonial, index) => (

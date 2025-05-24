@@ -50,7 +50,7 @@ router.post('/schedule-evaluation', async (req, res) => {
 
     try {
       const webhookResponse = await axios.post(
-        'https://learnbay.co/gauth/service_account_meeting.php',
+        'https://lbayms.in/gauth/service_account_meeting.php',
         webhookData,
         {
           timeout: 10000,

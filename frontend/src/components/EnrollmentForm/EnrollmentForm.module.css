@@ -168,6 +168,9 @@ padding:10px 20px;
   width: 100%;
   font-size: 1rem;
 }
+.stepContent textarea::placeholder{
+font-size: 14px;
+}
 
 
 .labelInput select {

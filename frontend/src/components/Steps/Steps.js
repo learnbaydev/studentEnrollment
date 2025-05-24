@@ -360,7 +360,7 @@ function StepCard({
             {formSubmitted || status === "in_progress" ? (
               <>
                 <p className={styles.timerText}>
-                  <span>⏱</span> Expires in: {formatTime(timeLeft)}
+                  <span>⏱</span> Approved: {formatTime(timeLeft)}
                 </p>
                 <p className={styles.progressText}>
                   {timeLeft <= 0
@@ -370,6 +370,7 @@ function StepCard({
               </>
             ) : (
               <p className={styles.timerText}>
+                
                 Timer will start after form submission
               </p>
             )}
