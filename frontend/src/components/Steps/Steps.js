@@ -7,6 +7,37 @@ import EnrollmentForm from "../EnrollmentForm/EnrollmentForm";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment-timezone';
+import TimeLapsedMessage from "../TimeLapsedMessage/TimeLapsedMessage";
+
+// Custom Popup Component
+const CustomPopup = ({ message, onClose, type = 'success' }) => {
+  const bgColor = type === 'success' ? '#4CAF50' : '#F44336';
+  
+  return (
+    <div className={styles.customPopupOverlay}>
+      <div 
+        className={styles.customPopup} 
+        style={{ backgroundColor: bgColor }}
+      >
+        <div className={styles.popupContent}>
+          {type === 'success' ? (
+            <svg className={styles.popupIcon} viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+            </svg>
+          ) : (
+            <svg className={styles.popupIcon} viewBox="0 0 24 24">
+              <path fill="currentColor" d="M13 13H11V7H13M13 17H11V15H13M12 2C6.47 2 2 6.5 2 12A10 10 0 0 0 12 22A10 10 0 0 0 22 12A10 10 0 0 0 12 2Z" />
+            </svg>
+          )}
+          <p>{message}</p>
+        </div>
+        <button onClick={onClose} className={styles.popupCloseButton}>
+          &times;
+        </button>
+      </div>
+    </div>
+  );
+};
 
 function StepCard({
   number,
@@ -78,6 +109,7 @@ function StepCard({
   const [localMeetingData, setLocalMeetingData] = useState(meetingData);
   const [meetingTimeLeft, setMeetingTimeLeft] = useState(null);
   const [isFetchingMeetingLink, setIsFetchingMeetingLink] = useState(false);
+  const [popup, setPopup] = useState({ show: false, message: '', type: 'success' });
 
   const isWeekday = (date) => {
     const day = date.getDay();
@@ -133,7 +165,11 @@ function StepCard({
       return data.scheduled_meeting_link;
     } catch (error) {
       console.error("Error fetching meeting link:", error);
-      alert(`Error: ${error.message}`);
+      setPopup({
+        show: true,
+        message: `Error: ${error.message}`,
+        type: 'error'
+      });
       return null;
     } finally {
       setIsFetchingMeetingLink(false);
@@ -154,7 +190,11 @@ function StepCard({
 
   const handleScheduleSubmit = async () => {
     if (!selectedDateTime || !userEmail) {
-      alert("Please select date and time");
+      setPopup({
+        show: true,
+        message: "Please select date and time",
+        type: 'error'
+      });
       return;
     }
 
@@ -182,10 +222,18 @@ function StepCard({
 
       await fetchData();
       setShowTooltip(false);
-      alert("Evaluation scheduled successfully!");
+      setPopup({
+        show: true,
+        message: "Evaluation scheduled successfully!",
+        type: 'success'
+      });
     } catch (error) {
       console.error("Error:", error);
-      alert(`Error: ${error.message}`);
+      setPopup({
+        show: true,
+        message: `Error: ${error.message}`,
+        type: 'error'
+      });
     } finally {
       setIsScheduling(false);
     }
@@ -207,6 +255,14 @@ function StepCard({
         position: "relative",
       }}
     >
+      {popup.show && (
+        <CustomPopup 
+          message={popup.message} 
+          type={popup.type}
+          onClose={() => setPopup({...popup, show: false})}
+        />
+      )}
+
       {number === 2 && showTooltip && (
         <div className={styles.tooltipPopup}>
           <div className={styles.tooltipHeader}>
@@ -399,7 +455,7 @@ export default function Steps({
   currentStep,
   onStepChange,
 }) {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [enrollmentStatus, setEnrollmentStatus] = useState({
     step1: "locked",
     step2: "locked",
@@ -417,49 +473,31 @@ export default function Steps({
   const [timeLeft, setTimeLeft] = useState(1200);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [meetingData, setMeetingData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [timeValid, setTimeValid] = useState(null);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const statusResponse = await fetch(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/progress?email=${userEmail}`
-  //     );
-  //     const statusData = await statusResponse.json();
-  
-  //     const meetingResponse = await fetch(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/api/schedule/get-meeting?email=${userEmail}`
-  //     );
-  //     const meetingData = await meetingResponse.json();
-      
-  //     setMeetingData(meetingData);
-  
-  //     if (statusResponse.ok) {
-  //       setEnrollmentStatus((prev) => ({
-  //         ...prev,
-  //         ...statusData,
-  //         timestamps: {
-  //           ...prev.timestamps,
-  //           ...(statusData.timestamps || {}),
-  //         },
-  //       }));
-  
-  //       if (statusData.timestamps?.step1) {
-  //         setFormSubmitted(true);
-  //         const createdAt = new Date(statusData.timestamps.step1);
-  //         const now = new Date();
-  //         const elapsedSeconds = Math.floor((now - createdAt) / 1000);
-  //         const remainingSeconds = Math.max(0, 1200 - elapsedSeconds);
-  //         setTimeLeft(remainingSeconds);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  useEffect(() => {
+    const checkTimeValidity = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/check-time-validity`,
+          {
+            credentials: 'include'
+          }
+        );
+        const data = await response.json();
+        setTimeValid(data.isValid);
+      } catch (error) {
+        console.error('Error checking time validity:', error);
+        setTimeValid(false);
+      }
+    };
+
+    checkTimeValidity();
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -547,80 +585,47 @@ export default function Steps({
     await fetchData();
   };
 
-  // const getStepStatus = (stepNumber) => {
-  //   const stepKey = `step${stepNumber}`;
-  //   let currentStatus = enrollmentStatus[stepKey];
-  
-  //   if (stepNumber === 1) {
-  //     return currentStatus || 'pending';
-  //   }
-  
-  //   if (stepNumber === 2) {
-  //     if (enrollmentStatus.step1 !== 'approved') return 'locked';
-  //     if (meetingData?.completed) return 'approved';
-  //     if (meetingData?.exists) return 'in_progress';
-  //     return 'pending';
-  //   }
-  
-  //   if (stepNumber === 3) {
-  //     if (enrollmentStatus.step3 === 'approved') return 'approved';
-  //     if (meetingData?.completed) return 'pending';
-  //     return 'locked';
-  //   }
-  
-  //   if (stepNumber === 4) {
-  //     if (enrollmentStatus.step3 !== 'approved') return 'locked';
-  //     if (enrollmentStatus.step4 === 'approved') return 'approved';
-  //     if (enrollmentStatus.step4 === 'in_progress') return 'in_progress';
-  //     return 'pending';
-  //   }
-  
-  //   return 'locked';
-  // };
+  const getStepStatus = (stepNumber) => {
+    const stepKey = `step${stepNumber}`;
+    let currentStatus = enrollmentStatus[stepKey];
 
-  // Update the getStepStatus function to handle auto-approval
-const getStepStatus = (stepNumber) => {
-  const stepKey = `step${stepNumber}`;
-  let currentStatus = enrollmentStatus[stepKey];
-
-  if (stepNumber === 1) {
-    // Check if 2 minutes have passed since creation
-    if (currentStatus === 'pending' && enrollmentStatus.timestamps?.step1) {
-      const createdAt = new Date(enrollmentStatus.timestamps.step1);
-      const now = new Date();
-      const elapsedSeconds = Math.floor((now - createdAt) / 1000);
-      
-      if (elapsedSeconds >= 120) {
-        return 'approved';
+    if (stepNumber === 1) {
+      // Check if 2 minutes have passed since creation
+      if (currentStatus === 'pending' && enrollmentStatus.timestamps?.step1) {
+        const createdAt = new Date(enrollmentStatus.timestamps.step1);
+        const now = new Date();
+        const elapsedSeconds = Math.floor((now - createdAt) / 1000);
+        
+        if (elapsedSeconds >= 120) {
+          return 'approved';
+        }
+        return 'in_progress';
       }
-      return 'in_progress';
+      return currentStatus || 'pending';
     }
-    return currentStatus || 'pending';
-  }
 
-  // Rest of the logic remains the same...
-  if (stepNumber === 2) {
-    if (enrollmentStatus.step1 !== 'approved') return 'locked';
-    if (meetingData?.completed) return 'approved';
-    if (meetingData?.exists) return 'in_progress';
-    return 'pending';
-  }
+    if (stepNumber === 2) {
+      if (enrollmentStatus.step1 !== 'approved') return 'locked';
+      if (meetingData?.completed) return 'approved';
+      if (meetingData?.exists) return 'in_progress';
+      return 'pending';
+    }
 
-  if (stepNumber === 3) {
-    if (enrollmentStatus.step3 === 'approved') return 'approved';
-    if (meetingData?.completed) return 'pending';
+    if (stepNumber === 3) {
+      if (enrollmentStatus.step3 === 'approved') return 'approved';
+      if (meetingData?.completed) return 'pending';
+      return 'locked';
+    }
+
+    if (stepNumber === 4) {
+      if (enrollmentStatus.step3 !== 'approved') return 'locked';
+      if (enrollmentStatus.step4 === 'pending') return 'approved';
+      if (enrollmentStatus.step4 === 'in_progress') return 'in_progress';
+      return 'pending';
+    }
+
     return 'locked';
-  }
-
-  if (stepNumber === 4) {
-    if (enrollmentStatus.step3 !== 'approved') return 'locked';
-    if (enrollmentStatus.step4 === 'approved') return 'approved';
-    if (enrollmentStatus.step4 === 'in_progress') return 'in_progress';
-    return 'pending';
-  }
-
-  return 'locked';
-};
+  };
   
   const steps = [
     {
@@ -659,6 +664,10 @@ const getStepStatus = (stepNumber) => {
     return <div className={styles.container}>Loading enrollment status...</div>;
   }
 
+  if (timeValid === false) {
+    return <TimeLapsedMessage />;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -673,7 +682,7 @@ const getStepStatus = (stepNumber) => {
           >
             <circle cx="7.00949" cy="7.72818" r="6.9094" fill="#F99600" />
           </svg>
-          <span>Progress: {enrollmentStatus.progress}% completed</span>
+          <span>Progress: {enrollmentStatus.progress} completed</span>
         </div>
       </div>
 
@@ -758,7 +767,7 @@ const getStepStatus = (stepNumber) => {
                 </div>
               )}
 
-              {number === 4 && status === "approved" && (
+              {number === 4 && status === "pending" && (
                 <button 
                   onClick={() => window.open("https://razorpay.com/payment-link/plink_QWKwR1uZjHH8UG", "_blank")}
                   className={styles.completedButton}
@@ -778,7 +787,7 @@ const getStepStatus = (stepNumber) => {
         })}
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={modalOpen} onClose={closeModal}>
         <EnrollmentForm
           onComplete={handleEnrollmentComplete}
           onClose={closeModal}
