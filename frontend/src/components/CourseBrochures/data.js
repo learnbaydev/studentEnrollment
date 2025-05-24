@@ -1,39 +1,25 @@
 // data.js
 export const categories = [
-  "Data Science & Generative AI",
-  "Business Analytics & Data Analytics",
-  "Cloud & DevOps",
-  "DSA & System Design"
+  "Certification Courses",
+  "Domain Certification",
+  "DSA / Cloud & DevOps",
+  "HR/BFSI",
+  "Cyber Security",
+  "Gen-AI"
 ];
 
 export const courses = [
-  // Data Science & Generative AI Courses
+  // Certification Courses Courses
 
   {
-    id: 3,
-    title: "Data Science & AI Master Program",
-    category: "Data Science & Generative AI",
+    id: 1,
+    title: "Data Science and Generative AI Master Certification Program",
+    category: "Certification Courses",
     duration: "13 months",
     projects: "4",
-    certification: "IBM & Microsoft Certification",
-    for: "For Working Professional",
-    image: "/course/dsMaster.webp",
-    certificationBadges: [
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
-    ],
-    brochureLink: "#",
-    detailsLink: "#"
-  },
-  {
-    id: 1,
-    title: "Executive Program in Data Science & Generative AI for Managers & Leaders",
-    category: "Data Science & Generative AI",
-    duration: "11 months",
-    projects: "3",
     certification: "Project Certification from IBM",
-    for: "For Manager & Team leader",
-    image: "/card_1.webp",
+    for: "For Working Professional",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/ai_master.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
@@ -41,14 +27,16 @@ export const courses = [
     brochureLink: "#",
     detailsLink: "#"
   },
+
   {
     id: 2,
-    title: "Advanced Data Science & AI Program",
-    category: "Data Science & Generative AI",
+    title: "Generative AI & Machine Learning Program",
+    category: "Certification Courses",
     duration: "9 months",
-    projects: "3",
-    certification: "IBM & Microsoft Certification",
-    image: "/card_1.webp",
+    projects: "2",
+    certification: "Project Certification form IBM",
+    for:'Inclusive of Generative Ai',
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/ai_ml.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
@@ -56,16 +44,33 @@ export const courses = [
     brochureLink: "#",
     detailsLink: "#"
   },
+  {
+    id: 3,
+    title: "Data Analytics and Business Analytics with Generative AI",
+    category: "Certification Courses",
+    duration: "9 months",
+    projects: "4",
+    certification: "Project Certification from IBM",
+    for: "For Working Professional",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/da_ba.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
+    ],
+    brochureLink: "#",
+    detailsLink: "#"
+  },
+
 
   {
     id: 4,
-    title: "Data Science & AI Program for Tech Professionals",
-    category: "Data Science & Generative AI",
-    duration: "9 months",
-    projects: "8+",
-    certification: "IBM & Microsoft Certification",
-    for: "For Tech Professionals",
-    image: "/card_1.webp",
+    title: "Advanced Data Science & Generative AI Certification",
+    category: "Certification Courses",
+    duration: "7 months",
+    projects: "4",
+    certification: "Project Certification form IBM",
+    for: "For Working Professional",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/advance_ds_cer.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
@@ -75,13 +80,13 @@ export const courses = [
   },
   {
     id: 5,
-    title: "Data Science & AI Program for Non-Tech Professionals",
-    category: "Data Science & Generative AI",
-    duration: "11 months",
-    projects: "8+",
-    certification: "IBM Certification",
-    for: "For Non-Tech Professionals",
-    image: "/card_1.webp",
+    title: "Data Science Foundation Program ",
+    category: "Certification Courses",
+    duration: "4 months",
+    projects: "4",
+    certification: "Project Certification form IBM",
+    for: "For Data science enthusiasts",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/foundation_ds.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png"
     ],
@@ -90,12 +95,13 @@ export const courses = [
   },
   {
     id: 6,
-    title: "Generative AI & Prompt Engineering Program",
-    category: "Data Science & Generative AI",
-    duration: "3 months",
-    projects: "5+",
-    certification: "IBM Certification",
-    image: "/card_1.webp",
+    title: "Executive Program in Data Science & Generative AI for Managers & Leaders",
+    category: "Domain Certification",
+    duration: "11 months",
+    projects: "3",
+    certification: "Project Certification form IBM",
+    for:"For Manager & Team leader",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/manger_leader.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png"
     ],
@@ -106,12 +112,14 @@ export const courses = [
   // Business Analytics & Data Analytics Courses
   {
     id: 7,
-    title: "Business Analytics Program",
-    category: "Business Analytics & Data Analytics",
-    duration: "6 months",
+    title: "HR Analytics Certification Program",
+    category: "Domain Certification",
+    duration: "5 months",
     projects: "2",
-    certification: "Microsoft Certification",
-    image: "/card_1.webp",
+    certification: "Project Certification form IBM",
+    for:"For HR Professional",
+  
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/hr+(1).webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
@@ -120,13 +128,13 @@ export const courses = [
   },
   {
     id: 8,
-    title: "Business Analytics & Data Analytics Program for Managers & Leaders",
-    category: "Business Analytics & Data Analytics",
-    duration: "8 months",
-    projects: "5+",
+    title: "Data Science & Generative AI for BFSI Professionals",
+    category: "Domain Certification",
+    duration: "7 months",
+    projects: "2",
     certification: "Microsoft Certification",
-    for: "For Manager & Team leader",
-    image: "/card_1.webp",
+    for: "For BFSI Professional",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/BFSI+(1).webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
@@ -135,12 +143,13 @@ export const courses = [
   },
   {
     id: 9,
-    title: "Data Analytics Program",
-    category: "Business Analytics & Data Analytics",
+    title: "Marketing Analytics Certification Program",
+    category: "Domain Certification",
     duration: "5 months",
-    projects: "8+",
-    certification: "Microsoft Certification",
-    image: "/card_1.webp",
+    projects: "2",
+    certification: "Project Certification form IBM",
+    for:'For Marketing Professional',
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/marketing.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
@@ -151,12 +160,13 @@ export const courses = [
   // Cloud & DevOps Courses
   {
     id: 10,
-    title: "Cloud Computing & DevOps Program",
-    category: "Cloud & DevOps",
-    duration: "7 months",
-    projects: "5+",
-    certification: "Microsoft & IBM Certification",
-    image: "/card_1.webp",
+    title: "Data Structure Algorithms & System Design",
+    category: "DSA / Cloud & DevOps",
+    duration: "9-10 months",
+    projects: "2+",
+    certification: "Certification form Microsoft",
+    for:"with Gen-AI for Software Developers",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/dsa_a.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png"
@@ -166,12 +176,13 @@ export const courses = [
   },
   {
     id: 11,
-    title: "AWS Cloud Architect Program",
-    category: "Cloud & DevOps",
-    duration: "6 months",
+    title: "Cloud Computing & DevOps Certification Program",
+    category: "DSA / Cloud & DevOps",
+    duration: "10 months",
     projects: "5+",
-    certification: "AWS Certification",
-    image: "/card_1.webp",
+    certification: "Global Certification",
+    for:"Designed by industry experts",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_gen.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/aws.png"
     ],
@@ -180,12 +191,13 @@ export const courses = [
   },
   {
     id: 12,
-    title: "Azure Cloud Architect Program",
-    category: "Cloud & DevOps",
+    title: "Cloud Computing & DevOps Certification Program",
+    category: "DSA / Cloud & DevOps",
     duration: "6 months",
-    projects: "5+",
-    certification: "Microsoft Azure Certification",
-    image: "/card_1.webp",
+    projects: "3",
+    certification: "Global Certification",
+    for:"Designed by industry experts",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_s.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
@@ -196,12 +208,14 @@ export const courses = [
   // DSA & System Design Courses
   {
     id: 13,
-    title: "DSA & System Design Program",
-    category: "DSA & System Design",
-    duration: "6 months",
-    projects: "5+",
+    title: "Professional Certificate in AWS Cloud Computing & Devops",
+    category: "DSA / Cloud & DevOps",
+    duration: "18 months",
+    projects: "3+",
     certification: "Microsoft Certification",
-    image: "/card_1.webp",
+    for:'Designed by industry experts',
+
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/aws.webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
@@ -210,12 +224,14 @@ export const courses = [
   },
   {
     id: 14,
-    title: "Advance DSA & System Design Program",
-    category: "DSA & System Design",
-    duration: "8 months",
-    projects: "10+",
-    certification: "Microsoft Certification",
-    image: "/card_1.webp",
+    title: "HR Analytics Certification Program",
+    category: "HR/BFSI",
+    duration: "5 months",
+    projects: "2",
+    certification: "Project Certification form IBM",
+    for:"For HR Professional",
+  
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/hr+(1).webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
@@ -224,16 +240,98 @@ export const courses = [
   },
   {
     id: 15,
-    title: "DSA for FAANG Preparation",
-    category: "DSA & System Design",
-    duration: "3 months",
-    projects: "5+",
+    title: "Data Science & Generative AI for BFSI Professionals",
+    category: "HR/BFSI",
+    duration: "7 months",
+    projects: "2",
     certification: "Microsoft Certification",
-    image: "/card_1.webp",
+    for: "For BFSI Professional",
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/BFSI+(1).webp",
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
     brochureLink: "#",
     detailsLink: "#"
-  }
+  },
+  {
+    id: 16,
+    title: "Marketing Analytics Certification Program",
+    category: "HR/BFSI",
+    duration: "5 months",
+    projects: "2",
+    certification: "Project Certification form IBM",
+    for:'For Marketing Professional',
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/marketing.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
+    ],
+    brochureLink: "#",
+    detailsLink: "#"
+  },
+
+
+  {
+    id: 17,
+    title: "Executive Certification in Cyber Security & Ethical Hacking",
+    category: "Cyber Security",
+    duration: "8 months",
+    projects: "2",
+    certification: "EC Council Certified ethical hacker Certificate",
+    for:'For Working Professional',
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/marketing.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
+    ],
+    brochureLink: "#",
+    detailsLink: "#"
+  },
+
+  {
+    id: 17,
+    title: "Cloud Computing & DevOps Certification Program",
+    category: "Gen-AI",
+    duration: "10 months",
+    projects: "3",
+    certification: "Global Certification",
+    for:'Designed by industry experts',
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_gen.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
+    ],
+    brochureLink: "#",
+    detailsLink: "#"
+  },
+
+
+  {
+    id: 17,
+    title: "GenAI Certification for Managers & Tech Leaders",
+    category: "Gen-AI",
+    duration: "4 months",
+    projects: "2",
+    certification: "Project Certification form Guwahati",
+    for:'For Managers & Tech Leaders',
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/Gen_ai_cer.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
+    ],
+    brochureLink: "#",
+    detailsLink: "#"
+  },
+
+  {
+    id: 17,
+    title: "GenAI Developer Certification for Professionals",
+    category: "Gen-AI",
+    duration: "3 months",
+    projects: "2",
+    certification: "Project Certification form IIT Guwahati",
+    for:'For Working Professional',
+    image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/Gen_ai_tech_le.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
+    ],
+    brochureLink: "#",
+    detailsLink: "#"
+  },
 ];

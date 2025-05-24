@@ -14,6 +14,8 @@ import CourseBrochures from '@/components/CourseBrochures/CourseBrochures';
 import ThemeToggle from '@/components/ThemeToggle';
 import FeaturesSection from '@/components/Features/Features';
 import DemoVideoSection from '@/components/DevVideoSection/DemoVideoSection';
+import Head from 'next/head';
+
 
 export default function Dashboard() {
   const { loading, user } = useAuth();
@@ -58,6 +60,9 @@ export default function Dashboard() {
 
   return (
     <div className={styles.dashboardLayout}>
+      <Head>
+  <link rel="icon" href="/favicon.ico" />
+</Head>
       <Navbar 
         user={user} 
         toggleSidebar={toggleSidebar} 
@@ -75,14 +80,15 @@ export default function Dashboard() {
         <div className={`${styles.contentArea} ${isSidebarOpen ? styles.withSidebar : ''}`}>
           {activeSection === 'dashboard' && (
             <>
-              <UserInfo user={user} />
-              <Steps
+             <Steps
                 currentStep={currentStep}
                 enrollmentStatus={enrollmentStatus}
                 userEmail={user?.email}
                 onStepChange={setCurrentStep}
                 user={user}
               />
+              <UserInfo user={user} />
+             
             </>
           )}
 

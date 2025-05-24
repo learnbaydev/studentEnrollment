@@ -26,26 +26,47 @@ app.use(express.json());
 app.set("trust proxy", 1);
 
 // ✅ Secure & domain-aware session
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET || "your_secret",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       secure: true, // only works with HTTPS
+//       sameSite: "lax",
+//       domain: "app.learnbay.co", // your production domain
+//     },
+//   })
+// );
+
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "your_secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: true, // only works with HTTPS
-      sameSite: "lax",
-      domain: "app.learnbay.co", // your production domain
+      secure: process.env.NODE_ENV === "production", // HTTPS-only in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Required for cross-site cookies
+      domain: process.env.NODE_ENV === "production" ? ".learnbay.co" : undefined, // Allow subdomains
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      httpOnly: true, // Prevent client-side JS access
     },
   })
 );
 
 // ✅ CORS (important for frontend-backend cookie communication)
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_URL,
+//     credentials: true,
+//   })
+// );
+
+const corsOptions = {
+  origin: process.env.CLIENT_URL || 'http://localhost:3000', // default to common React port
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 // ✅ Initialize Passport
 require("./config/passport");

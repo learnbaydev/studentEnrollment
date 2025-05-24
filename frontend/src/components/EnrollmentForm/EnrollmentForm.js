@@ -12,7 +12,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
   // Step 1: Personal Info
   const [formData, setFormData] = useState({
     email: user?.email || "",
-    full_name: "",
+    full_name: user?.name|| "",
     domain: "",
     experience_years: "",
     graduation_year: "",
@@ -216,7 +216,10 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 name="full_name"
                 value={formData.full_name}
                 onChange={handleChange}
+                disabled
+                readOnly
                 placeholder="Your full name"
+                className={styles.disabledInput}
               />
             </div>
 

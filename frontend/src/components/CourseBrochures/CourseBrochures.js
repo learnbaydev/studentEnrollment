@@ -81,7 +81,7 @@ const downloadSvg = (
               </div>
               
               <div className={styles.cardContent}>
-                {/* <h3 className={styles.courseTitle}>{course.title}</h3> */}
+                <h3 className={styles.courseTitle}>{course.title}</h3>
                 
                 <div className={styles.courseDetails}>
                   <span className={styles.duration}>{course.duration}</span>
