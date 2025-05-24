@@ -3,26 +3,21 @@ const db = require('../config/db');
 const path = require('path');
 const generateOfferLetterPDF = require('../utils/generateOfferLetterPDF');
 
+const { uploadFile, getSignedUrl } = require('../utils/s3Storage');
+
 exports.generatePDFByEmail = async (req, res) => {
   try {
     const email = req.params.email;
-    console.log(`[generatePDFByEmail] Request received for email: ${email}`);
-
-    // Query user by email with all required fields
+    
+    // Query user data
     const [results] = await db.query(
-      `SELECT 
-        id, email, name as full_name, 
-        program_name, program_fee, 
-        domain,
-        scholarship_percentage, scholarship_fee, 
-        validity, offer_letter_path, 
-        signature_image_path as signatureImagePath
-      FROM user WHERE email = ?`, 
+      `SELECT id, email, name as full_name, program_name, 
+       program_fee, domain, offer_letter_path 
+       FROM user WHERE email = ?`, 
       [email]
     );
 
     if (results.length === 0) {
-      console.log(`[generatePDFByEmail] User not found for email: ${email}`);
       return res.status(404).json({ 
         success: false, 
         message: 'User not found' 
@@ -30,47 +25,129 @@ exports.generatePDFByEmail = async (req, res) => {
     }
 
     const userData = results[0];
-    console.log(`[generatePDFByEmail] Found user: ${userData.full_name}`);
 
-    // Check if offer letter already exists
+    // If offer letter exists, return a fresh signed URL
     if (userData.offer_letter_path) {
-      console.log(`[generatePDFByEmail] Offer letter already exists for ${email}`);
+      // Generate a new signed URL with longer expiration
+      const signedUrl = await getSignedUrl(userData.offer_letter_path, 3600); // 1 hour expiration
       return res.json({
         success: true,
-        downloadUrl: `/pdfs/${userData.offer_letter_path}`,
+        downloadUrl: signedUrl,
         message: 'Offer letter already generated',
       });
     }
 
-    // Generate a new file name
-    const fileName = `offer_${userData.id}_${Date.now()}.pdf`;
-    const filePath = path.join(__dirname, '../public/pdfs', fileName);
+    // Generate new PDF and upload to S3
+    const { s3Key, s3Url } = await generateOfferLetterPDF(userData);
 
-    console.log(`[generatePDFByEmail] Generating PDF for ${email} at ${filePath}`);
-    
-    // Generate PDF
-    await generateOfferLetterPDF(userData, filePath);
-
-    // Update database with file path
+    // Update database with S3 key
     await db.query(
       'UPDATE user SET offer_letter_path = ? WHERE email = ?', 
-      [fileName, email]
+      [s3Key, email]
     );
-
-    console.log(`[generatePDFByEmail] PDF generated successfully for ${email}`);
     
+    // Return the S3 URL with longer expiration
+    const signedUrl = await getSignedUrl(s3Key, 3600); // 1 hour expiration
     res.json({
       success: true,
-      downloadUrl: `/pdfs/${fileName}`,
+      downloadUrl: signedUrl,
       message: 'Offer letter generated successfully',
     });
 
   } catch (error) {
-    console.error('[generatePDFByEmail] Error:', error);
+    console.error('Error:', error);
     res.status(500).json({ 
       success: false,
       message: 'Server error while generating PDF' 
     });
+  }
+};
+
+// exports.checkStatus = async (req, res) => {
+//   try {
+//     const email = req.params.email;
+//     const [results] = await db.query(
+//       'SELECT offer_letter_path FROM user WHERE email = ?',
+//       [email]
+//     );
+
+//     if (results.length === 0) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+
+//     if (!results[0].offer_letter_path) {
+//       return res.json({
+//         exists: false,
+//         downloadUrl: null
+//       });
+//     }
+
+//     // Generate a fresh signed URL for the check
+//     const signedUrl = await getSignedUrl(results[0].offer_letter_path, 3600); // 1 hour expiration
+    
+//     res.json({
+//       exists: true,
+//       downloadUrl: signedUrl // Return the full signed URL
+//     });
+//   } catch (error) {
+//     console.error('Error checking offer letter status:', error);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// };
+
+// Unified download endpoint
+exports.download = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const [results] = await db.query(
+      'SELECT offer_letter_path FROM user WHERE email = ?',
+      [email]
+    );
+
+    if (results.length === 0 || !results[0].offer_letter_path) {
+      return res.status(404).json({ message: 'Offer letter not found' });
+    }
+
+    const s3Key = results[0].offer_letter_path;
+    const signedUrl = await getSignedUrl(s3Key);
+    
+    res.json({
+      success: true,
+      downloadUrl: signedUrl
+    });
+    
+  } catch (error) {
+    console.error('Download error:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Server error while generating download URL' 
+    });
+  }
+};
+
+// Status check endpoint
+exports.checkStatus = async (req, res) => {
+  try {
+    const email = req.params.email;
+    const [results] = await db.query(
+      'SELECT offer_letter_path FROM user WHERE email = ?',
+      [email]
+    );
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const s3Key = results[0].offer_letter_path;
+    const signedUrl = s3Key ? await getSignedUrl(s3Key) : null;
+    
+    res.json({
+      exists: !!s3Key,
+      downloadUrl: signedUrl
+    });
+  } catch (error) {
+    console.error('Error checking offer letter status:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -155,27 +232,27 @@ exports.checkDownloadStatus = async (req, res) => {
   };
 
   // In your backend controller
-exports.checkStatus = async (req, res) => {
-    try {
-      const email = req.params.email;
-      const [results] = await db.query(
-        'SELECT offer_letter_path FROM user WHERE email = ?',
-        [email]
-      );
+// exports.checkStatus = async (req, res) => {
+//     try {
+//       const email = req.params.email;
+//       const [results] = await db.query(
+//         'SELECT offer_letter_path FROM user WHERE email = ?',
+//         [email]
+//       );
   
-      if (results.length === 0) {
-        return res.status(404).json({ message: 'User not found' });
-      }
+//       if (results.length === 0) {
+//         return res.status(404).json({ message: 'User not found' });
+//       }
   
-      res.json({
-        exists: !!results[0].offer_letter_path,
-        downloadUrl: results[0].offer_letter_path ? `/pdfs/${results[0].offer_letter_path}` : null
-      });
-    } catch (error) {
-      console.error('Error checking offer letter status:', error);
-      res.status(500).json({ message: 'Server error' });
-    }
-  };
+//       res.json({
+//         exists: !!results[0].offer_letter_path,
+//         downloadUrl: results[0].offer_letter_path ? `/pdfs/${results[0].offer_letter_path}` : null
+//       });
+//     } catch (error) {
+//       console.error('Error checking offer letter status:', error);
+//       res.status(500).json({ message: 'Server error' });
+//     }
+//   };
 
 
   // In your offerLetterController.js
