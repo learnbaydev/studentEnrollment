@@ -9,7 +9,7 @@ async function findUserByEmail(email) {
     }
 
     // Log the database query being executed
-    const query = "SELECT * FROM user WHERE email = ?";
+    const query = "SELECT * FROM user WHERE email = ? AND status = 'active'";
     console.log("Executing query:", query, "with parameters:", [email]);
 
     const [rows] = await db.query(query, [email]);
@@ -17,7 +17,7 @@ async function findUserByEmail(email) {
     console.log("DB query result:", rows); 
 
     if (rows.length === 0) {
-      console.log("No user found with email:", email);  
+      console.log("No active user found with email:", email);  
       return null; 
     }
 

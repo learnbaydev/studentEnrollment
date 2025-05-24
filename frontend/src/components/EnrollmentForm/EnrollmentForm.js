@@ -12,7 +12,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
   // Step 1: Personal Info
   const [formData, setFormData] = useState({
     email: user?.email || "",
-    full_name: "",
+    full_name: user?.name|| "",
     domain: "",
     experience_years: "",
     graduation_year: "",
@@ -215,8 +215,10 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 type="text"
                 name="full_name"
                 value={formData.full_name}
-                onChange={handleChange}
-                placeholder="Your full name"
+                // onChange={handleChange}
+                disabled
+                readOnly
+                className={styles.disabledInput}
               />
             </div>
 
@@ -336,29 +338,29 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
       {step === 3 && (
         <div className={styles.stepContent}>
           <label>Aspiring Companies *</label>
-          <input
+          <textarea
             type="text"
             name="aspiring_companies"
             value={formData.aspiring_companies}
             onChange={handleChange}
-            placeholder="Companies you want to work for"
+            placeholder="e.g., Your Dream Companies"
           />
 
-          <label>Motivation *</label>
+          <label>Why do you want to join this program?</label>
           <textarea
             name="motivation"
             value={formData.motivation}
             onChange={handleChange}
-            placeholder="Why do you want to join this program?"
+            placeholder="Share why you want to join our program...?"
             rows="3"
           />
 
-          <label>Expectations *</label>
+          <label>What are your expectations from this course?</label>
           <textarea
             name="expectations"
             value={formData.expectations}
             onChange={handleChange}
-            placeholder="What are your expectations from this course?"
+            placeholder="what outcomes are you looking from this program...?"
             rows="3"
           />
         </div>
