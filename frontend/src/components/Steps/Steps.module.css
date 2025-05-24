@@ -665,6 +665,53 @@ li.react-datepicker__time-list-item--selected {
   padding: 0;
 }
 
+/* Custom Popup Styles */
+.customPopupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.customPopup {
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.popupContent {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.popupIcon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.popupCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+}
 @media (max-width: 768px) {
 .header{
   /* grid-template-columns: 53% 45%;
