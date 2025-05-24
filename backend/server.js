@@ -47,7 +47,7 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === "production", // HTTPS-only in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Required for cross-site cookies
-      domain: process.env.NODE_ENV === "production" ? ".learnbay.co" : undefined, // Allow subdomains
+      domain: process.env.NODE_ENV === "production" ? "app.learnbay.co" : undefined, // Allow subdomains
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       httpOnly: true, // Prevent client-side JS access
     },
