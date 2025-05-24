@@ -11,35 +11,53 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [letterGenerated, setLetterGenerated] = useState(false);
 
-  useEffect(() => {
-    const checkLetterStatus = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/offer/checkStatus/${encodeURIComponent(userEmail)}`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          if (data.exists) {
-            setLetterGenerated(true);
-            setPdfUrl(`${process.env.NEXT_PUBLIC_API_URL}${data.downloadUrl}`);
-            if (onGenerate) onGenerate();
-          }
+  const checkLetterStatus = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/offer/checkStatus/${encodeURIComponent(userEmail)}`
+      );
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.exists) {
+          setLetterGenerated(true);
+          setPdfUrl(data.downloadUrl);
         }
-      } catch (err) {
-        console.error("Error checking letter status:", err);
       }
-    };
+    } catch (err) {
+      console.error("Error checking letter status:", err);
+    }
+  }, [userEmail]);
 
+  // const generateLetter = useCallback(async () => {
+  //   setLoading(true);
+  //   setError(null);
+    
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/api/offer/generate/${encodeURIComponent(userEmail)}`
+  //     );
+
+  //     if (!response.ok) throw new Error("Failed to generate letter");
+      
+  //     const data = await response.json();
+  //     setPdfUrl(data.downloadUrl);
+  //     setLetterGenerated(true);
+  //     setIsModalOpen(true);
+      
+  //     if (onGenerate) onGenerate();
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [userEmail, onGenerate]);
+
+  useEffect(() => {
     if (userEmail) {
       checkLetterStatus();
     }
-  }, [userEmail, onGenerate]);
+  }, [userEmail, checkLetterStatus]);
 
   const generateLetter = useCallback(async () => {
     if (!userEmail) {
@@ -60,23 +78,18 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
         }
       );
 
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        throw new Error(`Unexpected response: ${text.substring(0, 100)}`);
+      if (!response.ok) {
+        throw new Error("Failed to generate scholarship letter");
       }
   
       const data = await response.json();
       
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to generate scholarship letter");
-      }
-  
       if (!data.downloadUrl) {
         throw new Error("PDF URL not received from server");
       }
   
-      setPdfUrl(`${process.env.NEXT_PUBLIC_API_URL}${data.downloadUrl}`);
+      // Use the URL directly from the response (should be S3 signed URL)
+      setPdfUrl(data.downloadUrl);
       setLetterGenerated(true);
       setIsModalOpen(true);
       
@@ -98,25 +111,7 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
     setError(null);
 
     try {
-      const response = await fetch(pdfUrl, {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to download file");
-      }
-
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = downloadUrl;
-      link.download = "Scholarship_Letter.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(downloadUrl);
-
+      // Record the download first
       await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/offer/recordDownload/${encodeURIComponent(userEmail)}`,
         {
@@ -125,6 +120,9 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
           credentials: "include",
         }
       );
+
+      // For S3 files, we can just open in new tab (the URL is already signed)
+      window.open(pdfUrl, '_blank');
     } catch (err) {
       setError(err.message || "Failed to download letter. Please try again.");
       console.error("Download error:", err);
@@ -160,28 +158,24 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
 
       {error && <p className={styles.error}>{error}</p>}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        style={{ maxWidth: "800px" }}
-      >
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className={styles.modalContent}>
-          {pdfUrl && (
-            <embed
-              src={`${pdfUrl}#toolbar=0&navpanes=0`}
-              type="application/pdf"
-              width="100%"
-              height="500px"
-              className={styles.pdfEmbed}
-            />
+          {pdfUrl ? (
+            <div className={styles.pdfContainer}>
+              <iframe
+                src={`${pdfUrl}#toolbar=0&navpanes=0`}
+                width="100%"
+                height="500px"
+                className={styles.pdfEmbed}
+                title="Scholarship Letter"
+              />
+              {error && <p className={styles.pdfError}>{error}</p>}
+            </div>
+          ) : (
+            <p>Loading PDF...</p>
           )}
-
-          <button
-            onClick={downloadLetter}
-            disabled={isDownloading}
-            className={styles.downloadButton}
-          >
-            {isDownloading ? "Downloading..." : "Download Scholarship Letter"}
+          <button onClick={downloadLetter} className={styles.downloadButton}>
+            Download Scholarship Letter
           </button>
         </div>
       </Modal>
