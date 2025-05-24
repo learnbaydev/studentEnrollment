@@ -24,8 +24,8 @@ export const courses = [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/UpdateBrochure/DSAI_Master.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/data-science-and-ai-master-certification-program"
   },
 
   {
@@ -41,8 +41,8 @@ export const courses = [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/Advance+Artifical+Intelligence+%26+ML+Certification+Program.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/artificial-intelligence-certification-course"
   },
   {
     id: 3,
@@ -57,8 +57,8 @@ export const courses = [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/DA-BA.pdf",
+    detailsLink: "https://www.learnbay.co/artificial-intelligence/generative-ai-analytics-course"
   },
 
 
@@ -75,8 +75,8 @@ export const courses = [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/UpdateBrochure/Advance_DSAI.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/advance-data-science-certification-courses"
   },
   {
     id: 5,
@@ -90,8 +90,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/Data+Science+Foundation+Program.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/data-science-certification-courses",
   },
   {
     id: 6,
@@ -105,8 +105,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/DSAI_for_Managers_and_Leaders.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/data-science-ai-for-managers"
   },
 
   // Business Analytics & Data Analytics Courses
@@ -123,8 +123,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/HR+Analytics+Certification+Program.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/hr-analytics"
   },
   {
     id: 8,
@@ -138,8 +138,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/Data+Science+%26+AI+Certification+Program+for+BFSI+Professionals.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/data-science-for-bfsi-professional",
   },
   {
     id: 9,
@@ -153,8 +153,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/Marketing+Analytics+Certification+Program.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/marketing-analytics"
   },
 
   // Cloud & DevOps Courses
@@ -171,8 +171,8 @@ export const courses = [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/ibm.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/DSA.pdf",
+    detailsLink: "https://www.learnbay.co/fullstack/dsa-system-design"
   },
   {
     id: 11,
@@ -186,8 +186,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/aws.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/IIT-cloud-devops.pdf",
+    detailsLink: "https://www.learnbay.co/cloud&devops/executive-program-in-cloud-and-devops-by-iit-guwahati"
   },
   {
     id: 12,
@@ -201,8 +201,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/Cloud-and-Devops-Certification-Program.pdf",
+    detailsLink: "https://www.learnbay.co/cloud&devops/cloud-computing-and-devOps-certification-program"
   },
 
   // DSA & System Design Courses
@@ -219,8 +219,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/AWS-Cloud-and-Devops-Certification-Program.pdf",
+    detailsLink: "https://www.learnbay.co/cloud&devops/cloud-computing-and-devOps-certification-program"
   },
   {
     id: 14,
@@ -235,8 +235,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/HR+Analytics+Certification+Program.pdf",
+    detailsLink: "https://www.learnbay.codatascience/hr-analytics"
   },
   {
     id: 15,
@@ -250,8 +250,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/Data+Science+%26+AI+Certification+Program+for+BFSI+Professionals.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/data-science-for-bfsi-professional",
   },
   {
     id: 16,
@@ -265,8 +265,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/Marketing+Analytics+Certification+Program.pdf",
+    detailsLink: "https://www.learnbay.co/datascience/marketing-analytics "
   },
 
 
@@ -282,8 +282,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/Cyber-Security-IIT.pdf",
+    detailsLink: "https://www.learnbay.co/cyber-security/executive-program-in-cyber-security-and-ethical-hacking-by-iit-roorkee",
   },
 
   {
@@ -298,8 +298,8 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/IIT-cloud-devops.pdf",
+    detailsLink: "https://www.learnbay.co/cloud&devops/executive-program-in-cloud-and-devops-by-iit-guwahati"
   },
 
 
@@ -316,7 +316,7 @@ export const courses = [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
     brochureLink: "#",
-    detailsLink: "#"
+    detailsLink: "https://www.learnbay.co/datascience/generative-ai-course-for-manager"
   },
 
   {
@@ -331,7 +331,7 @@ export const courses = [
     certificationBadges: [
       "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png"
     ],
-    brochureLink: "#",
-    detailsLink: "#"
+    brochureLink: "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/GenAI-Managers-Tech-Leaders-iits.pdf",
+    detailsLink: "https://www.learnbay.co/fullstack/generative-ai-course-for-professional",
   },
 ];

@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 20px;
+}
+
+.messageBox {
+  background: #FFF;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.messageBox h2 {
+  color: #FF4444;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.messageBox p {
+  color: #666;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.contactButton {
+  display: inline-block;
+  background: linear-gradient(90deg, #037FF7 0%, #02529F 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 20px;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.contactButton:hover {
+  transform: translateY(-2px);
+} 
