@@ -796,7 +796,7 @@ export default function Steps({
               {number === 4 && status === "pending" && (
                 <button 
                   onClick={() => window.open("https://razorpay.com/payment-link/plink_QWKwR1uZjHH8UG", "_blank")}
-                  className={styles.completedButton}
+                  className={styles.enrollButton}
                   style={{ cursor: "pointer" }}
                 >
           Block your seat

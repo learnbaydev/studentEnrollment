@@ -30,7 +30,7 @@ const testimonials = [
     videoUrl: "https://www.youtube.com/embed/hcl-testimonial"
   },
   {
-    name: "Mohit Israr",
+    name: "Mohamod Israr",
     role: "Data Scientist",
     review: "Thanks to the LearnBay data science course & excellent guidance. I was able to crack the TCS interview and secure a job with a 397% pay raise. The real-world projects helped me develop my concepts as a data scientist.",
     domain: "Sales Domain",

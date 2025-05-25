@@ -319,6 +319,72 @@
   display: none;
 }
 
+/* Add these to your Login.module.css */
+
+.testimonialContainer {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: auto;
+  height: 300px; /* Adjust based on your testimonial height */
+  overflow: hidden;
+  margin-top: 60px;
+}
+
+.testimonial {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+  transform: translateX(100%);
+  border-radius: 24.131px;
+  background: rgba(223, 224, 220, 0.24);
+  padding: 20px;
+  padding-top: 50px;
+}
+
+.testimonial.active {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 1;
+}
+
+.testimonial.exit {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+/* Keep the rest of your existing testimonial styles */
+.userImg {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  padding: 10px;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.testper {
+  color: #000;
+  text-align: center;
+  font-size: 12.148px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 147.182%;
+}
+
+.quote {
+  color: #343232;
+  text-align: center;
+  font-size: 12.148px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 147.182%;
+}
+
 /* Responsive: Tablet */
 @media (max-width: 1024px) {
   .container {
@@ -455,6 +521,15 @@
 
 .featuresMain{
   padding-top: 10px;
+}
+.testimonialContainer{
+  margin-top: 50px;
+}
+.testimonial{
+  margin-top: 50px;
+}
+.testimonial.active{
+  margin-top: 50px;
 }
 /* Small Mobile Devices */
 @media (max-width: 480px) {

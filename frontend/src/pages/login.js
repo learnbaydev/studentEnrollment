@@ -1,8 +1,63 @@
 // pages/login.js
+import { useEffect, useState } from 'react';
 import styles from '../styles/Login.module.css';
 import GoogleLoginButton from '@/components/googleAuthButton/GoogleLoginButton';
 
+
+const testimonials = [
+  {
+    id: 1,
+    name: "Priya Patel",
+    role: "Data Analyst",
+    rating: "⭐⭐⭐⭐⭐",
+    quote: "As a fresher, I was struggling to get my first break. The course gave me practical skills and confidence.",
+    image: "/testimonials/priya.webp"
+  },
+  {
+    id: 2,
+    name: "Shravanthi A",
+    role: "Data Scientist",
+    rating: "⭐⭐⭐⭐",
+    quote: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training.",
+    image: "/Testimoals/testin_1.webp"
+  },
+  {
+    id: 3,
+    name: "Preksha Mishra",
+    role: "Lead Data Scientist",
+    rating: "⭐⭐⭐⭐⭐",
+    quote: "The course structure is excellent with emphasis on concept building and tools & software at the same time.",
+    image: "/Testimoals/test_2.webp"
+  },
+  {
+    id: 4,
+    name: "Mohamod Israr",
+    role: "Data Scientist",
+    rating: "⭐⭐⭐⭐",
+    quote: "Thanks to the LearnBay data science course & excellent guidance. I was able to crack the TCS interview and secure a job with a 397% pay raise.",
+    image: "/Testimoals/test_3.webp"
+  },
+  {
+    id: 5,
+    name: "Rahul Sharma",
+    role: "Machine Learning Engineer",
+    rating: "⭐⭐⭐⭐⭐",
+    quote: "The hands-on projects and industry-relevant curriculum helped me transition from a software developer to ML engineer.",
+    image: "/Testimoals/test_4.webp"
+  }
+];
 const Login = () => {
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000); // Change testimonial every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
     <div className={styles.main}>
       <div className={styles.container}>
@@ -85,14 +140,26 @@ const Login = () => {
               </div>
             </div>
             
-            <div className={styles.testimonial}>
-              <img src="/rahul.webp" alt="Rahul" className={styles.userImg} />
-              <p className={styles.testper}><strong>Rahul S.</strong><br />Data Science Graduate</p>
-              <p>⭐⭐⭐⭐⭐</p>
-              <p className={styles.quote}>
-                "The mentorship and job support were fantastic. Landed a role at Amazon after just 6 months!"
-              </p>
-            </div>
+       {/* Testimonial Slider */}
+       <div className={styles.testimonialContainer}>
+            {testimonials.map((testimonial, index) => (
+              <div 
+                key={testimonial.id}
+                className={`${styles.testimonial} ${index === currentTestimonial ? styles.active : ''}`}
+              >
+                <img 
+                  src={testimonial.image} 
+                  alt={testimonial.name} 
+                  className={styles.userImg} 
+                />
+                <p className={styles.testper}>
+                  <strong>{testimonial.name}</strong><br />{testimonial.role}
+                </p>
+                <p>{testimonial.rating}</p>
+                <p className={styles.quote}>"{testimonial.quote}"</p>
+              </div>
+            ))}
+          </div>
             <p className={styles.terms}>By signing in, you agree to Learnbay's <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a></p>
           </div>
         </div>
