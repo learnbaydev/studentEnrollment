@@ -15,7 +15,7 @@ function StepCard({
   status,
   children,
   showTimer,
-  icon,
+
   timeLeft,
   userEmail,
   onScheduleComplete,
@@ -53,8 +53,36 @@ function StepCard({
       cardBg: "#F9FAFB",
     },
   };
+  const stepIcons = {
+    1: {
+      pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/steps_1_blue.webp",
+      in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_org.webp",
+      approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_green.webp",
+      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_lock.webp"
+    },
+    2: {
+      pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_blue.webp",
+      in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_org.webp",
+      approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_green.webp",
+      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_lock.webp"
+    },
+    3: {
+      pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_blue.webp",
+      in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_org.webp",
+      approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_green.webp",
+      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_lock.webp"
+    },
+    4: {
+      pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_blue.webp",
+      in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_org.webp",
+      approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_green.webp",
+      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_lock.webp"
+    }
+  };
 
   const currentStatus = statusColors[status] || statusColors.locked;
+  const icon = stepIcons[number]?.[status] || stepIcons[number]?.locked;
+
 
   const formatTime = (seconds) => {
     if (!seconds || seconds <= 0) return "00h 00m 00s";
@@ -283,7 +311,13 @@ function StepCard({
 
       <div className={styles.stepContent}>
         <div className={styles.iconDivs}>
-          <Image src={icon} width={50} height={50} alt="icons" loading="lazy" />
+        <Image 
+            src={icon} 
+            width={50} 
+            height={50} 
+            alt={`Step ${number} ${status}`} 
+            loading="lazy" 
+          />
           <h3>{title}</h3>
         </div>
         <p className={styles.desc}>{description}</p>
