@@ -510,9 +510,28 @@ export default function Steps({
       setMeetingData(meetingData);
   
       if (statusResponse.ok) {
+         // Calculate progress based on all completed steps
+      let completedSteps = 0;
+      const totalSteps = 4;
+
+      // Step 1 completed
+      if (statusData.step1 === 'approved') completedSteps++;
+      
+      // Step 2 completed (meeting completed)
+      if (meetingData?.completed) completedSteps++;
+      
+      // Step 3 completed (offer letter exists or status approved)
+      if (statusData.step3 === 'approved' || user?.offer_letter_path) completedSteps++;
+      
+      // Step 4 completed
+      if (statusData.step4 === 'approved') completedSteps++;
+
+      const progressPercentage = Math.round((completedSteps / totalSteps) * 100);
+      const progress = `${progressPercentage}%`;
         setEnrollmentStatus((prev) => ({
           ...prev,
           ...statusData,
+          progress,
           timestamps: {
             ...prev.timestamps,
             ...(statusData.timestamps || {}),
@@ -796,7 +815,7 @@ export default function Steps({
               {number === 4 && status === "pending" && (
                 <button 
                   onClick={() => window.open("https://razorpay.com/payment-link/plink_QWKwR1uZjHH8UG", "_blank")}
-                  className={styles.enrollButton}
+    className={styles.enrollButton}
                   style={{ cursor: "pointer" }}
                 >
           Block your seat
