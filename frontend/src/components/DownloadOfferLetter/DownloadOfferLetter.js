@@ -141,20 +141,21 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
 
   return (
     <div className={styles.container}>
-      <button
-        onClick={handleMainAction}
-        disabled={loading}
-        className={styles.button}
-      >
-        {loading && <span className={styles.shimmer}></span>}
-        <span className={styles.buttonText}>
-          {loading
-            ? "Generating..."
-            : letterGenerated
-            ? "View Scholarship Letter"
-            : "Generate Scholarship Letter"}
-        </span>
-      </button>
+ <button
+  onClick={handleMainAction}
+  disabled={loading}
+  className={`${styles.button} ${letterGenerated ? styles.generated : styles.generating}`}
+>
+  {loading && <span className={styles.shimmer}></span>}
+  <span className={styles.buttonText}>
+    {loading
+      ? "Generating..."
+      : letterGenerated
+      ? "View Offer Letter"
+      : "Generate Offer Letter"}
+  </span>
+</button>
+
 
       {error && <p className={styles.error}>{error}</p>}
 
@@ -167,7 +168,7 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
                 width="100%"
                 height="500px"
                 className={styles.pdfEmbed}
-                title="Scholarship Letter"
+                title="offer Letter"
               />
               {error && <p className={styles.pdfError}>{error}</p>}
             </div>
@@ -175,7 +176,7 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
             <p>Loading PDF...</p>
           )}
           <button onClick={downloadLetter} className={styles.downloadButton}>
-            Download Scholarship Letter
+            Download offer Letter
           </button>
         </div>
       </Modal>

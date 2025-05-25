@@ -308,6 +308,17 @@
   margin-top: 30px;
 }
 
+/* Mobile-only Google button */
+.mobileGoogleButton {
+  display: none;
+  width: 100%;
+  margin: 20px 0;
+  text-align: center;
+}
+.mobileonly{
+  display: none;
+}
+
 /* Responsive: Tablet */
 @media (max-width: 1024px) {
   .container {
@@ -340,8 +351,12 @@
     padding: 0;
   }
   
-  .leftPanel, .rightPanel {
+  .rightPanel {
     padding: 20px 15px;
+  }
+  
+  .left {
+    padding: 20px 30px;
   }
   
   .logo {
@@ -360,7 +375,7 @@
   .features {
     grid-template-columns: 1fr;
     width: 100%;
-    padding: 20px 0;
+    padding: 20px;
   }
   
   .featureBox {
@@ -386,14 +401,25 @@
     font-size: 24px;
   }
   
-  .googleBox {
+  /* Show mobile Google button and hide desktop one */
+  .mobileGoogleButton {
+    display: block;
+    margin: 0;
+  }
+  
+  .mobileGoogleButton .googleBox {
     width: 100%;
-    padding: 20px;
-    margin: 20px 0;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 15px;
+  }
+  
+  .rightPanel .googleBox {
+    display: none;
   }
   
   .testimonial {
-    margin-top: 80px;
+    margin-top: 0;
     padding-top: 60px;
   }
   
@@ -407,8 +433,29 @@
     font-size: 12px;
     text-align: center;
   }
+
+  .mobileonly{
+    display:block;
+    margin: 40px 0;
+  }
+
+  .leftPanel{
+    padding: 0;
+  }
+
+  .mobileonly h2{
+
+    font-size: 18px;
+  }
+  .desktophighlets, .paras{
+    display: none;
+  }
+  
 }
 
+.featuresMain{
+  padding-top: 10px;
+}
 /* Small Mobile Devices */
 @media (max-width: 480px) {
   .rightPanel h2 {
@@ -422,22 +469,24 @@
   .smallhead {
     font-size: 12px;
   }
+  .featureBox span {
+    font-size: 12px;
+  }
+
+  .featureBox p {
+    font-size: 14px;
+  }
+
   
-  .featureBox p, .featureBox span {
+  .certificationBox p {
     font-size: 16px;
   }
   
-  .certificationBox p {
+  .certificationBox span {
     font-size: 12px;
   }
   
-  .certificationBox span {
-    font-size: 9px;
-  }
-  
-  .testimonial {
-    padding-top: 50px;
-  }
+ 
   
   .userImg {
     width: 70px;

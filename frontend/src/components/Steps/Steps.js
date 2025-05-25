@@ -765,7 +765,7 @@ export default function Steps({
                   className={styles.completedButton}
                   style={{ cursor: "pointer" }}
                 >
-                  Make Payment
+          Block your seat
                 </button>
               )}
 
