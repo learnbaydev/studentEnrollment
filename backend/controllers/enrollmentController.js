@@ -357,6 +357,7 @@ module.exports = {
   getEnrollmentSteps,
   getEnrollmentProgress,
   checkPaymentStatus,
+  
   updateStepStatus
 
 };
