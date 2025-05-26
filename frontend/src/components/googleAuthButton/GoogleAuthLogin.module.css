@@ -33,3 +33,14 @@ line-height: 153%; /* 33.549px */
     height: 30px;
   }
   
+
+  @media (max-width:768px){
+    .googleButton{
+     padding: 13px 0px;
+     font-size: 14px;
+    }
+    .googleButton img {
+      width: 20px;
+    }
+
+  }
