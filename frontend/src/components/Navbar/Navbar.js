@@ -28,6 +28,19 @@ export default function Navbar({ user, sidebarOpen, toggleSidebar }) {
         </div>
       </div>
 
+        {/* <div className={styles.middle}>
+    
+<div className={styles.domain}>
+
+<h6 className={styles.DomainName}>Domain :<span>{user?.domain || 'data science'}</span></h6>
+</div>
+<div className={styles.program}>
+<h6 className={styles.programName}>Program :<span>{user?.program_name || 'data science'}</span></h6>
+</div>
+
+    
+      </div> */}
+
       <div className={styles.right}>
         <button className={styles.notificationButton} aria-label="Notifications">
           <Bell size={20} />
@@ -41,3 +54,4 @@ export default function Navbar({ user, sidebarOpen, toggleSidebar }) {
     </nav>
   );
 }
+

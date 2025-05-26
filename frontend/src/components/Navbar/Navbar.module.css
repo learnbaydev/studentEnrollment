@@ -91,6 +91,40 @@
   display: flex;
   align-items: center;
 }
+.middle {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin: 0 auto; /* Center the middle section */
+  padding: 0 1rem;
+}
+
+.domain, .program {
+  display: flex;
+  align-items: center;
+  background: #f8fafc;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.375rem;
+  border: 1px solid #e2e8f0;
+}
+
+.DomainName, .programName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  margin: 0;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.DomainName span, .programName span {
+  color: #334155;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
 @media (max-width:1181px){
   .navbar{
     left: -18%;

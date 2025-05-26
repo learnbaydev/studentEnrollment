@@ -5,14 +5,14 @@ import GoogleLoginButton from '@/components/googleAuthButton/GoogleLoginButton';
 
 
 const testimonials = [
-  {
-    id: 1,
-    name: "Priya Patel",
-    role: "Data Analyst",
-    rating: "⭐⭐⭐⭐⭐",
-    quote: "As a fresher, I was struggling to get my first break. The course gave me practical skills and confidence.",
-    image: "/testimonials/priya.webp"
-  },
+  // {
+  //   id: 1,
+  //   name: "Priya Patel",
+  //   role: "Data Analyst",
+  //   rating: "⭐⭐⭐⭐⭐",
+  //   quote: "As a fresher, I was struggling to get my first break. The course gave me practical skills and confidence.",
+  //   image: "/testimonials/priya.webp"
+  // },
   {
     id: 2,
     name: "Shravanthi A",
