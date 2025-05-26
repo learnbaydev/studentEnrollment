@@ -288,11 +288,77 @@ const getEnrollmentProgress = async (req, res) => {
   }
 };
 
+// Add this to your existing API routes file
+const checkPaymentStatus = async (req, res) => {
+  const { email } = req.query;
+  
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    // First check if user exists
+    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
+    if (userRows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const emailid = userRows[0].email;
+
+
+    // Check payment status in enrollment_details or a separate payments table
+    const [paymentRows] = await db.query(
+      "SELECT payment_status FROM user WHERE email = ?",
+      [email]
+    );
+    
+    console.log(emailid, 'hello')
+    console.log("Payment status query result:", paymentRows); // Log the query result
+
+
+    if (paymentRows.length === 0) {
+      return res.status(200).json({ payment_status: 0 }); // 0 means not paid
+    }
+
+    return res.status(200).json({ 
+      payment_status: paymentRows[0].payment_status || 0 
+    });
+
+  } catch (err) {
+    console.error("Payment status check error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+// In your enrollmentController.js
+const updateStepStatus = async (req, res) => {
+  const { email, step, status } = req.body;
+
+  try {
+    // Update the specific step in enrollment_details
+    await db.query(
+      `UPDATE enrollment_details 
+       SET ${step} = ?, ${step}_timestamp = NOW() 
+       WHERE email = ?`,
+      [status, email]
+    );
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Error updating step status:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
 module.exports = {
   submitEnrollmentForm,
   checkEnrollmentStatus,
   getEnrollmentSteps,
   getEnrollmentProgress,
+  checkPaymentStatus,
+  
+  updateStepStatus
 
 };
 

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { courses, categories } from "./data";
 import styles from "./CourseBrochures.module.css";
 import { Download } from "lucide-react";
+import Link from "next/link";
 
 const CourseBrochures = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -166,14 +167,14 @@ const CourseBrochures = () => {
                   
                   <div className={styles.cardFooter}>
                     <div className={styles.brochureButton}>
-                      <a href={course.brochureLink}>Brochure</a>
+                    <a href={course.brochureLink} target="_blank">Brochure</a>
                       <div className={styles.downloadIcon}>
                         <Download size={20} />
                       </div>
                     </div>
 
                     <div className={styles.detailsButton}>
-                      <a href={course.detailsLink}>View Details</a>
+                      <a href={course.detailsLink} target="_blank">View Details</a>
                     </div>
                   </div>
                 </div>
