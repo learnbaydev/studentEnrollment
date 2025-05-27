@@ -282,4 +282,14 @@ font-size: 14px;
   .stepContent label{
     font-size: 12px;
   }
+
+  .nextBtn{
+    top: 92%;
+  }
+  .progressWrapper{
+    margin-top: 0;
+  }
+  .error{
+    margin-bottom: 35px;
+  }
 }
