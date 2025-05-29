@@ -4,6 +4,111 @@ import Image from "next/image";
 
 const testimonials = [
   {
+    name: "Mohamod Israr",
+    role: "Data Scientist",
+    review: "Thanks to the LearnBay data science course & excellent guidance. I was able to crack the TCS interview and secure a job with a 397% pay raise. The real-world projects helped me develop my concepts as a data scientist.",
+    domain: "Sales Domain",
+    company: "Teleperformance",
+    salaryHike: "397%",
+    profile: "/testimonials/mohit.webp",
+    comIcons: "/company-logos/teleperformance.webp",
+    rating: 5,
+    video: true,
+    videoUrl: "https://www.youtube.com/embed/x_EmBJ-h7DE"
+  },
+
+  {
+    name: "Shubham Kumar",
+    role: "Data Scientist",
+    review: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team.",
+    domain: "Mechanical Domain",
+    company: "Ford",
+    salaryHike: "161%",
+    profile: "/testimonials/shravanthi.webp",
+    comIcons: "/company-logos/ford.webp",
+    rating: 5,
+    video: true,
+    videoUrl: "https://www.youtube.com/embed/JoKquvfAhZU"
+  },
+
+  {
+    name: "Jaya Sinha",
+    role: "Data Scientist",
+    review: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team.",
+    domain: "Manifacture Domain",
+    company: "Ford",
+    salaryHike: "161%",
+    profile: "/testimonials/shravanthi.webp",
+    comIcons: "/company-logos/ford.webp",
+    rating: 5,
+    video: true,
+    videoUrl: "https://www.youtube.com/embed/A-BkcEM0rQM"
+  },
+
+  {
+    name: "Aravind Kumar",
+    role: "Data Scientist",
+    review: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team.",
+    domain: "Manifacture Domain",
+    company: "Ford",
+    salaryHike: "161%",
+    profile: "/testimonials/shravanthi.webp",
+    comIcons: "/company-logos/ford.webp",
+    rating: 5,
+    video: true,
+    videoUrl: "https://www.youtube.com/embed/hewBtR_WoDM"
+  },
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    name: "Laxmi Sushmita",
+    role: "business Analyst",
+    review: "Swiching to data science with Learnbay was a game changer. after one on one doubt sessions and working on sevral projects I got job offer from netwest with 80% salary hike while i was still in the middle of the course ",
+    domain: "Banking Domain",
+    company: "Ford",
+    salaryHike: "161%",
+    profile: "/testimonials/shravanthi.webp",
+    comIcons: "/company-logos/ford.webp",
+    rating: 5,
+    video: true,
+    videoUrl: "https://www.youtube.com/embed/myRKzYu1N5E"
+  },
+
+  {
+    name: "Preksha Mishra",
+    role: "Lead Data Scientist",
+    review: "The course structure is excellent with emphasis on concept building and tools & software at the same time. The support team is excellent and responds to doubts promptly with agile methodology.",
+    domain: "Telecom Domain",
+    company: "HCL",
+    salaryHike: "848%",
+    profile: "/testimonials/preksha.webp",
+    comIcons: "/company-logos/hcl.webp",
+    rating: 5,
+    video: true,
+    videoUrl: "https://www.youtube.com/embed/vSjfKdIzUjY"
+  },
+  {
     name: "Shravanthi A",
     role: "Data Scientist",
     review: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team.",
@@ -16,32 +121,8 @@ const testimonials = [
     video: true,
     videoUrl: "https://www.youtube.com/embed/ford-testimonial"
   },
-  {
-    name: "Preksha Mishra",
-    role: "Lead Data Scientist",
-    review: "The course structure is excellent with emphasis on concept building and tools & software at the same time. The support team is excellent and responds to doubts promptly with agile methodology.",
-    domain: "Telecom Domain",
-    company: "HCL",
-    salaryHike: "848%",
-    profile: "/testimonials/preksha.webp",
-    comIcons: "/company-logos/hcl.webp",
-    rating: 5,
-    video: true,
-    videoUrl: "https://www.youtube.com/embed/hcl-testimonial"
-  },
-  {
-    name: "Mohamod Israr",
-    role: "Data Scientist",
-    review: "Thanks to the LearnBay data science course & excellent guidance. I was able to crack the TCS interview and secure a job with a 397% pay raise. The real-world projects helped me develop my concepts as a data scientist.",
-    domain: "Sales Domain",
-    company: "Teleperformance",
-    salaryHike: "397%",
-    profile: "/testimonials/mohit.webp",
-    comIcons: "/company-logos/teleperformance.webp",
-    rating: 5,
-    video: true,
-    videoUrl: "https://www.youtube.com/embed/teleperformance-testimonial"
-  },
+ 
+ 
   {
     name: "Rahul Sharma",
     role: "Machine Learning Engineer",
@@ -305,8 +386,8 @@ const Avatar = ({ name, profile, width, height }) => {
               <p className={styles.review}>"{item.review}"</p>
               <div className={styles.cardFooter}>
                 <div className={styles.footerInner}>
-                  {item.domain} → <p><strong>{item.role}</strong> @</p> 
-                  <Image src={item.comIcons} width={50} height={20} alt={item.company} />
+             <p className={styles.pss}>   {item.domain}    →  <strong>{item.role}</strong></p> 
+                  {/* <Image src={item.comIcons} width={50} height={20} alt={item.company} /> */}
                 </div>
                 <hr className={styles.hr}/>
                 <span className={styles.salaryHike}>{item.salaryHike} Salary Hike</span>

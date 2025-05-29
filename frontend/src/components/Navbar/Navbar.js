@@ -42,10 +42,10 @@ export default function Navbar({ user, sidebarOpen, toggleSidebar }) {
       </div> */}
 
       <div className={styles.right}>
-        <button className={styles.notificationButton} aria-label="Notifications">
+        {/* <button className={styles.notificationButton} aria-label="Notifications">
           <Bell size={20} />
           <span className={styles.notificationBadge}>3</span>
-        </button>
+        </button> */}
         <ProfileHeader user={user} />
         <div className={styles.logoutWrapper}>
           <LogoutButton className={styles.logoutButton} />

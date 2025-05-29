@@ -102,13 +102,29 @@ const UserInfo = ({ user }) => {
       image: 'https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/mohd-round.webp',
     },
     {
-      name: 'Kunal Mehta',
-      title: 'Software Engineer',
+      name: 'Shravanthi A',
+      title: 'Data Scientist',
       rating: '⭐⭐⭐⭐⭐',
-      hike: '90% Salary Hike',
-      message: '“Project-based learning helped me build confidence for real jobs.”',
-      image: '/rahul.webp',
+      hike: '120% Salary Hike',
+      message: '“Learnbay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team”',
+      image: 'https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/shravanthi_a.webp',
     },
+    {
+      name: 'Saurabh Kumar',
+      title: 'Data Scientist',
+      rating: '⭐⭐⭐⭐',
+      hike: '135% Salary Hike',
+      message: '“The course structure is excellent with emphasis on concept building and tools & software at the same time. The support team is excellent and supportive and quite agile to respond to doubts”',
+      image: 'https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/saurabh-round.webp',
+    },
+    // {
+    //   name: 'Kunal Mehta',
+    //   title: 'Software Engineer',
+    //   rating: '⭐⭐⭐⭐⭐',
+    //   hike: '90% Salary Hike',
+    //   message: '“Project-based learning helped me build confidence for real jobs.”',
+    //   image: '/rahul.webp',
+    // },
   ];
 
   return (

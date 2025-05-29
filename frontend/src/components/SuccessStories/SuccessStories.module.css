@@ -212,6 +212,7 @@ font-weight: 400;
 
 .cardFooter strong {
   font-weight: 700;
+  font-size: 14px;
 }
 
 .hr {
@@ -236,6 +237,7 @@ font-weight: 400;
   align-items: center;
   gap: 5px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .loadMoreContainer {
@@ -349,7 +351,9 @@ font-weight: 400;
       justify-content: center;
 }
 
-
+.pss{
+  font-size: 14px;
+}
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .testimonials {

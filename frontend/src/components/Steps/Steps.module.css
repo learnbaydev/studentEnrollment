@@ -742,6 +742,38 @@ li.react-datepicker__time-list-item--selected {
   cursor: pointer;
   padding: 0;
 }
+
+.contactCounselor {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #FFF8E6;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #FFA500;
+}
+
+.contactCounselor p {
+  margin-bottom: 10px;
+  color: #E65100;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.contactButton {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #F99600;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.contactButton:hover {
+  background-color: #E65100;
+}
 @media (max-width: 768px) {
 .header{
   /* grid-template-columns: 53% 45%;

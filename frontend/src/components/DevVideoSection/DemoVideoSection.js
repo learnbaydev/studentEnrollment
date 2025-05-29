@@ -8,60 +8,126 @@ import 'swiper/css/pagination';
 
 
 const DemoSessions = () => {
-  const [activeTab, setActiveTab] = useState('DataScience');
+  const [activeTab, setActiveTab] = useState('PythonandStatistics');
   const [activeVideo, setActiveVideo] = useState(null);
 
   const categories = [
-    { id: 'DataScience', name: 'Data Science' },
-    { id: 'Cloud', name: 'Cloud Computing' },
-    { id: 'DevOps', name: 'DevOps' },
-    { id: 'CyberSecurity', name: 'Cyber Security' },
-    { id: 'DSA', name: 'Data Structures & Algorithms' },
+    { id: 'PythonandStatistics', name: 'Python & Statistics' },
+    { id: 'Cloud', name: 'Cloud Computing & DevOps' },
+    { id: 'DevOps', name: 'GenAI' },
+    { id: 'CyberSecurity', name: 'projects' },
+    // { id: 'DSA', name: 'Data Structures & Algorithms' },
   ];
 
   const courses = {
-    DataScience: [
+    PythonandStatistics: [
       {
         id: 1,
-        title: "Introduction to Python",
-        videoId: "QJMIdnfz2wc",
-        description: "Learn Python basics with this introductory course",
-        image: "/demo/py_video.webp"
+        title: "List in Python",
+        videoId: "zSTEiNN-R6g",
+        description: "Master Python Lists with Confidence. Join our comprehensive Python tutorial for beginners and learn how to work with lists in Python.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/one.webp"
       },
       {
         id: 2,
-        title: "Machine Learning Fundamentals",
-        videoId: "YOUTUBE_ID_ML",
-        description: "Introduction to machine learning concepts",
-        image: "/demo/py_video.webp"
+        title: "Tuples in Python",
+        videoId: "9s9tvkohoKU",
+        description: "Master Python Tuples with Confidence. Join our comprehensive Python tutorial for beginners and learn how to work with tuples in Python.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/two.webp"
+      },
+
+      {
+        id: 3,
+        title: "Linear Algebra and Statistics in Data Science",
+        videoId: "4lcPNSmiYi8",
+        description: "In this video, we'll explore the crucial role of linear algebra and statistics in data science, covering topics such as",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/three.webp"
+      },
+
+
+      {
+        id: 3,
+        title: "Machine Learning and Statistics in Data Science",
+        videoId: "eNVK-NlPqU4",
+        description: "Welcome to our video on Machine Learning and Statistics in Data Science",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/four.webp"
+      },
+
+      {
+        id: 4,
+        title: "Probability for Data Science",
+        videoId: "_tNIi3znm3k",
+        description: "According to Wikipedia-In probability theory and statistics, a probability distribution is the mathematical function that gives the probabilities of occurrence of different possible outcomes for an experiment.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/five.webp"
+      },
+
+      {
+        id:5,
+        title: "Statistics for Machine Learning Tutoria",
+        videoId: "3k3H6SVrWwU",
+        description: "Statistics is a branch of mathematics that studies the collection, organisation, analysis, interpretation, and presentation of data.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/six.webp"
       }
     ],
     Cloud: [
       {
         id: 1,
-        title: "AWS Fundamentals",
-        videoId: "YOUTUBE_ID_AWS",
-        description: "Learn core AWS services and concepts",
-        image: "/images/aws-course.jpg"
-      }
+        title: "The Essential Guide to Understanding Linux Basics",
+        videoId: "JOTChNJ4UjY",
+        description: "This video aims at clearing the basics so you understand what Linux is and how it and why it is very vital.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/seven.webp"
+      },
+
+      {
+        id: 2,
+        title: "DevOps Simplified: Learn the Fundamentals",
+        videoId: "uED6iULGEg8",
+        description: "In this video, we break down the fundamentals of DevOps, from version control to CI/CD, automation, and real-world workflows. ",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/eight.webp"
+      },
+
+      {
+        id: 3,
+        title: "Top 10 Linux Commands Every User Should Know ",
+        videoId: "SL49tF0clUA",
+        description: "In this video, discover 10 essential Linux commands that every user should know to navigate, manage files, and optimize their system efficiently.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/nine.webp"
+      },
+
     ],
     DevOps: [
       {
         id: 1,
-        title: "Docker & Kubernetes",
-        videoId: "YOUTUBE_ID_DOCKER",
-        description: "Containerization and orchestration fundamentals",
-        image: "/images/docker-course.jpg"
-      }
+        title: "Master Coding with GenAI",
+        videoId: "kNqmngXoTmE",
+        description: "An Ed-tech platform dedicated to offering Data Science and Cloud & DevOps programs to working professionals, along with 1:1 personal mentorship from our trainers.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/ten.webp"
+      },
+
+      {
+        id: 1,
+        title: "Best AI Tools for Productivity & Creativity in 2024 ",
+        videoId: "0vTOmLDbUbU",
+        description: "we'll be exploring the most popular and cutting-edge Gen AI tools that you should know about in 2024.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/elven.webp"
+      },
     ],
     CyberSecurity: [
       {
         id: 1,
-        title: "Ethical Hacking",
-        videoId: "YOUTUBE_ID_HACKING",
-        description: "Learn penetration testing techniques",
-        image: "/images/security-course.jpg"
-      }
+        title: "Real-Time Sentiment Analysis Using AWS Comprehend ",
+        videoId: "VFEK4Qbv6Y8",
+        description: "This project demonstrates how to perform real-time sentiment analysis on streaming data using AWS Kinesis and AWS Comprehend.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/thirten.webp"
+      },
+
+      {
+        id: 1,
+        title: "Learn CART Model with Real-Life Examples",
+        videoId: "jnSwd8FEIJs",
+        description: "An Ed-tech platform dedicated to offering Data Science and Cloud & DevOps programs to working professionals, along with 1:1 personal mentorship from our trainers.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/fouten.webp"
+      },
     ],
     DSA: [
       {
@@ -124,7 +190,7 @@ const DemoSessions = () => {
 
         {/* Top Courses Section */}
         {/* Top Courses Slider */}
-        <div className={styles.topCourses}>
+        {/* <div className={styles.topCourses}>
           <h4 className={styles.sectionTitle}>Top Related Videos</h4>
           <Swiper
             modules={[Navigation, Pagination]}
@@ -164,7 +230,7 @@ const DemoSessions = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        </div> */}
         {/* Certification Section */}
         <div className={styles.certificationSection}>
           <h4>Earn Your Online Professional Certification from</h4>
