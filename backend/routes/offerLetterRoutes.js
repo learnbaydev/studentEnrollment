@@ -9,6 +9,8 @@ router.get('/checkDownloadStatus/:email', offerLetterController.checkDownloadSta
 router.get('/checkStatus/:email', offerLetterController.checkStatus);
 router.get('/download/:email', offerLetterController.download);
 router.get('/check-payment/:email', offerLetterController.checkPaymentStatus);
+// In your routes file
+router.get('/seats-left/:email', offerLetterController.getSeatsLeft);
 
 
 // Generate and download new letter

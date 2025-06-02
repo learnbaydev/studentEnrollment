@@ -167,14 +167,28 @@ const CourseBrochures = () => {
                   
                   <div className={styles.cardFooter}>
                     <div className={styles.brochureButton}>
-                    <a href={course.brochureLink} target="_blank">Brochure</a>
+                    <a 
+  href={course.brochureLink} 
+  target="_blank" 
+  rel="noopener noreferrer"
+>
+  Brochure
+</a>
+
                       <div className={styles.downloadIcon}>
                         <Download size={20} />
                       </div>
                     </div>
 
                     <div className={styles.detailsButton}>
-                      <a href={course.detailsLink} target="_blank">View Details</a>
+                    <a 
+  href={course.detailsLink} 
+  target="_blank" 
+  rel="noopener noreferrer"
+>
+  View Details
+</a>
+
                     </div>
                   </div>
                 </div>
@@ -207,14 +221,14 @@ const CourseBrochures = () => {
                 
                 <div className={styles.cardFooter}>
                   <div className={styles.brochureButton}>
-                    <a href={course.brochureLink}>Brochure</a>
+                    <a href={course.brochureLink} target="_blank">Brochure</a>
                     <div className={styles.downloadIcon}>
                       <Download size={20} />
                     </div>
                   </div>
 
                   <div className={styles.detailsButton}>
-                    <a href={course.detailsLink}>View Details</a>
+                    <a href={course.detailsLink} target="_blank">View Details</a>
                   </div>
                 </div>
               </div>

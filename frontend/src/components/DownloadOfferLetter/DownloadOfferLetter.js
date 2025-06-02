@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Modal from "../OfferLatter/Model";
-import Image from "next/image";
 import styles from "./DownloadOfferLatter.module.css";
 
 const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
@@ -10,8 +9,53 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [letterGenerated, setLetterGenerated] = useState(false);
+  const [seatsLeft, setSeatsLeft] = useState(null);
+  const [isFetchingSeats, setIsFetchingSeats] = useState(false);
+  const [programName, setProgramName] = useState('');
+
+  const fetchSeatsLeft = useCallback(async () => {
+    if (!userEmail) return;
+    
+    setIsFetchingSeats(true);
+    setError(null);
+    
+    try {
+      const endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/offer/seats-left/${encodeURIComponent(userEmail)}`;
+      const response = await fetch(endpoint, {
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message || `HTTP error! status: ${response.status}`
+        );
+      }
+      
+      const data = await response.json();
+      
+      if (data.success === false) {
+        setSeatsLeft(null);
+        setProgramName('');
+        setError(data.message || "Seat data not available");
+      } else {
+        setSeatsLeft(data.seatsLeft);
+        setProgramName(data.programName || '');
+      }
+      
+    } catch (err) {
+      console.error("Error fetching seats:", err);
+      setError(err.message || "Failed to fetch seat data");
+      setSeatsLeft(null);
+      setProgramName('');
+    } finally {
+      setIsFetchingSeats(false);
+    }
+  }, [userEmail]);
 
   const checkLetterStatus = useCallback(async () => {
+    if (!userEmail) return;
+    
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/offer/checkStatus/${encodeURIComponent(userEmail)}`
@@ -22,42 +66,15 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
         if (data.exists) {
           setLetterGenerated(true);
           setPdfUrl(data.downloadUrl);
+          if (data.programName) {
+            setProgramName(data.programName);
+          }
         }
       }
     } catch (err) {
       console.error("Error checking letter status:", err);
     }
   }, [userEmail]);
-
-  // const generateLetter = useCallback(async () => {
-  //   setLoading(true);
-  //   setError(null);
-    
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/api/offer/generate/${encodeURIComponent(userEmail)}`
-  //     );
-
-  //     if (!response.ok) throw new Error("Failed to generate letter");
-      
-  //     const data = await response.json();
-  //     setPdfUrl(data.downloadUrl);
-  //     setLetterGenerated(true);
-  //     setIsModalOpen(true);
-      
-  //     if (onGenerate) onGenerate();
-  //   } catch (err) {
-  //     setError(err.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [userEmail, onGenerate]);
-
-  useEffect(() => {
-    if (userEmail) {
-      checkLetterStatus();
-    }
-  }, [userEmail, checkLetterStatus]);
 
   const generateLetter = useCallback(async () => {
     if (!userEmail) {
@@ -88,10 +105,13 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
         throw new Error("PDF URL not received from server");
       }
   
-      // Use the URL directly from the response (should be S3 signed URL)
       setPdfUrl(data.downloadUrl);
       setLetterGenerated(true);
       setIsModalOpen(true);
+      
+      if (data.programName) {
+        setProgramName(data.programName);
+      }
       
       if (onGenerate) {
         onGenerate();
@@ -111,7 +131,6 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
     setError(null);
 
     try {
-      // Record the download first
       await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/offer/recordDownload/${encodeURIComponent(userEmail)}`,
         {
@@ -121,7 +140,6 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
         }
       );
 
-      // For S3 files, we can just open in new tab (the URL is already signed)
       window.open(pdfUrl, '_blank');
     } catch (err) {
       setError(err.message || "Failed to download letter. Please try again.");
@@ -134,32 +152,67 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
   const handleMainAction = useCallback(() => {
     if (letterGenerated) {
       setIsModalOpen(true);
+      fetchSeatsLeft();
     } else {
       generateLetter();
     }
-  }, [letterGenerated, generateLetter]);
+  }, [letterGenerated, generateLetter, fetchSeatsLeft]);
+
+  useEffect(() => {
+    if (userEmail) {
+      checkLetterStatus();
+    }
+  }, [userEmail, checkLetterStatus]);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        setIsModalOpen(false);
+      }
+    };
+  
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+  
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <div className={styles.container}>
- <button
-  onClick={handleMainAction}
-  disabled={loading}
-  className={`${styles.button} ${letterGenerated ? styles.generated : styles.generating}`}
->
-  {loading && <span className={styles.shimmer}></span>}
-  <span className={styles.buttonText}>
-    {loading
-      ? "Generating..."
-      : letterGenerated
-      ? "View Offer Letter"
-      : "Generate Offer Letter"}
-  </span>
-</button>
+      <button
+        onClick={handleMainAction}
+        disabled={loading}
+        className={`${styles.button} ${letterGenerated ? styles.generated : styles.generating}`}
+        aria-busy={loading}
+        aria-label={letterGenerated ? "View Offer Letter" : "Generate Offer Letter"}
+      >
+        {loading && <span className={styles.shimmer}></span>}
+        <span className={styles.buttonText}>
+          {loading ? (
+            <>
+              <span className={styles.spinner}></span>
+              Generating...
+            </>
+          ) : letterGenerated ? (
+            "View Offer Letter"
+          ) : (
+            "Generate Offer Letter"
+          )}
+        </span>
+      </button>
 
+      {error && (
+        <div className={styles.error} role="alert">
+          {error}
+        </div>
+      )}
 
-      {error && <p className={styles.error}>{error}</p>}
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        aria-label="Offer Letter Modal"
+      >
         <div className={styles.modalContent}>
           {pdfUrl ? (
             <div className={styles.pdfContainer}>
@@ -168,16 +221,53 @@ const DownloadOfferLetter = ({ userEmail, onGenerate }) => {
                 width="100%"
                 height="500px"
                 className={styles.pdfEmbed}
-                title="offer Letter"
+                title="Offer Letter"
+                aria-label="Offer Letter PDF Viewer"
+                loading="lazy"
               />
-              {error && <p className={styles.pdfError}>{error}</p>}
             </div>
           ) : (
-            <p>Loading PDF...</p>
+            <p>Loading PDF preview...</p>
           )}
-          <button onClick={downloadLetter} className={styles.downloadButton}>
-            Download offer Letter
-          </button>
+          
+          <div className={styles.modalFooter}>
+            <div className={styles.seatsInfo}>
+              {isFetchingSeats ? (
+                <p>Checking seat availability...</p>
+              ) : seatsLeft !== null ? (
+                <p>
+  Total Seats Available :<span className={styles.seatsLeft}>0{seatsLeft}</span>
+</p>
+
+
+              ) : (
+                <p>Seat information not currently available</p>
+              )}
+            </div>
+            
+            <div className={styles.buttons}>
+              <button 
+                onClick={downloadLetter} 
+                disabled={isDownloading}
+                className={styles.downloadButton}
+                aria-label="Download Offer Letter"
+              >
+                {isDownloading ? (
+                  "Downloading..."
+                ) : (
+                  "Download Offer Letter"
+                )}
+              </button>
+              
+              <button
+                onClick={() => window.open("https://pages.razorpay.com/learnbay", "_blank")}
+                className={styles.paymentButton}
+                aria-label="Block Your Seat"
+              >
+                Block Your Seat
+              </button>
+            </div>
+          </div>
         </div>
       </Modal>
     </div>

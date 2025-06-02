@@ -107,8 +107,8 @@ export default function Dashboard() {
 
           {activeSection === 'demo' && (
             <div className={styles.sectionContainer}>
-              <h3>Demo Lectures</h3>
-              <p>Watch sample lectures to understand our teaching style.</p>
+              {/* <h3>Demo Lectures</h3>
+              <p>Watch sample lectures to understand our teaching style.</p> */}
               {/* <div className={styles.videoGrid}>
                 <div className={styles.videoThumbnail}></div>
                 <div className={styles.videoThumbnail}></div>

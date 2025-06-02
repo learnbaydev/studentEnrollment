@@ -1,0 +1,105 @@
+.supportSection {
+    padding: 4rem 2rem;
+    background: linear-gradient(to right, #f0f4ff, #e0ecff);
+  }
+  
+  .wrapper {
+    display: flex;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .textSection {
+    flex: 1 1 450px;
+  }
+  
+  .textSection h2 {
+    font-size: 2.25rem;
+    color: #1e3a8a;
+    margin-bottom: 1rem;
+  }
+  
+  .textSection p {
+    font-size: 1.125rem;
+    color: #334155;
+    margin-bottom: 2rem;
+  }
+  
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  
+  .card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    flex: 1 1 250px;
+    text-align: center;
+  }
+  
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .icon {
+    color: #2563eb;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card p {
+    color: #64748b;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card a,
+  .chatBtn {
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .card a:hover,
+  .chatBtn:hover {
+    text-decoration: underline;
+  }
+  
+  .imageSection {
+    flex: 1 1 400px;
+    text-align: center;
+  }
+  
+  .imageSection img {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  @media (max-width: 768px) {
+    .wrapper {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .cards {
+      justify-content: center;
+    }
+  }
+  

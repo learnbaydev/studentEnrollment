@@ -21,6 +21,11 @@ function StepCard({
   formSubmitted,
   meetingData,
   fetchData,
+  deadline,
+  isStep1Locked,
+  openModal,
+  handlePaymentClick,
+  setEnrollmentStatus // Add this line
 }) {
   const statusColors = {
     pending: {
@@ -29,7 +34,7 @@ function StepCard({
       shadow: "-7px 7px 9.8px 8px rgba(0, 114, 188, 0.08)",
       statusText: "⏱ Pending",
       cardBg: "#FFF",
-      descBg: "#EFF7FF", // Blueish background for pending
+      descBg: "#EFF7FF",
     },
     in_progress: {
       circleBg: "linear-gradient(90deg, #FFA500 0%, #FF8C00 100%)",
@@ -37,7 +42,7 @@ function StepCard({
       shadow: "-7px 7px 9.8px 8px rgba(255, 165, 0, 0.08)",
       statusText: "🔄 Processing",
       cardBg: "#FFF8E6",
-      descBg: "#FFF3E0", // Orangeish background for in progress
+      descBg: "#FFF3E0",
     },
     approved: {
       circleBg: "linear-gradient(90deg, #4CAF50 0%, #2E7D32 100%)",
@@ -45,7 +50,7 @@ function StepCard({
       shadow: "-7px 7px 9.8px 8px rgba(76, 175, 80, 0.08)",
       statusText: "✓ Completed",
       cardBg: "#F0FFF0",
-      descBg: "#E8F5E9", // Greenish background for approved
+      descBg: "#E8F5E9",
     },
     locked: {
       circleBg: "linear-gradient(90deg, #9D9D9D 0%, #2F3030 100%)",
@@ -53,9 +58,10 @@ function StepCard({
       shadow: "3.781px 3.781px 5.766px 0px rgba(0, 0, 0, 0.15)",
       statusText: "🔒 Locked",
       cardBg: "#F9FAFB",
-      descBg: "#F2F2F2", // Gray background for locked
+      descBg: "#F2F2F2",
     },
   };
+  
   const stepIcons = {
     1: {
       pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/steps_1_blue.webp",
@@ -111,7 +117,7 @@ function StepCard({
 
   const isWeekday = (date) => {
     const day = date.getDay();
-    return day !== 0 && day !== 6; // Sunday = 0, Saturday = 6
+    return day !== 0 && day !== 6;
   };
 
   useEffect(() => {
@@ -133,8 +139,6 @@ function StepCard({
     const hours = time.getHours();
     const minutes = time.getMinutes();
     const currentTime = new Date();
-    
-    // Convert to IST (UTC+5:30)
     const currentIST = new Date(currentTime.getTime() + (currentTime.getTimezoneOffset() * 60000) + (5.5 * 3600000));
     if (time.getDate() === currentIST.getDate() &&
         time.getMonth() === currentIST.getMonth() &&
@@ -142,8 +146,6 @@ function StepCard({
       return (hours > currentIST.getHours() || 
              (hours === currentIST.getHours() && minutes > currentIST.getMinutes()));
     }
-
-    // Normal business hours (9AM to 5PM IST)
     return hours >= 9 && hours <= 17;
   };
 
@@ -322,9 +324,27 @@ function StepCard({
           />
           <h3>{title}</h3>
         </div>
-        <p className={styles.desc}   style={{ backgroundColor: currentStatus.descBg }}>{description} </p>
+        <p className={styles.desc} style={{ backgroundColor: currentStatus.descBg }}>{description} </p>
 
         {children}
+
+        {number === 1 && status === "locked" && isStep1Locked && (
+          <div className={styles.contactCounselor}>
+            <p>⏰ Time's up! Please contact your counselor to unlock your application.</p>
+            <a 
+              href="mailto:counselor@learnbay.co" 
+              className={styles.contactButton}
+            >
+              Contact Counselor
+            </a>
+          </div>
+        )}
+
+        {number === 1 && status === "locked" && !isStep1Locked && (
+          <button className={styles.lockedButton} disabled>
+            Complete previous steps first
+          </button>
+        )}
 
         {number === 2 && (
           <>
@@ -405,11 +425,111 @@ function StepCard({
                 </p>
               </>
             ) : (
-              <p className={styles.timerText}>
-                Timer will start after form submission
-              </p>
+              ""
             )}
           </div>
+        )}
+
+        {number === 1 && status === "pending" && deadline && (
+          <div className={styles.timerSection}>
+            <p className={styles.timerText}>
+              <span>⏱</span> Time left to start: {formatTime(timeLeft)}
+            </p>
+          </div>
+        )}
+
+        {number === 1 && status === "pending" && (
+          <button
+            onClick={openModal}
+            className={styles.enrollButton}
+          >
+            Start Your Application
+          </button>
+        )}
+
+        {number === 1 && status === "in_progress" && (
+          <button className={styles.processingButton} disabled>
+            Application Submitted
+          </button>
+        )}
+
+        {number === 1 && status === "approved" && (
+          <button className={styles.completedButton} disabled>
+            Step 1 Completed
+          </button>
+        )}
+
+        {number === 3 && status === "approved" && (
+          <DownloadOfferLetter userEmail={userEmail} />
+        )}
+
+        {number === 3 && status === "pending" && (
+          <DownloadOfferLetter
+            userEmail={userEmail}
+            onGenerate={async () => {
+              setEnrollmentStatus((prev) => ({
+                ...prev,
+                step3: "approved",
+                progress: "75%",
+              }));
+
+              await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/complete-steps`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: userEmail,
+                    steps: ["step3"],
+                    status: "approved",
+                  }),
+                }
+              );
+            }}
+          />
+        )}
+
+        {number === 3 && status === 'pending' && (
+          <div className={styles.hintBubble}>
+            <span>✅ Step 2 completed!</span>
+            <p>You can now download your offer letter</p>
+          </div>
+        )}
+
+        {number === 4 && status === "pending" && (
+          <button 
+            onClick={handlePaymentClick}
+            className={styles.enrollButton}
+          >
+            Block your seat
+          </button>
+        )}
+
+        {number === 4 && status === "in_progress" && (
+          <div className={styles.paymentProcessing}>
+            {/* <div className={styles.spinner}></div>
+            <span>Payment in progress...</span> */}
+            <button 
+              onClick={() => window.open("https://pages.razorpay.com/learnbay", "_blank")}
+              className={styles.retryButton}
+            >
+              Open Payment Again
+            </button>
+          </div>
+        )}
+
+        {number === 4 && status === "approved" && (
+          <button className={styles.completedButton} disabled>
+            Payment Completed
+          </button>
+        )}
+
+        {(number === 3 || number === 4) && status === "locked" && (
+          <button className={styles.lockedButton} disabled>
+            Complete Step {number - 1} first
+          </button>
         )}
       </div>
 
@@ -449,13 +569,25 @@ export default function Steps({
     },
   });
   const [loading, setLoading] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(1200);
+  const [timeLeft, setTimeLeft] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [meetingData, setMeetingData] = useState(null);
-  const [paymentStatus, setPaymentStatus] = useState(0); // 0 = pending, 1 = completed
+  const [paymentStatus, setPaymentStatus] = useState(0);
+  const [deadline, setDeadline] = useState(null);
+  const [isStep1Locked, setIsStep1Locked] = useState(false);
 
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+
+  const calculateTimeLeft = () => {
+    if (!deadline) return 0;
+    
+    const now = new Date();
+    const deadlineTime = new Date(deadline);
+    const diffInSeconds = Math.floor((deadlineTime - now) / 1000);
+    
+    return Math.max(0, diffInSeconds);
+  };
 
   const fetchData = async () => {
     try {
@@ -471,15 +603,14 @@ export default function Steps({
       );
       const meetingData = await meetingResponse.json();
 
-      // Fetch payment status separately
-    const paymentResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/check-payment?email=${userEmail}`
-    );
-    const paymentData = await paymentResponse.json();
-
+      // Fetch payment status
+      const paymentResponse = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/check-payment?email=${userEmail}`
+      );
+      const paymentData = await paymentResponse.json();
       
       setMeetingData(meetingData);
-      setPaymentStatus(paymentData.payment_status === '1' ? 1 : 0); // Ensure proper conversion
+      setPaymentStatus(paymentData.payment_status === '1' ? 1 : 0);
 
       if (statusResponse.ok) {
         // Calculate progress based on all completed steps
@@ -496,14 +627,10 @@ export default function Steps({
         if (statusData.step3 === 'approved' || user?.offer_letter_path) completedSteps++;
         
         // Step 4 completed (payment completed)
-        // if (statusData.step4 === 'approved' || user?.payment_status === 1) {
-        //   completedSteps++;
-        //   setPaymentStatus(1);
-        // }
-  // Use payment status from the dedicated endpoint
-  if (paymentData.payment_status === '1') {
-    completedSteps++;
-  }
+        if (paymentData.payment_status === '1') {
+          completedSteps++;
+        }
+        
         const progressPercentage = Math.round((completedSteps / totalSteps) * 100);
         const progress = `${progressPercentage}%`;
         
@@ -520,6 +647,34 @@ export default function Steps({
             step1: statusData.step1_timestamp
           },
         }));
+
+        // Calculate deadline based on user_creation_time and application_time
+        if (user?.user_creation_time && user?.application_time) {
+          const creationTime = new Date(user.user_creation_time);
+          const [hours, minutes, seconds] = user.application_time.split(':').map(Number);
+          
+          // Set the deadline by adding application_time hours to creation date
+          const deadlineDate = new Date(creationTime);
+          deadlineDate.setHours(creationTime.getHours() + hours);
+          deadlineDate.setMinutes(creationTime.getMinutes() + minutes);
+          deadlineDate.setSeconds(creationTime.getSeconds() + seconds);
+          
+          setDeadline(deadlineDate);
+          
+          // Calculate initial time left
+          const now = new Date();
+          const initialTimeLeft = Math.floor((deadlineDate - now) / 1000);
+          setTimeLeft(Math.max(0, initialTimeLeft));
+          
+          // Check if we should lock step 1
+          if (initialTimeLeft <= 0 && getStepStatus(1) === 'pending') {
+            setIsStep1Locked(true);
+            setEnrollmentStatus(prev => ({
+              ...prev,
+              step1: "locked"
+            }));
+          }
+        }
 
         if (statusData.step1_timestamp) {
           const approvalTime = new Date(statusData.step1_timestamp);
@@ -554,6 +709,26 @@ export default function Steps({
   }, [userEmail]);
 
   useEffect(() => {
+    if (deadline && getStepStatus(1) === "pending" && !formSubmitted && !isStep1Locked) {
+      const timer = setInterval(() => {
+        const newTimeLeft = calculateTimeLeft();
+        setTimeLeft(newTimeLeft);
+        
+        if (newTimeLeft <= 0) {
+          setIsStep1Locked(true);
+          setEnrollmentStatus(prev => ({
+            ...prev,
+            step1: "locked"
+          }));
+          clearInterval(timer);
+        }
+      }, 1000);
+      
+      return () => clearInterval(timer);
+    }
+  }, [deadline, formSubmitted, isStep1Locked]);
+
+  useEffect(() => {
     if (formSubmitted && timeLeft > 0) {
       const timer = setInterval(() => {
         setTimeLeft((prevTime) => {
@@ -582,19 +757,16 @@ export default function Steps({
 
   const handlePaymentClick = async () => {
     try {
-      // Update step4 status to in_progress when payment process starts
       setEnrollmentStatus(prev => ({
         ...prev,
         step4: "in_progress"
       }));
 
-      // Open payment link in new tab
       const paymentWindow = window.open(
         "https://pages.razorpay.com/learnbay", 
         "_blank"
       );
 
-      // Poll for payment status updates
       const paymentCheckInterval = setInterval(async () => {
         try {
           const response = await fetch(
@@ -603,7 +775,6 @@ export default function Steps({
           const data = await response.json();
 
           if (data.payment_status === 1) {
-            // Payment completed
             clearInterval(paymentCheckInterval);
             setPaymentStatus(1);
             setEnrollmentStatus(prev => ({
@@ -615,9 +786,8 @@ export default function Steps({
         } catch (error) {
           console.error("Error checking payment status:", error);
         }
-      }, 5000); // Check every 5 seconds
+      }, 5000);
 
-      // Cleanup interval if user navigates away
       return () => clearInterval(paymentCheckInterval);
     } catch (error) {
       console.error("Error handling payment:", error);
@@ -629,6 +799,7 @@ export default function Steps({
     let currentStatus = enrollmentStatus[stepKey];
   
     if (stepNumber === 1) {
+      if (isStep1Locked) return 'locked';
       if (currentStatus === 'pending' && enrollmentStatus.timestamps?.step1) {
         const createdAt = new Date(enrollmentStatus.timestamps.step1);
         const now = new Date();
@@ -701,16 +872,21 @@ export default function Steps({
     },
   ];
 
-  if (loading) {
-    return <div className={styles.container}>Loading enrollment status...</div>;
-  }
+if (loading) {
+  return (
+    <div className={styles.loaderWrapper}>
+      <div className={styles.spinner}></div>
+      <p>Loading enrollment status...</p>
+    </div>
+  );
+}
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>Learnbay Admission Process</h2>
         <div className={styles.label}>
-          <svg
+          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
             width="14"
             height="15"
@@ -718,7 +894,7 @@ export default function Steps({
             fill="none"
           >
             <circle cx="7.00949" cy="7.72818" r="6.9094" fill="#F99600" />
-          </svg>
+          </svg> */}
           <span>Progress: {enrollmentStatus.progress} completed</span>
         </div>
       </div>
@@ -745,97 +921,12 @@ export default function Steps({
               formSubmitted={formSubmitted}
               meetingData={number === 2 ? meetingData : null}
               fetchData={fetchData}
-            >
-              {number === 1 && status === "pending" && (
-                <button onClick={openModal} className={styles.enrollButton}>
-                  Start Your Application
-                </button>
-              )}
-
-              {number === 1 && status === "in_progress" && (
-                <button className={styles.processingButton} disabled>
-                  Application Submitted
-                </button>
-              )}
-
-              {number === 1 && status === "approved" && (
-                <button className={styles.completedButton} disabled>
-                  Step 1 Completed
-                </button>
-              )}
-
-              {number === 3 && status === "approved" && (
-                <DownloadOfferLetter userEmail={userEmail} />
-              )}
-
-              {number === 3 && status === "pending" && (
-                <DownloadOfferLetter
-                  userEmail={userEmail}
-                  onGenerate={async () => {
-                    setEnrollmentStatus((prev) => ({
-                      ...prev,
-                      step3: "approved",
-                      progress: "75%",
-                    }));
-
-                    await fetch(
-                      `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/complete-steps`,
-                      {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          email: userEmail,
-                          steps: ["step3"],
-                          status: "approved",
-                        }),
-                      }
-                    );
-                  }}
-                />
-              )}
-
-              {number === 3 && status === 'pending' && (
-                <div className={styles.hintBubble}>
-                  <span>✅ Step 2 completed!</span>
-                  <p>You can now download your offer letter</p>
-                </div>
-              )}
-{number === 4 && status === "pending" && (
-  <button 
-    onClick={handlePaymentClick}
-    className={styles.enrollButton}
-  >
-    Block your seat
-  </button>
-)}
-
-{number === 4 && status === "in_progress" && (
-  <div className={styles.paymentProcessing}>
-    <div className={styles.spinner}></div>
-    <span>Payment in progress...</span>
-    <button 
-      onClick={() => window.open("https://pages.razorpay.com/learnbay", "_blank")}
-      className={styles.retryButton}
-    >
-      Open Payment Again
-    </button>
-  </div>
-)}
-
-{number === 4 && status === "approved" && (
-  <button className={styles.completedButton} disabled>
-    Payment Completed
-  </button>
-)}
-
-              {(number === 3 || number === 4) && status === "locked" && (
-                <button className={styles.lockedButton} disabled>
-                  Complete Step {number - 1} first
-                </button>
-              )}
-            </StepCard>
+              deadline={number === 1 ? deadline : null}
+              isStep1Locked={number === 1 ? isStep1Locked : false}
+              openModal={openModal} // Add this line
+              setEnrollmentStatus={setEnrollmentStatus} // Add this line
+              handlePaymentClick={handlePaymentClick}
+            />
           );
         })}
       </div>
