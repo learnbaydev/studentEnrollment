@@ -872,9 +872,14 @@ export default function Steps({
     },
   ];
 
-  if (loading) {
-    return <div className={styles.container}>Loading enrollment status...</div>;
-  }
+if (loading) {
+  return (
+    <div className={styles.loaderWrapper}>
+      <div className={styles.spinner}></div>
+      <p>Loading enrollment status...</p>
+    </div>
+  );
+}
 
   return (
     <div className={styles.container}>

@@ -8,18 +8,77 @@ import 'swiper/css/pagination';
 
 
 const DemoSessions = () => {
-  const [activeTab, setActiveTab] = useState('PythonandStatistics');
+  const [activeTab, setActiveTab] = useState('DevOps');
   const [activeVideo, setActiveVideo] = useState(null);
 
   const categories = [
+    { id: 'DevOps', name: 'GenAI' },
+    { id: 'AIML', name: 'AI/ML' },
     { id: 'PythonandStatistics', name: 'Python & Statistics' },
     { id: 'Cloud', name: 'Cloud Computing & DevOps' },
-    { id: 'DevOps', name: 'GenAI' },
+
     { id: 'CyberSecurity', name: 'projects' },
     // { id: 'DSA', name: 'Data Structures & Algorithms' },
   ];
 
   const courses = {
+    DevOps: [
+      {
+        id: 1,
+        title: "Master Coding with GenAI",
+        videoId: "kNqmngXoTmE",
+        description: "An Ed-tech platform dedicated to offering Data Science and Cloud & DevOps programs to working professionals, along with 1:1 personal mentorship from our trainers.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/ten.webp"
+      },
+
+      {
+        id: 1,
+        title: "Best AI Tools for Productivity & Creativity in 2024 ",
+        videoId: "0vTOmLDbUbU",
+        description: "we'll be exploring the most popular and cutting-edge Gen AI tools that you should know about in 2024.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/elven.webp"
+      },
+    ],
+    AIML: [
+      {
+        id: 1,
+        title: "Linear Algebra and Statistics in Data Science ",
+        videoId: "4lcPNSmiYi8",
+        description: "we'll explore the crucial role of linear algebra and statistics in data science, covering topics such as:",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/ml_1.webp"
+      },
+
+      {
+        id: 2,
+        title: "Matrix Operations in Data Science  ",
+        videoId: "_fZzyb70p9o",
+        description: "Learn how to perform matrix addition, subtraction, multiplication, and inversion, and discover how these operations can be used to solve real-world data science problems. ",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/ml_2.webp"
+      },
+
+      {
+        id: 3,
+        title: "Machine Learning and Statistics in Data Science",
+        videoId: "eNVK-NlPqU4",
+        description: "we'll explore the intersection of machine learning and statistics in data science, and how they work together to extract insights from data. We'll cover key concepts such as:",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/ml_3.webp"
+      },
+      {
+        id: 4,
+        title: "Machine Learning Vs Deep Learning Vs Artificial Intelligence",
+        videoId: "upv5jmYOMLU",
+        description: "Machine learning and deep learning are the subparts of Artificial intelligence, with this video you will know about the difference between them.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/ml_4.webp"
+      },
+
+      {
+        id: 5,
+        title: "K-Nearest Neighbor Classification (Algorithm) - Machine Learning",
+        videoId: "a77auiOnuyE",
+        description: "According to Wikipedia-The k-nearest neighbors algorithm (k-NN) is a non-parametric classification method first developed by Evelyn Fix and Joseph Hodges in 1951, and later expanded by Thomas Cover.",
+        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/ml_5.webp"
+      },
+    ],
     PythonandStatistics: [
       {
         id: 1,
@@ -95,23 +154,7 @@ const DemoSessions = () => {
       },
 
     ],
-    DevOps: [
-      {
-        id: 1,
-        title: "Master Coding with GenAI",
-        videoId: "kNqmngXoTmE",
-        description: "An Ed-tech platform dedicated to offering Data Science and Cloud & DevOps programs to working professionals, along with 1:1 personal mentorship from our trainers.",
-        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/ten.webp"
-      },
-
-      {
-        id: 1,
-        title: "Best AI Tools for Productivity & Creativity in 2024 ",
-        videoId: "0vTOmLDbUbU",
-        description: "we'll be exploring the most popular and cutting-edge Gen AI tools that you should know about in 2024.",
-        image: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/tut_card/elven.webp"
-      },
-    ],
+  
     CyberSecurity: [
       {
         id: 1,

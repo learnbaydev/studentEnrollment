@@ -1,90 +1,238 @@
-/* DownloadOfferLetter.module.css */
 .container {
-    padding: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+}
+
+.button {
+  padding: 12px 28px;
+  color: white;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  /* font-weight: 600; */
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.generated {
+  background-color: #4caf50; /* Green when generated */
+}
+
+.generating {
+  background: linear-gradient(90deg, #02529f 0%, #037ff7 100%); /* Blue when not yet generated */
+}
+
+.button:disabled {
+  background: linear-gradient(90deg, #02529f 0%, #037ff7 100%);
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 1.5s infinite;
+}
+.seatscourse{
+  color: #007bff;
+  font-weight: 600;
+}
+
+.buttonText {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.error {
+  color: #d32f2f;
+  margin-top: 12px;
+  font-size: 14px;
+  max-width: 300px;
+  text-align: center;
+  padding: 8px 12px;
+  background-color: #ffebee;
+  border-radius: 4px;
+  border-left: 4px solid #d32f2f;
+}
+
+.modalContent {
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pdfContainer {
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pdfEmbed {
+  width: 100%;
+  min-height: 500px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modalFooter {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.seatsInfo {
+  text-align: center;
+  font-size: 16px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.seatsLeft {
+  font-weight: bold;
+  color: #d9534f;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.downloadButton {
+  padding: 12px 24px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  font-size: 15px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.downloadButton:hover:not(:disabled) {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.downloadButton:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.paymentButton {
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  font-size: 15px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.paymentButton:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
   }
-  
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Mobile and Tablet Styles */
+@media (max-width: 768px) {
   .button {
-    padding: 10px 28px;
-    color: white;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    min-width: 200px;
-    position: relative;
-    overflow: hidden;
-    /* Remove this if you're using generated/generating classes */
-    /* background: #4caf50; */
+    padding: 10px 20px;
+    font-size: 15px;
+    min-width: 180px;
   }
-  
-  .generated {
-    background-color: #4caf50; /* Green when generated */
-  }
-  
-  .generating {
-    background:linear-gradient(90deg, #02529f 0%, #037ff7 100%); /* Blue when not yet generated */
-  }
-  
-  
-  .button:disabled {
-    background: linear-gradient(90deg, #02529f 0%, #037ff7 100%);
-    cursor: not-allowed;
-  }
-  
-  .shimmer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    animation: shimmer 1.5s infinite;
-  }
-  
-  .buttonText {
-    position: relative;
-  }
-  
-  .error {
-    color: red;
-    margin-top: 10px;
-    font-size: 14px;
-    max-width: 300px;
-  }
-  
+
   .modalContent {
-    padding: 20px;
-    text-align: center;
+    padding: 15px;
   }
-  
+
   .pdfEmbed {
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    margin-bottom: 20px;
+    min-height: 400px;
   }
-  
-  .downloadButton {
-    padding: 12px 30px;
-    background-color: #43a047;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    min-width: 220px;
+
+  .buttons {
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  .downloadButton:disabled {
-    background-color: #02529f;
-    cursor: not-allowed;
+
+  .downloadButton,
+  .paymentButton {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
   }
-  
-  @keyframes shimmer {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
+
+  .seatsInfo {
+    font-size: 14px;
+    padding: 10px;
   }
+}
+
+@media (max-width: 480px) {
+  .button {
+    padding: 10px 16px;
+    font-size: 14px;
+    min-width: 160px;
+    font-weight: 400;
+  }
+
+  .pdfEmbed {
+    min-height: 300px;
+  }
+
+  .error {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}

@@ -365,6 +365,44 @@ exports.download = async (req, res) => {
     }
   };
 
+// In your offerLetterController.js
+exports.getSeatsLeft = async (req, res) => {
+  try {
+    const email = req.params.email;
+    console.log(`Fetching seats for email: ${email}`); 
+
+    const [results] = await db.query(
+      'SELECT `seats-left` AS seatsLeft, program_name FROM user WHERE email = ?',
+      [email]
+    );
+
+    if (results.length === 0) {
+      console.log('No user found with email:', email);
+      return res.status(404).json({ 
+        success: false, 
+        message: 'User not found' 
+      });
+    }
+
+    const seatsLeft = results[0].seatsLeft;
+    const programName = results[0].program_name;
+    console.log('Seats left retrieved:', seatsLeft); 
+
+    res.json({
+      success: true,
+      seatsLeft: seatsLeft,
+      programName: programName
+    });
+
+  } catch (error) {
+    console.error('Server error in getSeatsLeft:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Internal server error',
+      error: error.message 
+    });
+  }
+};
   
 
   

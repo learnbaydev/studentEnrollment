@@ -115,7 +115,7 @@ const testimonials = [
     domain: "Mechanical Domain",
     company: "Ford",
     salaryHike: "161%",
-    profile: "/testimonials/shravanthi.webp",
+    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/shravanthi_a.webp",
     comIcons: "/company-logos/ford.webp",
     rating: 5,
     video: true,
@@ -365,6 +365,7 @@ const Avatar = ({ name, profile, width, height }) => {
                   width={60} 
                   height={60} 
                 />
+                {/* <Image src={item.profile} width={0} height={80} loading="lazy" className={styles.profile}/> */}
                 <div className={styles.profileInfo}>
                   <h4>{item.name}</h4>
                   <p>{item.role}</p>

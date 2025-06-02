@@ -774,6 +774,49 @@ li.react-datepicker__time-list-item--selected {
 .contactButton:hover {
   background-color: #E65100;
 }
+.loaderWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid transparent;
+  border-top: 4px solid #037FF7; /* initial color */
+  border-radius: 50%;
+  animation: spin 1s linear infinite, colorChange 4s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes colorChange {
+  0% {
+    border-top-color: #037FF7; /* Blue */
+  }
+  25% {
+    border-top-color: #FFA500; /* Orange */
+  }
+  50% {
+    border-top-color: #4CAF50; /* Green */
+  }
+  75% {
+    border-top-color: #FF4081; /* Pink */
+  }
+  100% {
+    border-top-color: #037FF7; /* Back to Blue */
+  }
+}
+
 @media (max-width: 768px) {
 .header{
   /* grid-template-columns: 53% 45%;
