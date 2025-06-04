@@ -3,19 +3,7 @@ import styles from "./SuccessStories.module.css";
 import Image from "next/image";
 
 const testimonials = [
-  {
-    name: "Shravanthi A",
-    role: "Data Scientist",
-    review: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team.",
-    domain: "Mechanical Domain",
-    company: "Ford",
-    salaryHike: "161%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/sharvann.webp",
-    comIcons: "/company-logos/ford.webp",
-    rating: 5,
-    video: true,
-    videoUrl: "https://www.youtube.com/embed/ford-testimonial"
-  },
+ 
   {
     name: "Mohamod Israr",
     role: "Data Scientist",
@@ -112,6 +100,20 @@ const testimonials = [
     rating: 5,
     video: true,
     videoUrl: "https://www.youtube.com/embed/yAfsDFsqW10?si=UK42OD6__tYvF0tM"
+  },
+
+  {
+    name: "Shravanthi A",
+    role: "Data Scientist",
+    review: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team.",
+    domain: "Mechanical Domain",
+    company: "Ford",
+    salaryHike: "161%",
+    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/sharvann.webp",
+    comIcons: "/company-logos/ford.webp",
+    rating: 5,
+    video: true,
+    videoUrl: "https://www.youtube.com/embed/ford-testimonial"
   },
 
   {
