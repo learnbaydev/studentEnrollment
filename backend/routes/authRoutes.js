@@ -3,7 +3,7 @@ const passport = require("passport");
 const { checkUserTimeValidity } = require("../controllers/authController");
 
 // Initiate Google OAuth login
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"],   prompt: "select_account",}));
 
 // Handle Google OAuth callback
 router.get("/google/callback", (req, res, next) => {
