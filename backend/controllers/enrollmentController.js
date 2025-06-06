@@ -12,11 +12,16 @@ const submitEnrollmentForm = async (req, res) => {
     graduation_year,
     current_company,
     current_job_title,
+    aspiring_designation,
     current_ctc,
     expected_ctc,
     aspiring_companies,
     motivation,
     expectations,
+    programming_rating,
+    linkedin_profile,
+    evaluator_rating,
+    native_city,
   } = req.body;
 
   if (
@@ -33,7 +38,7 @@ const submitEnrollmentForm = async (req, res) => {
     !motivation ||
     !expectations
   ) {
-    return res.status(400).json({ message: "All fields are required" });
+    return res.status(400).json({ message: "All required fields are missing" });
   }
 
   try {
@@ -55,8 +60,12 @@ const submitEnrollmentForm = async (req, res) => {
 
     const insertQuery = `
       INSERT INTO enrollment_details 
-        (user_id, email, full_name, domain, experience_years, graduation_year, current_company, current_job_title, current_ctc, expected_ctc, aspiring_companies, motivation, expectations, enrollment_status, created_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (user_id, email, full_name, domain, experience_years, graduation_year, 
+         current_company, current_job_title, aspiring_designation, current_ctc, 
+         expected_ctc, aspiring_companies, motivation, expectations, 
+         enrollment_status, created_at, programming_rating, linkedin_profile, 
+         evaluator_rating, native_city)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const [result] = await db.query(insertQuery, [
@@ -68,6 +77,7 @@ const submitEnrollmentForm = async (req, res) => {
       graduation_year,
       current_company,
       current_job_title,
+      aspiring_designation || null,
       current_ctc,
       expected_ctc,
       aspiring_companies,
@@ -75,6 +85,10 @@ const submitEnrollmentForm = async (req, res) => {
       expectations,
       "pending",
       istTime,
+      programming_rating || null,
+      linkedin_profile || null,
+      evaluator_rating || null,
+      native_city || null,
     ]);
 
     return res.status(201).json({
@@ -86,6 +100,7 @@ const submitEnrollmentForm = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 // Check if user is already enrolled
 const checkEnrollmentStatus = async (req, res) => {
