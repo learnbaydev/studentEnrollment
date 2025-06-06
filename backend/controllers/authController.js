@@ -9,7 +9,7 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
     // Step 1: Check if user exists
     const [rows] = await pool.query(`
       SELECT *,
-      CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline
+      ADDTIME(ADDTIME(user_creation_time, application_time), '-05:30:00') as deadline
       FROM user 
       WHERE email = ?`, [email]);
     
@@ -75,7 +75,7 @@ const checkUserTimeValidity = async (req, res) => {
         user_creation_time,
         application_time,
         first_login,
-        CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline,
+        ADDTIME(ADDTIME(user_creation_time, application_time), '-05:30:00') as deadline,
         status
       FROM user 
       WHERE email = ?`,
