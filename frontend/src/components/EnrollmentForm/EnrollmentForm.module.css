@@ -283,6 +283,7 @@
   padding-right: 8px; /* Add some space for scrollbar */
 }
 
+
 /* Optional: Style the scrollbar (works in Chrome, Edge, Safari) */
 .stepContent[data-step="3"]::-webkit-scrollbar {
   width: 6px;
@@ -301,6 +302,10 @@
 .stepContent[data-step="3"]::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+
+
+
 
 @media (max-width: 768px) {
   .formContainer {
@@ -335,4 +340,56 @@
     padding: 10px;
     font-size: 13px;
   }
+
+  .stepContent[data-step="2"] {
+    height: 280px;
+    overflow-y: auto;
+    padding-right: 8px; /* Add some space for scrollbar */
+    padding-top: 20px;
+  }
+
+
+.stepContent[data-step="2"]::-webkit-scrollbar {
+  width: 6px;
+}
+
+.stepContent[data-step="2"]::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.stepContent[data-step="2"]::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.stepContent[data-step="2"]::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.stepContent[data-step="1"] {
+  height: 280px;
+  overflow-y: auto;
+  padding-right: 8px; /* Add some space for scrollbar */
+  padding-top: 20px;
+}
+
+
+.stepContent[data-step="1"]::-webkit-scrollbar {
+width: 6px;
+}
+
+.stepContent[data-step="1"]::-webkit-scrollbar-track {
+background: #f1f1f1;
+border-radius: 3px;
+}
+
+.stepContent[data-step="1"]::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 3px;
+}
+
+.stepContent[data-step="1"]::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
 }

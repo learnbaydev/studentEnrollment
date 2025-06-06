@@ -103,7 +103,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     }
 
     if (step === 3) {
-      const requiredFields = ["aspiring_companies", "motivation", "expectations"];
+      const requiredFields = [ "motivation", "expectations"];
       requiredFields.forEach(field => {
         if (!formData[field]) {
           errors[field] = "This field is required";
@@ -216,7 +216,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
       </div>
 
       {step === 1 && (
-        <div className={styles.stepContent}>
+        <div className={styles.stepContent} data-step="1">
           <div className={styles.info}>
             <h4>Personal Information</h4>
             <span className={styles.spant}>
@@ -319,7 +319,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
       )}
 
       {step === 2 && (
-        <div className={styles.stepContent}>
+        <div className={styles.stepContent} data-step="2">
           <div className={`${styles.eName} ${styles.secondf}`}>
             <div className={styles.labelInput}>
               <label>Current Company *</label>

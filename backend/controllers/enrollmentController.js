@@ -24,23 +24,31 @@ const submitEnrollmentForm = async (req, res) => {
     native_city,
   } = req.body;
 
-  if (
-    !email ||
-    !full_name ||
-    !domain ||
-    !experience_years ||
-    !graduation_year ||
-    !current_company ||
-    !current_job_title ||
-    !current_ctc ||
-    !expected_ctc ||
-    !aspiring_companies ||
-    !motivation ||
-    !expectations
-  ) {
-    return res.status(400).json({ message: "All required fields are missing" });
+  const requiredFields = {
+    email,
+    full_name,
+    // domain,
+    experience_years,
+    graduation_year,
+    current_company,
+    current_job_title,
+    current_ctc,
+    expected_ctc,
+    aspiring_companies,
+    motivation,
+    expectations
+  };
+  
+  const missingFields = Object.entries(requiredFields).filter(
+    ([_, value]) => !value || value.toString().trim() === ""
+  );
+  
+  if (missingFields.length > 0) {
+    return res.status(400).json({
+      message: `Missing required fields: ${missingFields.map(([key]) => key).join(", ")}`
+    });
   }
-
+  
   try {
     const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
 
@@ -60,19 +68,20 @@ const submitEnrollmentForm = async (req, res) => {
 
     const insertQuery = `
       INSERT INTO enrollment_details 
-        (user_id, email, full_name, domain, experience_years, graduation_year, 
-         current_company, current_job_title, aspiring_designation, current_ctc, 
-         expected_ctc, aspiring_companies, motivation, expectations, 
-         enrollment_status, created_at, programming_rating, linkedin_profile, 
-         evaluator_rating, native_city)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+       (user_id, email, full_name, experience_years, graduation_year, 
+ current_company, current_job_title, aspiring_designation, current_ctc, 
+ expected_ctc, aspiring_companies, motivation, expectations, 
+ enrollment_status, created_at, programming_rating, linkedin_profile, 
+ evaluator_rating, native_city)
+
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const [result] = await db.query(insertQuery, [
       userId,
       email,
       full_name,
-      domain,
+      // domain,
       experience_years,
       graduation_year,
       current_company,

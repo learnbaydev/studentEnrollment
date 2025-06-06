@@ -9,10 +9,10 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
     // Step 1: Check if user exists
     const [rows] = await pool.query(`
       SELECT *,
-      ADDTIME(user_creation_time, application_time) as deadline
+      CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline
       FROM user 
       WHERE email = ?`, [email]);
-
+    
     if (rows.length === 0) {
       console.log('No user found with email:', email);
       return done(null, false, { message: "Email not registered." });
@@ -75,12 +75,13 @@ const checkUserTimeValidity = async (req, res) => {
         user_creation_time,
         application_time,
         first_login,
-        ADDTIME(user_creation_time, application_time) as deadline,
+        CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline,
         status
       FROM user 
       WHERE email = ?`,
       [email]
     );
+    
 
     if (rows.length === 0) {
       console.log('No user found for time validity check');
