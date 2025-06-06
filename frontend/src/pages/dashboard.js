@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import useAuth from '../hooks/hooks';
+import { useRouter } from 'next/router'; // ✅ added
+import useAuth from '../hooks/hooks'; // ✅ updated hook path
 import Sidebar from '../components/sidebar/SideBar';
 import Navbar from '@/components/Navbar/Navbar';
 import Modal from '../components/Model/Model';
@@ -16,9 +17,10 @@ import FeaturesSection from '@/components/Features/Features';
 import DemoVideoSection from '@/components/DevVideoSection/DemoVideoSection';
 import Head from 'next/head';
 
-
 export default function Dashboard() {
   const { loading, user } = useAuth();
+  const router = useRouter(); // ✅ required for redirect
+
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
@@ -52,23 +54,32 @@ export default function Dashboard() {
     if (user?.email) fetchEnrollmentStatus();
   }, [user]);
 
-  if (loading) return (
-    <div className={styles.loadingContainer}>
-      <div className={styles.loadingSpinner}></div>
-    </div>
-  );
+  // ✅ client-side redirect if unauthenticated
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace('/login');
+    }
+  }, [loading, user, router]);
+
+  // ✅ show spinner while loading or waiting to redirect
+  if (loading || (!user && typeof window !== 'undefined')) {
+    return (
+      <div className={styles.loadingContainer}>
+        <div className={styles.loadingSpinner}></div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.dashboardLayout}>
       <Head>
-  <link rel="icon" href="/favicon.ico" />
-</Head>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Navbar 
         user={user} 
         toggleSidebar={toggleSidebar} 
         isSidebarOpen={isSidebarOpen}
       />
-      
       <div className={styles.mainContent}>
         <Sidebar 
           selected={activeSection} 
@@ -80,7 +91,7 @@ export default function Dashboard() {
         <div className={`${styles.contentArea} ${isSidebarOpen ? styles.withSidebar : ''}`}>
           {activeSection === 'dashboard' && (
             <>
-             <Steps
+              <Steps
                 currentStep={currentStep}
                 enrollmentStatus={enrollmentStatus}
                 userEmail={user?.email}
@@ -88,15 +99,14 @@ export default function Dashboard() {
                 user={user}
               />
               <UserInfo user={user} />
-             
             </>
           )}
 
-{activeSection === 'testimonials' && (
-    <div className={styles.tesimonals}>
-      <SuccessStories />
-    </div>
-  )}
+          {activeSection === 'testimonials' && (
+            <div className={styles.tesimonals}>
+              <SuccessStories />
+            </div>
+          )}
 
           {activeSection === 'brochure' && (
             <div className={styles.sectionContainer}>
@@ -107,30 +117,13 @@ export default function Dashboard() {
 
           {activeSection === 'demo' && (
             <div className={styles.sectionContainer}>
-              {/* <h3>Demo Lectures</h3>
-              <p>Watch sample lectures to understand our teaching style.</p> */}
-              {/* <div className={styles.videoGrid}>
-                <div className={styles.videoThumbnail}></div>
-                <div className={styles.videoThumbnail}></div>
-                <div className={styles.videoThumbnail}></div>
-              </div> */}
-              < DemoVideoSection/>
+              <DemoVideoSection />
             </div>
           )}
 
           {activeSection === 'features' && (
             <div className={styles.sectionContainer}>
-        
-              {/* <ul className={styles.featuresList}>
-                <li>Industry-aligned curriculum</li>
-                <li>Live sessions with experts</li>
-                <li>24x7 support</li>
-                <li>Hands-on projects</li>
-                <li>Career guidance</li>
-                <li>Certificate upon completion</li>
-              </ul> */}
-
-              <FeaturesSection/>
+              <FeaturesSection />
             </div>
           )}
 
@@ -163,4 +156,30 @@ export default function Dashboard() {
       </Modal>
     </div>
   );
+}
+
+// ✅ server-side protection
+export async function getServerSideProps(context) {
+  const cookie = context.req.headers.cookie || '';
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/check-auth`, {
+    headers: {
+      cookie,
+    },
+  });
+
+  const data = await res.json();
+
+  if (!data.isAuthenticated) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }

@@ -1,17 +1,15 @@
 // hooks/useAuth.js
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 export default function useAuth() {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/check-auth`, {
       method: 'GET',
-      credentials: 'include', 
+      credentials: 'include',
     })
       .then(async (res) => {
         if (res.ok) {
@@ -19,15 +17,17 @@ export default function useAuth() {
           setAuthenticated(true);
           setUser(data.user);
         } else {
-          router.replace('/login');
+          setAuthenticated(false);
+          setUser(null);
         }
       })
       .catch((err) => {
         console.error(err);
-        router.replace('/login');
+        setAuthenticated(false);
+        setUser(null);
       })
       .finally(() => setLoading(false));
-  }, [router]);
+  }, []);
 
   return { loading, authenticated, user };
 }

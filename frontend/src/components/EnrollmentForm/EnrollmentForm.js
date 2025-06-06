@@ -1,35 +1,42 @@
 import { useState, useEffect } from "react";
 import { FaUser, FaBriefcase, FaStar } from "react-icons/fa";
+import { FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import styles from "./EnrollmentForm.module.css";
 import { ArrowRight } from "lucide-react";
 
 export default function EnrollmentForm({ onClose, onComplete, user }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [status, setStatus] = useState(null); // To store enrollment status from API
-  const [loadingStatus, setLoadingStatus] = useState(true); // Loading flag for status
+  const [status, setStatus] = useState(null);
+  const [loadingStatus, setLoadingStatus] = useState(true);
   const [statusError, setStatusError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
-  // Step 1: Personal Info
   const [formData, setFormData] = useState({
     email: user?.email || "",
     full_name: user?.name|| "",
-    domain: "",
+    // domain: "",
     experience_years: "",
     graduation_year: "",
     current_company: "",
     current_job_title: "",
+    aspiring_designation: "",
     current_ctc: "",
     expected_ctc: "",
     aspiring_companies: "",
     motivation: "",
     expectations: "",
+    programming_rating: "",
+    linkedin_profile: "",
+    evaluator_rating: "",
+    native_city: ""
   });
 
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [hoverRating, setHoverRating] = useState(0);
+  const [hoverEvaluatorRating, setHoverEvaluatorRating] = useState(0);
 
-  // On mount: check enrollment status
   useEffect(() => {
     async function fetchStatus() {
       if (!formData.email) {
@@ -44,9 +51,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
           throw new Error("Failed to fetch enrollment status");
         }
         const data = await res.json();
-        // Assuming API returns something like { enrolled: true/false, message: "..." }
         setStatus(data);
-        // If user is already enrolled, we can consider form as submitted
         if (data.enrolled) {
           setIsSubmitted(true);
         }
@@ -59,35 +64,58 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     fetchStatus();
   }, [formData.email]);
 
-  // Handle input change for controlled inputs
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    
+    // Clear error when user starts typing
+    if (fieldErrors[name]) {
+      setFieldErrors(prev => {
+        const newErrors = {...prev};
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
   };
 
-  // Validation for current step fields
   const validateStep = () => {
+    const errors = {};
+    let isValid = true;
+
     if (step === 1) {
-      const requiredFields = ["email", "full_name", "domain", "experience_years", "graduation_year"];
-      for (const field of requiredFields) {
-        if (!formData[field]) return false;
-      }
+      const requiredFields = ["email", "full_name",  "experience_years", "graduation_year"];
+      requiredFields.forEach(field => {
+        if (!formData[field]) {
+          errors[field] = "This field is required";
+          isValid = false;
+        }
+      });
     }
+
     if (step === 2) {
       const requiredFields = ["current_company", "current_job_title", "current_ctc", "expected_ctc"];
-      for (const field of requiredFields) {
-        if (!formData[field]) return false;
-      }
+      requiredFields.forEach(field => {
+        if (!formData[field]) {
+          errors[field] = "This field is required";
+          isValid = false;
+        }
+      });
     }
+
     if (step === 3) {
-      const requiredFields = ["aspiring_companies", "motivation", "expectations"];
-      for (const field of requiredFields) {
-        if (!formData[field]) return false;
-      }
+      const requiredFields = [ "motivation", "expectations"];
+      requiredFields.forEach(field => {
+        if (!formData[field]) {
+          errors[field] = "This field is required";
+          isValid = false;
+        }
+      });
     }
-    return true;
+
+    setFieldErrors(errors);
+    return isValid;
   };
 
-  // Handle next button click
   const handleNext = () => {
     if (!validateStep()) {
       setError("Please fill all required fields in this step");
@@ -101,12 +129,10 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     }
   };
 
-  // Handle back button click
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  // Submit form data to backend
   const handleSubmit = async () => {
     setLoading(true);
     setError("");
@@ -133,20 +159,24 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     }
   };
 
-  // Progress bar percentage
+  const handleRatingClick = (rating) => {
+    setFormData({ ...formData, programming_rating: rating });
+  };
+
+  const handleEvaluatorRatingClick = (rating) => {
+    setFormData({ ...formData, evaluator_rating: rating.toString() });
+  };
+
   const progressPercent = (step / 3) * 100;
 
-  // If status is still loading
   if (loadingStatus) {
     return <div className={styles.formContainer}>Checking enrollment status...</div>;
   }
 
-  // If error in fetching status
   if (statusError) {
     return <div className={styles.formContainer}>Error: {statusError}</div>;
   }
 
-  // If user already enrolled
   if (isSubmitted && status?.enrolled) {
     return (
       <div className={styles.formContainer}>
@@ -161,46 +191,32 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     <div className={styles.formContainer}>
       <h2 className={styles.step}>Start Your Application</h2>
       <p className={styles.para}>Complete this 3-step form to begin your personalized learning journey.</p>
+      
       <div className={styles.progressWrapper}>
         <div className={styles.stepLabels}>
-          <div
-            className={`${styles.stepLabel} ${
-              step >= 1 ? styles.activeStep : ""
-            } ${isSubmitted ? styles.completedStep : ""}`}
-          >
+          <div className={`${styles.stepLabel} ${step >= 1 ? styles.activeStep : ""} ${isSubmitted ? styles.completedStep : ""}`}>
             <FaUser className={styles.stepIcon} />
             <span>Personal Information</span>
           </div>
 
-          <div
-            className={`${styles.stepLabel} ${
-              step >= 2 ? styles.activeStep : ""
-            }`}
-          >
+          <div className={`${styles.stepLabel} ${step >= 2 ? styles.activeStep : ""}`}>
             <FaBriefcase className={styles.stepIcon} />
             <span>Professional Experience</span>
           </div>
 
-          <div
-            className={`${styles.stepLabel} ${
-              step >= 3 ? styles.activeStep : ""
-            }`}
-          >
+          <div className={`${styles.stepLabel} ${step >= 3 ? styles.activeStep : ""}`}>
             <FaStar className={styles.stepIcon} />
             <span>Skills & Aspirations</span>
           </div>
         </div>
 
         <div className={styles.progressBar}>
-          <div
-            className={styles.progressFill}
-            style={{ width: `${progressPercent}%` }}
-          ></div>
+          <div className={styles.progressFill} style={{ width: `${progressPercent}%` }}></div>
         </div>
       </div>
 
       {step === 1 && (
-        <div className={styles.stepContent}>
+        <div className={styles.stepContent} data-step="1">
           <div className={styles.info}>
             <h4>Personal Information</h4>
             <span className={styles.spant}>
@@ -215,7 +231,6 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 type="text"
                 name="full_name"
                 value={formData.full_name}
-                // onChange={handleChange}
                 disabled
                 readOnly
                 className={styles.disabledInput}
@@ -234,17 +249,37 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
               />
             </div>
           </div>
+          
           <div className={styles.eName}>
-            <div className={styles.labelInput}>
+            {/* <div className={styles.labelInput}>
               <label>Domain *</label>
-              <select name="domain" value={formData.domain} onChange={handleChange}>
+              <select 
+                name="domain" 
+                value={formData.domain} 
+                onChange={handleChange}
+                className={fieldErrors.domain ? styles.errorField : ""}
+              >
                 <option value="">Select your domain</option>
-                <option value="Data Science">Data Science</option>
-                <option value="AI/ML">AI / ML</option>
-                <option value="Cloud">Cloud</option>
-                <option value="DevOps">DevOps</option>
-                <option value="IIT Cyber Security">IIT Cyber Security</option>
+                <option value="HR">HR</option>
+                <option value="Marketing">Marketing</option>
+                <option value="BFSI">BFSI</option>
+                <option value="Helthcare">Healthcare</option>
               </select>
+              {fieldErrors.domain && <span className={styles.errorText}>{fieldErrors.domain}</span>}
+            </div> */}
+                   <div className={styles.labelInput}>
+              <label>Graduation Year *</label>
+              <input
+                type="number"
+                placeholder="Graduation year (ex: 2012)"
+                name="graduation_year"
+                value={formData.graduation_year}
+                onChange={handleChange}
+                min="1900"
+                max={new Date().getFullYear()}
+                className={fieldErrors.graduation_year ? styles.errorField : ""}
+              />
+              {fieldErrors.graduation_year && <span className={styles.errorText}>{fieldErrors.graduation_year}</span>}
             </div>
 
             <div className={styles.labelInput}>
@@ -253,6 +288,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 name="experience_years"
                 value={formData.experience_years}
                 onChange={handleChange}
+                className={fieldErrors.experience_years ? styles.errorField : ""}
               >
                 <option value="">Select experience</option>
                 <option value="0-1">0-1 years</option>
@@ -261,27 +297,29 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 <option value="3-4">3-4 years</option>
                 <option value="4+">4+ years</option>
               </select>
+              {fieldErrors.experience_years && <span className={styles.errorText}>{fieldErrors.experience_years}</span>}
             </div>
           </div>
-          <div className={styles.grad}>
-            <label>Graduation Year *</label>
-            <input
-              type="number"
-              placeholder="Graduation... (ex:2012)"
-              name="graduation_year"
-              value={formData.graduation_year}
-              onChange={handleChange}
-              min="1900"
-              max={new Date().getFullYear()}
-              className={styles.grad}
-            />
+          
+          <div className={styles.eName}>
+     
+            
+            <div className={styles.labelInput}>
+              <label>Native City</label>
+              <input
+                type="text"
+                placeholder="Your native city"
+                name="native_city"
+                value={formData.native_city}
+                onChange={handleChange}
+              />
+            </div>
           </div>
         </div>
       )}
 
-      {/* Step 2: Professional Info */}
       {step === 2 && (
-        <div className={styles.stepContent}>
+        <div className={styles.stepContent} data-step="2">
           <div className={`${styles.eName} ${styles.secondf}`}>
             <div className={styles.labelInput}>
               <label>Current Company *</label>
@@ -290,79 +328,172 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 name="current_company"
                 value={formData.current_company}
                 onChange={handleChange}
-                placeholder="e.g:current company..."
+                placeholder="e.g. current company..."
+                className={fieldErrors.current_company ? styles.errorField : ""}
               />
+              {fieldErrors.current_company && <span className={styles.errorText}>{fieldErrors.current_company}</span>}
             </div>
 
             <div className={styles.labelInput}>
-              <label>Current Job Title *</label>
+              <label>Your current designation *</label>
               <input
                 type="text"
                 name="current_job_title"
                 value={formData.current_job_title}
                 onChange={handleChange}
-                placeholder="e.g:current job title..."
+                placeholder="e.g. current job title..."
+                className={fieldErrors.current_job_title ? styles.errorField : ""}
               />
+              {fieldErrors.current_job_title && <span className={styles.errorText}>{fieldErrors.current_job_title}</span>}
             </div>
           </div>
 
           <div className={`${styles.eName} ${styles.secondf}`}>
             <div className={styles.labelInput}>
-              <label>Current CTC *</label>
+              <label>Your current CTC (in LPA) *</label>
               <input
-                type="number"
+                type="text"
                 name="current_ctc"
                 value={formData.current_ctc}
                 onChange={handleChange}
                 min="0"
-                placeholder="e.g:current CTC.."
+                placeholder="e.g. current CTC..."
+                className={fieldErrors.current_ctc ? styles.errorField : ""}
               />
+              {fieldErrors.current_ctc && <span className={styles.errorText}>{fieldErrors.current_ctc}</span>}
             </div>
 
             <div className={styles.labelInput}>
-              <label>Expected CTC *</label>
+              <label>Aspiring CTC (in LPA) *</label>
               <input
-                type="number"
+                type="text"
                 name="expected_ctc"
                 value={formData.expected_ctc}
                 onChange={handleChange}
                 min="0"
-                placeholder="e.g:Expected CTC.."
+                placeholder="e.g. Expected CTC..."
+                className={fieldErrors.expected_ctc ? styles.errorField : ""}
               />
+              {fieldErrors.expected_ctc && <span className={styles.errorText}>{fieldErrors.expected_ctc}</span>}
             </div>
+          </div>
+          <div className={`${styles.eName} ${styles.secondf}`}>
+          <div className={styles.labelInput}>
+            <label>Aspiring Companies *</label>
+            <input
+              type="text"
+              name="aspiring_companies"
+              value={formData.aspiring_companies}
+              onChange={handleChange}
+              placeholder="e.g., Your Dream Companies"
+              className={fieldErrors.aspiring_companies ? styles.errorField : ""}
+            />
+            {fieldErrors.aspiring_companies && <span className={styles.errorText}>{fieldErrors.aspiring_companies}</span>}
+          </div>
+          <div className={styles.labelInput}>
+            <label>Your aspiring designation (if any)</label>
+            <input
+              type="text"
+              name="aspiring_designation"
+              value={formData.aspiring_designation}
+              onChange={handleChange}
+              placeholder="e.g. your desired job title..."
+            />
+          </div>
+        
+          </div>
+
+          <div className={styles.labelInput}>
+            <label>Your LinkedIn Profile</label>
+            <input
+              type="url"
+              name="linkedin_profile"
+              value={formData.linkedin_profile}
+              onChange={handleChange}
+              placeholder="https://linkedin.com/in/your-profile"
+            />
           </div>
         </div>
       )}
 
-      {/* Step 3: Aspiration Info */}
       {step === 3 && (
-        <div className={styles.stepContent}>
-          <label>Aspiring Companies *</label>
-          <textarea
-            type="text"
-            name="aspiring_companies"
-            value={formData.aspiring_companies}
-            onChange={handleChange}
-            placeholder="e.g., Your Dream Companies"
-          />
+  <div className={styles.stepContent} data-step="3">
 
-          <label>Why do you want to join this program?</label>
-          <textarea
-            name="motivation"
-            value={formData.motivation}
-            onChange={handleChange}
-            placeholder="Share why you want to join our program...?"
-            rows="3"
-          />
+        
 
-          <label>What are your expectations from this course?</label>
-          <textarea
-            name="expectations"
-            value={formData.expectations}
-            onChange={handleChange}
-            placeholder="what outcomes are you looking from this program...?"
-            rows="3"
-          />
+          <div className={styles.labelInput}>
+            <label>Why are you specifically targeting these companies? *</label>
+            <textarea
+              name="motivation"
+              value={formData.motivation}
+              onChange={handleChange}
+              placeholder="Share why you're targeting these companies..."
+              rows="3"
+              className={fieldErrors.motivation ? styles.errorField : ""}
+            />
+            {fieldErrors.motivation && <span className={styles.errorText}>{fieldErrors.motivation}</span>}
+          </div>
+
+          <div className={styles.labelInput}>
+            <label>Rate yourself in programming</label>
+            <div className={styles.ratingContainer}>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={styles.star}
+                  onMouseEnter={() => setHoverRating(star)}
+                  onMouseLeave={() => setHoverRating(0)}
+                  onClick={() => handleRatingClick(star)}
+                >
+                  {star <= (hoverRating || formData.programming_rating) ? (
+                    <FaStar className={styles.filledStar} />
+                  ) : (
+                    <FaRegStar className={styles.emptyStar} />
+                  )}
+                </span>
+              ))}
+              <span className={styles.ratingText}>
+                {formData.programming_rating ? `${formData.programming_rating} star${formData.programming_rating > 1 ? 's' : ''}` : "Not rated"}
+              </span>
+            </div>
+          </div>
+
+          <div className={styles.labelInput}>
+            <label>Rate your conversation with your profile Evaluator out of 5</label>
+            <div className={styles.ratingContainer}>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={styles.star}
+                  onMouseEnter={() => setHoverEvaluatorRating(star)}
+                  onMouseLeave={() => setHoverEvaluatorRating(0)}
+                  onClick={() => handleEvaluatorRatingClick(star)}
+                >
+                  {star <= (hoverEvaluatorRating || formData.evaluator_rating) ? (
+                    <FaStar className={styles.filledStar} />
+                  ) : (
+                    <FaRegStar className={styles.emptyStar} />
+                  )}
+                </span>
+              ))}
+              <span className={styles.ratingText}>
+                {formData.evaluator_rating ? `${formData.evaluator_rating} star${formData.evaluator_rating > 1 ? 's' : ''}` : "Not rated"}
+              </span>
+            </div>
+          </div>
+
+          <div className={styles.labelInput}>
+            <label>Why do you want join this program? *</label>
+            <textarea
+              name="expectations"
+              value={formData.expectations}
+              onChange={handleChange}
+              placeholder="Describe in approx 100 words which will be your Statement of Purpose for the Evaluation and career roadmap for team head (SOP)."
+              rows="5"
+              className={fieldErrors.expectations ? styles.errorField : ""}
+            />
+            {fieldErrors.expectations && <span className={styles.errorText}>{fieldErrors.expectations}</span>}
+          </div>
         </div>
       )}
 
