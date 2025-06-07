@@ -6,13 +6,13 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
     const email = profile.emails[0].value;
     console.log('Attempting login for email:', email);
 
-    // Step 1: Check if user exists
+    // Step 1: Check if user exists (convert to IST safely)
     const [rows] = await pool.query(`
       SELECT *,
-      ADDTIME(ADDTIME(user_creation_time, application_time), '-05:30:00') as deadline
+        CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline
       FROM user 
       WHERE email = ?`, [email]);
-    
+
     if (rows.length === 0) {
       console.log('No user found with email:', email);
       return done(null, false, { message: "Email not registered." });
@@ -37,12 +37,11 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
     }
 
     // Step 4: Update first_login if not already set
-    await pool.query(
-      `UPDATE user 
-       SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
-       WHERE email = ? AND first_login IS NULL`,
-      [email]
-    );
+    await pool.query(`
+      UPDATE user 
+      SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
+      WHERE email = ? AND first_login IS NULL
+    `, [email]);
 
     // Step 5: Success
     console.log('Authentication successful');
@@ -61,27 +60,24 @@ const checkUserTimeValidity = async (req, res) => {
     console.log('Checking time validity for email:', email);
 
     // Step 1: Update first_login if not already set
-    await pool.query(
-      `UPDATE user 
-       SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
-       WHERE email = ? AND first_login IS NULL`,
-      [email]
-    );
+    await pool.query(`
+      UPDATE user 
+      SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
+      WHERE email = ? AND first_login IS NULL
+    `, [email]);
 
-    // Step 2: Fetch updated user data
+    // Step 2: Fetch updated user data with deadline conversion
     const [rows] = await pool.query(`
       SELECT 
         id,
         user_creation_time,
         application_time,
         first_login,
-        ADDTIME(ADDTIME(user_creation_time, application_time), '-05:30:00') as deadline,
+        CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline,
         status
       FROM user 
-      WHERE email = ?`,
-      [email]
-    );
-    
+      WHERE email = ?
+    `, [email]);
 
     if (rows.length === 0) {
       console.log('No user found for time validity check');
