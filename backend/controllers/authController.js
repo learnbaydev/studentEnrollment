@@ -6,10 +6,10 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
     const email = profile.emails[0].value;
     console.log('Attempting login for email:', email);
 
-    // Step 1: Check if user exists (convert to IST safely)
+    // Step 1: Check if user exists (no time zone math)
     const [rows] = await pool.query(`
       SELECT *,
-        CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline
+        ADDTIME(user_creation_time, application_time) AS deadline
       FROM user 
       WHERE email = ?`, [email]);
 
@@ -36,10 +36,10 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
       return done(null, false, { message: "Account is inactive. Please contact support." });
     }
 
-    // Step 4: Update first_login if not already set
+    // Step 4: Set first_login without conversion
     await pool.query(`
       UPDATE user 
-      SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
+SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
       WHERE email = ? AND first_login IS NULL
     `, [email]);
 
@@ -59,21 +59,21 @@ const checkUserTimeValidity = async (req, res) => {
     const { email } = req.user;
     console.log('Checking time validity for email:', email);
 
-    // Step 1: Update first_login if not already set
+    // Step 1: Update first_login without conversion
     await pool.query(`
       UPDATE user 
-      SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
+SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
       WHERE email = ? AND first_login IS NULL
     `, [email]);
 
-    // Step 2: Fetch updated user data with deadline conversion
+    // Step 2: Fetch updated user data without any timezone adjustments
     const [rows] = await pool.query(`
       SELECT 
         id,
         user_creation_time,
         application_time,
         first_login,
-        CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline,
+        ADDTIME(user_creation_time, application_time) AS deadline,
         status
       FROM user 
       WHERE email = ?
