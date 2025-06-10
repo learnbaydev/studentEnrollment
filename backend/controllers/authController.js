@@ -6,12 +6,20 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
     const email = profile.emails[0].value;
     console.log('Attempting login for email:', email);
 
-    // Step 1: Check if user exists (no time zone math)
+    // Step 1: Check if user exists
     const [rows] = await pool.query(`
-      SELECT *,
-        ADDTIME(user_creation_time, application_time) AS deadline
+      SELECT 
+        id,
+        email,
+        CONVERT_TZ(user_creation_time, '+00:00', '+05:30') as user_creation_time,
+        application_time,
+        first_login,
+        CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline,
+        status
       FROM user 
-      WHERE email = ?`, [email]);
+      WHERE email = ?`,
+      [email]
+    );
 
     if (rows.length === 0) {
       console.log('No user found with email:', email);
@@ -36,12 +44,16 @@ const googleCallback = async (accessToken, refreshToken, profile, done) => {
       return done(null, false, { message: "Account is inactive. Please contact support." });
     }
 
-    // Step 4: Set first_login without conversion
-    await pool.query(`
-      UPDATE user 
-SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
-      WHERE email = ? AND first_login IS NULL
-    `, [email]);
+    // Step 4: Update first_login if not already set (in IST)
+    if (!user.first_login) {
+      await pool.query(
+        `UPDATE user 
+         SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
+         WHERE email = ? AND first_login IS NULL`,
+        [email]
+      );
+      user.first_login = new Date(); // Update local object for immediate use
+    }
 
     // Step 5: Success
     console.log('Authentication successful');
@@ -59,25 +71,20 @@ const checkUserTimeValidity = async (req, res) => {
     const { email } = req.user;
     console.log('Checking time validity for email:', email);
 
-    // Step 1: Update first_login without conversion
-    await pool.query(`
-      UPDATE user 
-SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
-      WHERE email = ? AND first_login IS NULL
-    `, [email]);
-
-    // Step 2: Fetch updated user data without any timezone adjustments
+    // Step 1: Fetch user data with IST timezone conversion
     const [rows] = await pool.query(`
       SELECT 
         id,
-        user_creation_time,
+        email,
+        CONVERT_TZ(user_creation_time, '+00:00', '+05:30') as user_creation_time,
         application_time,
         first_login,
-        ADDTIME(user_creation_time, application_time) AS deadline,
+        CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline,
         status
       FROM user 
-      WHERE email = ?
-    `, [email]);
+      WHERE email = ?`,
+      [email]
+    );
 
     if (rows.length === 0) {
       console.log('No user found for time validity check');
@@ -85,6 +92,29 @@ SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
     }
 
     const user = rows[0];
+
+    // Step 2: Update first_login if not already set (in IST)
+    if (!user.first_login) {
+      await pool.query(
+        `UPDATE user 
+         SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
+         WHERE email = ? AND first_login IS NULL`,
+        [email]
+      );
+      // Fetch updated record
+      const [updatedRows] = await pool.query(`
+        SELECT 
+          first_login,
+          CONVERT_TZ(ADDTIME(user_creation_time, application_time), '+00:00', '+05:30') as deadline
+        FROM user 
+        WHERE email = ?`,
+        [email]
+      );
+      user.first_login = updatedRows[0].first_login;
+      user.deadline = updatedRows[0].deadline;
+    }
+
+    // Step 3: Check time validity
     const deadline = new Date(user.deadline);
     const firstLogin = new Date(user.first_login);
     const isValid = deadline >= firstLogin;
@@ -93,7 +123,7 @@ SET first_login = CONVERT_TZ(NOW(), '+00:00', '+05:30')
       userCreationTime: user.user_creation_time,
       applicationTime: user.application_time,
       firstLogin: user.first_login,
-      deadline: deadline.toISOString(),
+      deadline: user.deadline,
       isValid: isValid,
       status: user.status
     });

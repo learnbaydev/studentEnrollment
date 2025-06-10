@@ -25,7 +25,7 @@ function StepCard({
   isStep1Locked,
   openModal,
   handlePaymentClick,
-  setEnrollmentStatus // Add this line
+  setEnrollmentStatus
 }) {
   const statusColors = {
     pending: {
@@ -114,6 +114,7 @@ function StepCard({
   const [localMeetingData, setLocalMeetingData] = useState(meetingData);
   const [meetingTimeLeft, setMeetingTimeLeft] = useState(null);
   const [isFetchingMeetingLink, setIsFetchingMeetingLink] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const isWeekday = (date) => {
     const day = date.getDay();
@@ -213,8 +214,7 @@ function StepCard({
       }
 
       await fetchData();
-      setShowTooltip(false);
-      alert("Evaluation scheduled successfully!");
+      setShowSuccessPopup(true);
     } catch (error) {
       console.error("Error:", error);
       alert(`Error: ${error.message}`);
@@ -239,6 +239,32 @@ function StepCard({
         position: "relative",
       }}
     >
+      {showSuccessPopup && (
+        <div className={styles.successPopupOverlay}>
+          <div className={styles.successPopup}>
+            <div className={styles.successIcon}>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="#4CAF50"/>
+              </svg>
+            </div>
+            <h3>Evaluation Scheduled Successfully!</h3>
+            <p>Your profile evaluation has been scheduled for:</p>
+            <div className={styles.scheduledTime}>
+              {moment(selectedDateTime).tz("Asia/Kolkata").format("dddd, MMMM D, YYYY [at] h:mm A")} (IST)
+            </div>
+            <button 
+              onClick={() => {
+                setShowSuccessPopup(false);
+                setShowTooltip(false);
+              }}
+              className={styles.successButton}
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
+
       {number === 2 && showTooltip && (
         <div className={styles.tooltipPopup}>
           <div className={styles.tooltipHeader}>
@@ -509,8 +535,6 @@ function StepCard({
 
         {number === 4 && status === "in_progress" && (
           <div className={styles.paymentProcessing}>
-            {/* <div className={styles.spinner}></div>
-            <span>Payment in progress...</span> */}
             <button 
               onClick={() => window.open("https://pages.razorpay.com/learnbay", "_blank")}
               className={styles.retryButton}
@@ -886,15 +910,6 @@ if (loading) {
       <div className={styles.header}>
         <h2>Learnbay Admission Process</h2>
         <div className={styles.label}>
-          {/* <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="15"
-            viewBox="0 0 14 15"
-            fill="none"
-          >
-            <circle cx="7.00949" cy="7.72818" r="6.9094" fill="#F99600" />
-          </svg> */}
           <span>Progress: {enrollmentStatus.progress} completed</span>
         </div>
       </div>
@@ -923,8 +938,8 @@ if (loading) {
               fetchData={fetchData}
               deadline={number === 1 ? deadline : null}
               isStep1Locked={number === 1 ? isStep1Locked : false}
-              openModal={openModal} // Add this line
-              setEnrollmentStatus={setEnrollmentStatus} // Add this line
+              openModal={openModal}
+              setEnrollmentStatus={setEnrollmentStatus}
               handlePaymentClick={handlePaymentClick}
             />
           );
