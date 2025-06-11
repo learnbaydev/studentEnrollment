@@ -25,7 +25,7 @@ function StepCard({
   isStep1Locked,
   openModal,
   handlePaymentClick,
-  setEnrollmentStatus // Add this line
+  setEnrollmentStatus
 }) {
   const statusColors = {
     pending: {
@@ -114,6 +114,7 @@ function StepCard({
   const [localMeetingData, setLocalMeetingData] = useState(meetingData);
   const [meetingTimeLeft, setMeetingTimeLeft] = useState(null);
   const [isFetchingMeetingLink, setIsFetchingMeetingLink] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const isWeekday = (date) => {
     const day = date.getDay();
@@ -213,8 +214,7 @@ function StepCard({
       }
 
       await fetchData();
-      setShowTooltip(false);
-      alert("Evaluation scheduled successfully!");
+      setShowSuccessPopup(true);
     } catch (error) {
       console.error("Error:", error);
       alert(`Error: ${error.message}`);
@@ -239,6 +239,32 @@ function StepCard({
         position: "relative",
       }}
     >
+      {showSuccessPopup && (
+        <div className={styles.successPopupOverlay}>
+          <div className={styles.successPopup}>
+            <div className={styles.successIcon}>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="#4CAF50"/>
+              </svg>
+            </div>
+            <h3>Evaluation Scheduled Successfully!</h3>
+            <p>Your profile evaluation has been scheduled for:</p>
+            <div className={styles.scheduledTime}>
+              {moment(selectedDateTime).tz("Asia/Kolkata").format("dddd, MMMM D, YYYY [at] h:mm A")} (IST)
+            </div>
+            <button 
+              onClick={() => {
+                setShowSuccessPopup(false);
+                setShowTooltip(false);
+              }}
+              className={styles.successButton}
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
+
       {number === 2 && showTooltip && (
         <div className={styles.tooltipPopup}>
           <div className={styles.tooltipHeader}>
@@ -330,12 +356,12 @@ function StepCard({
 
         {number === 1 && status === "locked" && isStep1Locked && (
           <div className={styles.contactCounselor}>
-            <p>⏰ Time's up! Please contact your counselor to unlock your application.</p>
+            <p>⏰ Time's up! Please contact your evaluator to Unlock your evaluation form.</p>
             <a 
               href="mailto:counselor@learnbay.co" 
               className={styles.contactButton}
             >
-              Contact Counselor
+              Contact Evaluator 
             </a>
           </div>
         )}
@@ -416,13 +442,14 @@ function StepCard({
             {formSubmitted || status === "in_progress" ? (
               <>
                 <p className={styles.timerText}>
-                  <span>⏱</span> Approved: {formatTime(timeLeft)}
+                  {/* <span>⏱</span> Approved: {formatTime(timeLeft)} */}
                 </p>
-                <p className={styles.progressText}>
+                {/* <p className={styles.progressText}>
                   {timeLeft <= 0
                     ? "Expired"
                     : `${Math.round(calculateProgress(timeLeft))}% completed`}
-                </p>
+                </p> */}
+                <p className={styles.gren}>Your request is under review – approval is in progress.</p>
               </>
             ) : (
               ""
@@ -509,8 +536,6 @@ function StepCard({
 
         {number === 4 && status === "in_progress" && (
           <div className={styles.paymentProcessing}>
-            {/* <div className={styles.spinner}></div>
-            <span>Payment in progress...</span> */}
             <button 
               onClick={() => window.open("https://pages.razorpay.com/learnbay", "_blank")}
               className={styles.retryButton}
@@ -536,12 +561,13 @@ function StepCard({
       {showTimer &&
         (status === "pending" || status === "in_progress") &&
         (formSubmitted || status === "in_progress") && (
-          <div className={styles.progressBarContainer}>
-            <div
-              className={styles.progressBarFill}
-              style={{ width: `${calculateProgress(timeLeft)}%` }}
-            ></div>
-          </div>
+          // <div className={styles.progressBarContainer}>
+          //   <div
+          //     className={styles.progressBarFill}
+          //     style={{ width: `${calculateProgress(timeLeft)}%` }}
+          //   ></div>
+          // </div>
+          ''
         )}
     </div>
   );
@@ -638,9 +664,15 @@ export default function Steps({
           ...prev,
           ...statusData,
           progress,
-          step4: paymentData.payment_status === '1' ? 'approved' : 
-          prev.step4 === 'in_progress' ? 'in_progress' : 
-          'pending',
+          step4:
+          paymentData.payment_status === '1'
+            ? 'approved'
+            : paymentData.payment_status === '0'
+              ? 'in_progress'
+              : (statusData.step3 === 'approved' || user?.offer_letter_path)
+                ? 'pending'
+                : 'locked',
+            
           timestamps: {
             ...prev.timestamps,
             ...(statusData.timestamps || {}),
@@ -652,21 +684,26 @@ export default function Steps({
         if (user?.user_creation_time && user?.application_time) {
           const creationTime = new Date(user.user_creation_time);
           const [hours, minutes, seconds] = user.application_time.split(':').map(Number);
-          
-          // Set the deadline by adding application_time hours to creation date
+        
           const deadlineDate = new Date(creationTime);
           deadlineDate.setHours(creationTime.getHours() + hours);
           deadlineDate.setMinutes(creationTime.getMinutes() + minutes);
           deadlineDate.setSeconds(creationTime.getSeconds() + seconds);
-          
-          setDeadline(deadlineDate);
-          
-          // Calculate initial time left
+        
+          // ✅ Subtract 5:30 manually
+          deadlineDate.setHours(deadlineDate.getHours() - 5);
+          deadlineDate.setMinutes(deadlineDate.getMinutes() - 30);
+        
+          // ✅ Add logging
+          console.log("🕒 Adjusted Deadline:", deadlineDate.toISOString());
+        
           const now = new Date();
           const initialTimeLeft = Math.floor((deadlineDate - now) / 1000);
+          console.log("⏱ Time left (seconds):", initialTimeLeft);
+        
+          setDeadline(deadlineDate);
           setTimeLeft(Math.max(0, initialTimeLeft));
-          
-          // Check if we should lock step 1
+        
           if (initialTimeLeft <= 0 && getStepStatus(1) === 'pending') {
             setIsStep1Locked(true);
             setEnrollmentStatus(prev => ({
@@ -675,6 +712,22 @@ export default function Steps({
             }));
           }
         }
+        
+          
+        //   // Calculate initial time left
+        //   const now = new Date();
+        //   const initialTimeLeft = Math.floor((deadlineDate - now) / 1000);
+        //   setTimeLeft(Math.max(0, initialTimeLeft));
+          
+        //   // Check if we should lock step 1
+        //   if (initialTimeLeft <= 0 && getStepStatus(1) === 'pending') {
+        //     setIsStep1Locked(true);
+        //     setEnrollmentStatus(prev => ({
+        //       ...prev,
+        //       step1: "locked"
+        //     }));
+        //   }
+        // }
 
         if (statusData.step1_timestamp) {
           const approvalTime = new Date(statusData.step1_timestamp);
@@ -754,45 +807,40 @@ export default function Steps({
   const handleScheduleComplete = async () => {
     await fetchData();
   };
-
   const handlePaymentClick = async () => {
     try {
       setEnrollmentStatus(prev => ({
         ...prev,
         step4: "in_progress"
       }));
-
+  
+      console.log("⏳ Initiating payment status update...");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/initiate-payment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: userEmail })
+      });
+  
+      const result = await res.json();
+      console.log("🚀 Backend response:", result);
+  
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to initiate payment");
+      }
+  
       const paymentWindow = window.open(
-        "https://pages.razorpay.com/learnbay", 
+        "https://pages.razorpay.com/learnbay",
         "_blank"
       );
-
-      const paymentCheckInterval = setInterval(async () => {
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/check-payment?email=${userEmail}`
-          );
-          const data = await response.json();
-
-          if (data.payment_status === 1) {
-            clearInterval(paymentCheckInterval);
-            setPaymentStatus(1);
-            setEnrollmentStatus(prev => ({
-              ...prev,
-              step4: "approved"
-            }));
-            await fetchData();
-          }
-        } catch (error) {
-          console.error("Error checking payment status:", error);
-        }
-      }, 5000);
-
-      return () => clearInterval(paymentCheckInterval);
+  
+      // continue polling logic here...
     } catch (error) {
-      console.error("Error handling payment:", error);
+      console.error("❌ Error handling payment:", error);
     }
   };
+  
 
   const getStepStatus = (stepNumber) => {
     const stepKey = `step${stepNumber}`;
@@ -826,16 +874,15 @@ export default function Steps({
       if (meetingData?.completed) return 'pending';
       return 'locked';
     }
-  
     if (stepNumber === 4) {
-      if (paymentStatus === 1) return 'approved';
-      if (enrollmentStatus.step4 === 'in_progress') return 'in_progress';
-      if (enrollmentStatus.step3 === 'approved' || user?.offer_letter_path) {
-        return 'pending';
-      }
-      return 'locked';
+      if (paymentStatus === 1) return 'approved'; // ✅ Payment done
+      if (enrollmentStatus.step4 === 'in_progress') return 'in_progress'; // 🔄 In progress
+      if (enrollmentStatus.step3 === 'approved' || user?.offer_letter_path) return 'pending'; // 🕒 Eligible to pay
+      return 'locked'; // 🔒 Not ready
     }
-  
+    
+    
+    
     return 'locked';
   };
 
@@ -843,9 +890,9 @@ export default function Steps({
     {
       iconActive: "/icons/icon_pendning.webp",
       iconInactive: "/icons/icon_locked.webp",
-      title: "Eligibility & Application Form",
+      title: "Evaluation Form ",
       description:
-        "Begin your Learnbay journey by filling out the comprehensive eligibility and application form.",
+        "Begin your Learnbay journey by filling out the exclusive Evaluation form and get ready",
       showTimer: true,
     },
     {
@@ -886,15 +933,6 @@ if (loading) {
       <div className={styles.header}>
         <h2>Learnbay Admission Process</h2>
         <div className={styles.label}>
-          {/* <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="15"
-            viewBox="0 0 14 15"
-            fill="none"
-          >
-            <circle cx="7.00949" cy="7.72818" r="6.9094" fill="#F99600" />
-          </svg> */}
           <span>Progress: {enrollmentStatus.progress} completed</span>
         </div>
       </div>
@@ -923,8 +961,8 @@ if (loading) {
               fetchData={fetchData}
               deadline={number === 1 ? deadline : null}
               isStep1Locked={number === 1 ? isStep1Locked : false}
-              openModal={openModal} // Add this line
-              setEnrollmentStatus={setEnrollmentStatus} // Add this line
+              openModal={openModal}
+              setEnrollmentStatus={setEnrollmentStatus}
               handlePaymentClick={handlePaymentClick}
             />
           );

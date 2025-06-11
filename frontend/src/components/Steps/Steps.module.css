@@ -287,7 +287,7 @@ text-align: center;
   
   .timerSection {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     margin-top: 1rem;
     font-size: 12px;
     color: #F91500;
@@ -815,6 +815,94 @@ li.react-datepicker__time-list-item--selected {
   100% {
     border-top-color: #037FF7; /* Back to Blue */
   }
+}
+
+/* Success Popup Styles */
+.successPopupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.successPopup {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.successIcon {
+  margin-bottom: 1rem;
+}
+
+.successIcon svg {
+  width: 60px;
+  height: 60px;
+}
+
+.successPopup h3 {
+  color: #2E7D32;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.successPopup p {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.scheduledTime {
+  background: #E8F5E9;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-weight: 500;
+  color: #1B5E20;
+}
+
+.successButton {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.successButton:hover {
+  background: #3E8E41;
+}
+
+.gren{
+color: green;
+text-align: end;
+font-weight: 600;
 }
 
 @media (max-width: 768px) {
