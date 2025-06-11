@@ -361,7 +361,7 @@ function StepCard({
               href="mailto:counselor@learnbay.co" 
               className={styles.contactButton}
             >
-              Contact Counselor
+              Contact Evaluator 
             </a>
           </div>
         )}
@@ -684,21 +684,26 @@ export default function Steps({
         if (user?.user_creation_time && user?.application_time) {
           const creationTime = new Date(user.user_creation_time);
           const [hours, minutes, seconds] = user.application_time.split(':').map(Number);
-          
-          // Set the deadline by adding application_time hours to creation date
+        
           const deadlineDate = new Date(creationTime);
           deadlineDate.setHours(creationTime.getHours() + hours);
           deadlineDate.setMinutes(creationTime.getMinutes() + minutes);
           deadlineDate.setSeconds(creationTime.getSeconds() + seconds);
-          
-          setDeadline(deadlineDate);
-          
-          // Calculate initial time left
+        
+          // ✅ Subtract 5:30 manually
+          deadlineDate.setHours(deadlineDate.getHours() - 5);
+          deadlineDate.setMinutes(deadlineDate.getMinutes() - 30);
+        
+          // ✅ Add logging
+          console.log("🕒 Adjusted Deadline:", deadlineDate.toISOString());
+        
           const now = new Date();
           const initialTimeLeft = Math.floor((deadlineDate - now) / 1000);
+          console.log("⏱ Time left (seconds):", initialTimeLeft);
+        
+          setDeadline(deadlineDate);
           setTimeLeft(Math.max(0, initialTimeLeft));
-          
-          // Check if we should lock step 1
+        
           if (initialTimeLeft <= 0 && getStepStatus(1) === 'pending') {
             setIsStep1Locked(true);
             setEnrollmentStatus(prev => ({
@@ -707,6 +712,22 @@ export default function Steps({
             }));
           }
         }
+        
+          
+        //   // Calculate initial time left
+        //   const now = new Date();
+        //   const initialTimeLeft = Math.floor((deadlineDate - now) / 1000);
+        //   setTimeLeft(Math.max(0, initialTimeLeft));
+          
+        //   // Check if we should lock step 1
+        //   if (initialTimeLeft <= 0 && getStepStatus(1) === 'pending') {
+        //     setIsStep1Locked(true);
+        //     setEnrollmentStatus(prev => ({
+        //       ...prev,
+        //       step1: "locked"
+        //     }));
+        //   }
+        // }
 
         if (statusData.step1_timestamp) {
           const approvalTime = new Date(statusData.step1_timestamp);
