@@ -315,37 +315,27 @@ const getEnrollmentProgress = async (req, res) => {
 // Add this to your existing API routes file
 const checkPaymentStatus = async (req, res) => {
   const { email } = req.query;
-  
   if (!email) {
     return res.status(400).json({ message: "Email is required" });
   }
 
   try {
-    // First check if user exists
     const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
     if (userRows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const emailid = userRows[0].email;
-
-
-    // Check payment status in enrollment_details or a separate payments table
     const [paymentRows] = await db.query(
       "SELECT payment_status FROM user WHERE email = ?",
       [email]
     );
-    
-    console.log(emailid, 'hello')
-    console.log("Payment status query result:", paymentRows); // Log the query result
-
 
     if (paymentRows.length === 0) {
-      return res.status(200).json({ payment_status: 0 }); // 0 means not paid
+      return res.status(200).json({ payment_status: null }); // don't fallback
     }
 
     return res.status(200).json({ 
-      payment_status: paymentRows[0].payment_status || 0 
+      payment_status: paymentRows[0].payment_status  // no || 0 fallback
     });
 
   } catch (err) {
@@ -353,6 +343,29 @@ const checkPaymentStatus = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+
+
+const initiatePaymentStatus = async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: "Email is required" });
+
+  try {
+    const [result] = await db.query(
+      `UPDATE user SET payment_status = 0 WHERE email = ? AND (payment_status IS NULL OR payment_status = '')`,
+      [email]
+    );
+
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ message: "Payment status set to in_progress (0)" });
+    } else {
+      return res.status(200).json({ message: "Payment status already set or user not found" });
+    }
+  } catch (err) {
+    console.error("Error updating payment_status to 0:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 
 // In your enrollmentController.js
 const updateStepStatus = async (req, res) => {
@@ -382,7 +395,8 @@ module.exports = {
   getEnrollmentProgress,
   checkPaymentStatus,
   
-  updateStepStatus
+  updateStepStatus,
+  initiatePaymentStatus
 
 };
 

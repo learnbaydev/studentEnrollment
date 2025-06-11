@@ -287,7 +287,7 @@ text-align: center;
   
   .timerSection {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     margin-top: 1rem;
     font-size: 12px;
     color: #F91500;
@@ -897,6 +897,12 @@ li.react-datepicker__time-list-item--selected {
 
 .successButton:hover {
   background: #3E8E41;
+}
+
+.gren{
+color: green;
+text-align: end;
+font-weight: 600;
 }
 
 @media (max-width: 768px) {

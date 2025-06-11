@@ -356,7 +356,7 @@ function StepCard({
 
         {number === 1 && status === "locked" && isStep1Locked && (
           <div className={styles.contactCounselor}>
-            <p>⏰ Time's up! Please contact your counselor to unlock your application.</p>
+            <p>⏰ Time's up! Please contact your evaluator to Unlock your evaluation form.</p>
             <a 
               href="mailto:counselor@learnbay.co" 
               className={styles.contactButton}
@@ -442,13 +442,14 @@ function StepCard({
             {formSubmitted || status === "in_progress" ? (
               <>
                 <p className={styles.timerText}>
-                  <span>⏱</span> Approved: {formatTime(timeLeft)}
+                  {/* <span>⏱</span> Approved: {formatTime(timeLeft)} */}
                 </p>
-                <p className={styles.progressText}>
+                {/* <p className={styles.progressText}>
                   {timeLeft <= 0
                     ? "Expired"
                     : `${Math.round(calculateProgress(timeLeft))}% completed`}
-                </p>
+                </p> */}
+                <p className={styles.gren}>Your request is under review – approval is in progress.</p>
               </>
             ) : (
               ""
@@ -560,12 +561,13 @@ function StepCard({
       {showTimer &&
         (status === "pending" || status === "in_progress") &&
         (formSubmitted || status === "in_progress") && (
-          <div className={styles.progressBarContainer}>
-            <div
-              className={styles.progressBarFill}
-              style={{ width: `${calculateProgress(timeLeft)}%` }}
-            ></div>
-          </div>
+          // <div className={styles.progressBarContainer}>
+          //   <div
+          //     className={styles.progressBarFill}
+          //     style={{ width: `${calculateProgress(timeLeft)}%` }}
+          //   ></div>
+          // </div>
+          ''
         )}
     </div>
   );
@@ -662,9 +664,15 @@ export default function Steps({
           ...prev,
           ...statusData,
           progress,
-          step4: paymentData.payment_status === '1' ? 'approved' : 
-          prev.step4 === 'in_progress' ? 'in_progress' : 
-          'pending',
+          step4:
+          paymentData.payment_status === '1'
+            ? 'approved'
+            : paymentData.payment_status === '0'
+              ? 'in_progress'
+              : (statusData.step3 === 'approved' || user?.offer_letter_path)
+                ? 'pending'
+                : 'locked',
+            
           timestamps: {
             ...prev.timestamps,
             ...(statusData.timestamps || {}),
@@ -778,45 +786,40 @@ export default function Steps({
   const handleScheduleComplete = async () => {
     await fetchData();
   };
-
   const handlePaymentClick = async () => {
     try {
       setEnrollmentStatus(prev => ({
         ...prev,
         step4: "in_progress"
       }));
-
+  
+      console.log("⏳ Initiating payment status update...");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/initiate-payment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: userEmail })
+      });
+  
+      const result = await res.json();
+      console.log("🚀 Backend response:", result);
+  
+      if (!res.ok) {
+        throw new Error(result.message || "Failed to initiate payment");
+      }
+  
       const paymentWindow = window.open(
-        "https://pages.razorpay.com/learnbay", 
+        "https://pages.razorpay.com/learnbay",
         "_blank"
       );
-
-      const paymentCheckInterval = setInterval(async () => {
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/check-payment?email=${userEmail}`
-          );
-          const data = await response.json();
-
-          if (data.payment_status === 1) {
-            clearInterval(paymentCheckInterval);
-            setPaymentStatus(1);
-            setEnrollmentStatus(prev => ({
-              ...prev,
-              step4: "approved"
-            }));
-            await fetchData();
-          }
-        } catch (error) {
-          console.error("Error checking payment status:", error);
-        }
-      }, 5000);
-
-      return () => clearInterval(paymentCheckInterval);
+  
+      // continue polling logic here...
     } catch (error) {
-      console.error("Error handling payment:", error);
+      console.error("❌ Error handling payment:", error);
     }
   };
+  
 
   const getStepStatus = (stepNumber) => {
     const stepKey = `step${stepNumber}`;
@@ -850,16 +853,15 @@ export default function Steps({
       if (meetingData?.completed) return 'pending';
       return 'locked';
     }
-  
     if (stepNumber === 4) {
-      if (paymentStatus === 1) return 'approved';
-      if (enrollmentStatus.step4 === 'in_progress') return 'in_progress';
-      if (enrollmentStatus.step3 === 'approved' || user?.offer_letter_path) {
-        return 'pending';
-      }
-      return 'locked';
+      if (paymentStatus === 1) return 'approved'; // ✅ Payment done
+      if (enrollmentStatus.step4 === 'in_progress') return 'in_progress'; // 🔄 In progress
+      if (enrollmentStatus.step3 === 'approved' || user?.offer_letter_path) return 'pending'; // 🕒 Eligible to pay
+      return 'locked'; // 🔒 Not ready
     }
-  
+    
+    
+    
     return 'locked';
   };
 
@@ -867,9 +869,9 @@ export default function Steps({
     {
       iconActive: "/icons/icon_pendning.webp",
       iconInactive: "/icons/icon_locked.webp",
-      title: "Eligibility & Application Form",
+      title: "Evaluation Form ",
       description:
-        "Begin your Learnbay journey by filling out the comprehensive eligibility and application form.",
+        "Begin your Learnbay journey by filling out the exclusive Evaluation form and get ready",
       showTimer: true,
     },
     {

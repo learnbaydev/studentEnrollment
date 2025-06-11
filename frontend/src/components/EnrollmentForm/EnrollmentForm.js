@@ -267,38 +267,50 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
               </select>
               {fieldErrors.domain && <span className={styles.errorText}>{fieldErrors.domain}</span>}
             </div> */}
-                   <div className={styles.labelInput}>
-              <label>Graduation Year *</label>
-              <input
-                type="number"
-                placeholder="Graduation year (ex: 2012)"
-                name="graduation_year"
-                value={formData.graduation_year}
-                onChange={handleChange}
-                min="1900"
-                max={new Date().getFullYear()}
-                className={fieldErrors.graduation_year ? styles.errorField : ""}
-              />
-              {fieldErrors.graduation_year && <span className={styles.errorText}>{fieldErrors.graduation_year}</span>}
-            </div>
+     <div className={styles.labelInput}>
+  <label>Graduation Year *</label>
+  <input
+    type="number"
+    placeholder="Graduation year (ex: 2012)"
+    name="graduation_year"
+    value={formData.graduation_year}
+    onChange={(e) => {
+      const year = e.target.value;
 
-            <div className={styles.labelInput}>
-              <label>Years of Experience *</label>
-              <select
-                name="experience_years"
-                value={formData.experience_years}
-                onChange={handleChange}
-                className={fieldErrors.experience_years ? styles.errorField : ""}
-              >
-                <option value="">Select experience</option>
-                <option value="0-1">0-1 years</option>
-                <option value="1-2">1-2 years</option>
-                <option value="2-3">2-3 years</option>
-                <option value="3-4">3-4 years</option>
-                <option value="4+">4+ years</option>
-              </select>
-              {fieldErrors.experience_years && <span className={styles.errorText}>{fieldErrors.experience_years}</span>}
-            </div>
+      // Allow only 4-digit numbers
+      if (year.length <= 4 && /^[0-9]*$/.test(year)) {
+        handleChange(e);
+      }
+    }}
+    min="1900"
+    max={new Date().getFullYear()}
+    className={fieldErrors.graduation_year ? styles.errorField : ""}
+  />
+  {fieldErrors.graduation_year && (
+    <span className={styles.errorText}>{fieldErrors.graduation_year}</span>
+  )}
+</div>
+
+
+<div className={styles.labelInput}>
+  <label>Years of Experience *</label>
+  <input
+    type="number"
+    step="0.1"
+    min="0"
+    placeholder="Enter years of experience (e.g. 2 or 3.5)"
+    name="experience_years"
+    value={formData.experience_years}
+    onChange={handleChange}
+    className={fieldErrors.experience_years ? styles.errorField : ""}
+  />
+  {fieldErrors.experience_years && (
+    <span className={styles.errorText}>
+      {fieldErrors.experience_years}
+    </span>
+  )}
+</div>
+
           </div>
           
           <div className={styles.eName}>
@@ -335,50 +347,6 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
             </div>
 
             <div className={styles.labelInput}>
-              <label>Your current designation *</label>
-              <input
-                type="text"
-                name="current_job_title"
-                value={formData.current_job_title}
-                onChange={handleChange}
-                placeholder="e.g. current job title..."
-                className={fieldErrors.current_job_title ? styles.errorField : ""}
-              />
-              {fieldErrors.current_job_title && <span className={styles.errorText}>{fieldErrors.current_job_title}</span>}
-            </div>
-          </div>
-
-          <div className={`${styles.eName} ${styles.secondf}`}>
-            <div className={styles.labelInput}>
-              <label>Your current CTC (in LPA) *</label>
-              <input
-                type="text"
-                name="current_ctc"
-                value={formData.current_ctc}
-                onChange={handleChange}
-                min="0"
-                placeholder="e.g. current CTC..."
-                className={fieldErrors.current_ctc ? styles.errorField : ""}
-              />
-              {fieldErrors.current_ctc && <span className={styles.errorText}>{fieldErrors.current_ctc}</span>}
-            </div>
-
-            <div className={styles.labelInput}>
-              <label>Aspiring CTC (in LPA) *</label>
-              <input
-                type="text"
-                name="expected_ctc"
-                value={formData.expected_ctc}
-                onChange={handleChange}
-                min="0"
-                placeholder="e.g. Expected CTC..."
-                className={fieldErrors.expected_ctc ? styles.errorField : ""}
-              />
-              {fieldErrors.expected_ctc && <span className={styles.errorText}>{fieldErrors.expected_ctc}</span>}
-            </div>
-          </div>
-          <div className={`${styles.eName} ${styles.secondf}`}>
-          <div className={styles.labelInput}>
             <label>Aspiring Companies *</label>
             <input
               type="text"
@@ -390,6 +358,59 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
             />
             {fieldErrors.aspiring_companies && <span className={styles.errorText}>{fieldErrors.aspiring_companies}</span>}
           </div>
+
+           
+          </div>
+
+          <div className={`${styles.eName} ${styles.secondf}`}>
+          <div className={styles.labelInput}>
+  <label>Your current CTC (in LPA) *</label>
+  <input
+    type="number"
+    name="current_ctc"
+    value={formData.current_ctc}
+    onChange={handleChange}
+    min="0"
+    step="0.01"
+    placeholder="e.g. 12.5"
+    className={fieldErrors.current_ctc ? styles.errorField : ""}
+  />
+  {fieldErrors.current_ctc && (
+    <span className={styles.errorText}>{fieldErrors.current_ctc}</span>
+  )}
+</div>
+
+<div className={styles.labelInput}>
+  <label>Aspiring CTC (in LPA) *</label>
+  <input
+    type="number"
+    name="expected_ctc"
+    value={formData.expected_ctc}
+    onChange={handleChange}
+    min="0"
+    step="0.01"
+    placeholder="e.g. 15.75"
+    className={fieldErrors.expected_ctc ? styles.errorField : ""}
+  />
+  {fieldErrors.expected_ctc && (
+    <span className={styles.errorText}>{fieldErrors.expected_ctc}</span>
+  )}
+</div>
+
+          </div>
+          <div className={`${styles.eName} ${styles.secondf}`}>
+          <div className={styles.labelInput}>
+              <label>Your Current Designation *</label>
+              <input
+                type="text"
+                name="current_job_title"
+                value={formData.current_job_title}
+                onChange={handleChange}
+                placeholder="e.g. current job title..."
+                className={fieldErrors.current_job_title ? styles.errorField : ""}
+              />
+              {fieldErrors.current_job_title && <span className={styles.errorText}>{fieldErrors.current_job_title}</span>}
+            </div>
           <div className={styles.labelInput}>
             <label>Your aspiring designation (if any)</label>
             <input

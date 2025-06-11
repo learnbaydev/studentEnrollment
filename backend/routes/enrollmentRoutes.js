@@ -5,7 +5,9 @@ const {
   getEnrollmentSteps,
   getEnrollmentProgress,
   checkPaymentStatus,
-  updateStepStatus, // ✅ Add this
+  updateStepStatus,
+  initiatePaymentStatus,
+  // updatePaymentStatus, // ✅ Add this
 } = require("../controllers/enrollmentController");
 
 const router = express.Router();
@@ -16,4 +18,6 @@ router.get("/enroll/status", getEnrollmentSteps);
 router.get("/enrollment/progress", getEnrollmentProgress); // ✅ Fixed
 router.get("/enrollment/check-payment", checkPaymentStatus)
 router.post("/enrollment/update-step", updateStepStatus);
+router.post("/enrollment/initiate-payment", initiatePaymentStatus);
+
 module.exports = router;
