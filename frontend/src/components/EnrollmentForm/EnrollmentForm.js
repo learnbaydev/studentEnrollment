@@ -412,7 +412,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
               {fieldErrors.current_job_title && <span className={styles.errorText}>{fieldErrors.current_job_title}</span>}
             </div>
           <div className={styles.labelInput}>
-            <label>Your aspiring designation (if any)</label>
+            <label>Your Aspiring Designation (if any)</label>
             <input
               type="text"
               name="aspiring_designation"
@@ -504,7 +504,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
           </div>
 
           <div className={styles.labelInput}>
-            <label>Why do you want join this program? *</label>
+            <label>Why do you want join this program? (Describe in 100 words in SOP)*</label>
             <textarea
               name="expectations"
               value={formData.expectations}
