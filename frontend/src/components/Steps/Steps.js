@@ -409,7 +409,7 @@ function StepCard({
                 onClick={() => setShowTooltip(true)} 
                 className={styles.enrollButton}
               >
-                Schedule Evaluation
+                Schedule Screening
               </button>
             ) : null}
           </>
