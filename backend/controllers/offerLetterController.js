@@ -12,7 +12,7 @@ exports.generatePDFByEmail = async (req, res) => {
     // Query user data
     const [results] = await db.query(
       `SELECT id, email, name as full_name, program_name, 
-       program_fee, domain, offer_letter_path 
+       program_fee, domain, offer_letter_path, remarks 
        FROM user WHERE email = ?`, 
       [email]
     );
@@ -25,7 +25,10 @@ exports.generatePDFByEmail = async (req, res) => {
     }
 
     const userData = results[0];
-
+    const currentYear = new Date().getFullYear();
+    const userIdFormatted = 'LB' + currentYear + userData.id.toString().padStart(5, '0');
+    
+    
     // If offer letter exists, return a fresh signed URL
     if (userData.offer_letter_path) {
       // Generate a new signed URL with longer expiration
@@ -38,7 +41,7 @@ exports.generatePDFByEmail = async (req, res) => {
     }
 
     // Generate new PDF and upload to S3
-    const { s3Key, s3Url } = await generateOfferLetterPDF(userData);
+    const { s3Key, s3Url } = await generateOfferLetterPDF(userData, userIdFormatted);
 
     // Update database with S3 key
     await db.query(

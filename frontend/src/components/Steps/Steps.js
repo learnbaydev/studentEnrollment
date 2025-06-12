@@ -308,7 +308,7 @@ function StepCard({
               >
                 {isScheduling ? (
                   <>
-                    <span className={styles.spinner}></span> Scheduling...
+                    <span className={styles.spinnertwo}></span> Scheduling...
                   </>
                 ) : (
                   "Confirm Schedule"
@@ -695,11 +695,11 @@ export default function Steps({
           deadlineDate.setMinutes(deadlineDate.getMinutes() - 30);
         
           // ✅ Add logging
-          console.log("🕒 Adjusted Deadline:", deadlineDate.toISOString());
+          // console.log("🕒 Adjusted Deadline:", deadlineDate.toISOString());
         
           const now = new Date();
           const initialTimeLeft = Math.floor((deadlineDate - now) / 1000);
-          console.log("⏱ Time left (seconds):", initialTimeLeft);
+          // console.log("⏱ Time left (seconds):", initialTimeLeft);
         
           setDeadline(deadlineDate);
           setTimeLeft(Math.max(0, initialTimeLeft));

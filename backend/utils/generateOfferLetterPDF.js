@@ -3,21 +3,31 @@ const fs = require('fs');
 const path = require('path');
 const { uploadFile } = require('./s3Storage');
 
-const generateOfferLetterPDF = async (userData) => {
+const generateOfferLetterPDF = async (userData, userid) => {
   let browser;
   try {
     // Read HTML template
     const templatePath = path.join(__dirname, 'templates/scholarship-letter.html');
     let html = fs.readFileSync(templatePath, 'utf8');
     
-    // Replace placeholders with actual data
-    html = html.replace(/<<Full Name>>/g, userData.full_name)
-               .replace(/<<Program Name>>/g, userData.program_name || userData.program_name)
-               .replace(/<<Domain Name>>/g, userData.domain)
-               .replace(/<<Program Fee>>/g, userData.program_fee)
-               .replace(/<<Validity>>/g, userData.validity)
-               .replace(/<<Signature>>/g, userData.signature || 'Scholarship & Admissions Team');
+    const escapeHTML = (str) =>
+      str?.replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+
+
     
+          html = html.replace(/<<Full Name>>/g, userData.full_name)
+          .replace(/<<user Id>>/g, userid)
+          .replace(/<<Program Name>>/g, userData.program_name || userData.program_name)
+          .replace(/<<Domain Name>>/g, userData.domain)
+          .replace(/<<Remarks data>>/g, escapeHTML(userData.remarks || 'N/A'))
+          .replace(/<<Validity>>/g, userData.validity)
+          .replace(/<<Signature>>/g, userData.signature || 'Scholarship & Admissions Team');
+      
+     
     // Launch puppeteer
     browser = await puppeteer.launch({
       headless: 'new',
