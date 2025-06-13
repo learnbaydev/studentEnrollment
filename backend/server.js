@@ -15,6 +15,7 @@ const enrollmentRoutes = require("./routes/enrollmentRoutes");
 const scheduleRoutes = require("./routes/scheduleRoutes");
 const paymentStatusRouter = require("./routes/payment-status");
 const authRoutes = require("./routes/authRoutes");
+const discordRoutes = require("./routes/discorRoutes");
 
 // Initialize express app
 const app = express();
@@ -91,6 +92,8 @@ app.use("/api", enrollmentRoutes);
 app.use("/api/schedule", scheduleRoutes);
 app.use("/api/payment-status", paymentStatusRouter);
 app.use("/pdfs", express.static(path.join(__dirname, "public/pdfs")));
+app.use("/api", discordRoutes);
+
 
 // ✅ Check Auth Status API
 app.get("/api/check-auth", (req, res) => {

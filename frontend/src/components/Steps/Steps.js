@@ -137,18 +137,23 @@ function StepCard({
   }, [number, status, meetingData]);
 
   const filterPassedTime = (time) => {
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
-    const currentTime = new Date();
-    const currentIST = new Date(currentTime.getTime() + (currentTime.getTimezoneOffset() * 60000) + (5.5 * 3600000));
-    if (time.getDate() === currentIST.getDate() &&
-        time.getMonth() === currentIST.getMonth() &&
-        time.getFullYear() === currentIST.getFullYear()) {
-      return (hours > currentIST.getHours() || 
-             (hours === currentIST.getHours() && minutes > currentIST.getMinutes()));
+    const now = new Date();
+  
+    // Check if selected date is today
+    const selectedDate = new Date(time);
+    const isToday =
+      now.getDate() === selectedDate.getDate() &&
+      now.getMonth() === selectedDate.getMonth() &&
+      now.getFullYear() === selectedDate.getFullYear();
+  
+    if (isToday) {
+      return time.getTime() > now.getTime(); // Only allow times later than now
     }
-    return hours >= 9 && hours <= 17;
+  
+    // Allow all times on future days
+    return true;
   };
+  
 
   const fetchMeetingLink = async () => {
     try {
@@ -277,27 +282,27 @@ function StepCard({
             </button>
           </div>
           <div className={styles.tooltipContent}>
-            <p className={styles.tooltipMessage}>
-              Select a date and time for your evaluation call (Monday-Friday, 9AM-5PM)
-            </p>
+          <p className={styles.tooltipMessage}>
+  Select a convenient date and time for your evaluation session. Our expert will review your profile and help you move forward in the admission process.
+</p>
 
             <div className={styles.dateTimePicker}>
-              <DatePicker
-                selected={selectedDateTime}
-                onChange={(date) => setSelectedDateTime(date)}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={30}
-                dateFormat="MMMM d, yyyy h:mm aa"
-                minDate={new Date()}
-                filterDate={isWeekday}
-                filterTime={filterPassedTime}
-                placeholderText="Select date and time (IST)"
-                className={styles.datePickerInput}
-                timeCaption="Time (IST)"
-                utcOffset={5.5 * 60}
-                calendarClassName={styles.datePickerCalendar} 
-              />
+            <DatePicker
+  selected={selectedDateTime}
+  onChange={(date) => setSelectedDateTime(date)}
+  showTimeSelect
+  timeFormat="HH:mm"
+  timeIntervals={30}
+  dateFormat="MMMM d, yyyy h:mm aa"
+  minDate={new Date()}
+  // filterDate={isWeekday}
+  filterTime={filterPassedTime} // ✅ ensure this is passed
+  placeholderText="Select date and time (IST)"
+  className={styles.datePickerInput}
+  timeCaption="Time (IST)"
+  utcOffset={5.5 * 60}
+/>
+
             </div>
 
             <div className={styles.tooltipFooter}>

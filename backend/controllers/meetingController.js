@@ -31,13 +31,21 @@ exports.scheduleMeeting = async (req, res) => {
     }
 
     // Validate business hours (9am-6pm in user's timezone)
-    const meetingHour = moment.tz(meetingDateTime, timezone).hour();
-    if (meetingHour < 9 || meetingHour >= 18) {
+    const meetingMoment = moment.tz(meetingDateTime, timezone);
+    const hour = meetingMoment.hour();
+    const minute = meetingMoment.minute();
+    
+    if (
+      hour < 9 || 
+      (hour === 17 && minute > 30) || 
+      hour > 17
+    ) {
       return res.status(400).json({
         success: false,
-        error: 'Meetings must be scheduled between 9:00 AM and 6:00 PM in your timezone'
+        error: 'Meetings must be scheduled between 9:00 AM and 5:30 PM in your timezone'
       });
     }
+    
 
     // Check for existing meetings within 2 hours
     const existingMeeting = await Meeting.findOne({

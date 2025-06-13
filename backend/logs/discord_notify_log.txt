@@ -1,0 +1,126 @@
+[2025-06-13T07:44:22.660Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit ambi",
+  "experience_years": "133",
+  "graduation_year": "2019",
+  "current_company": "23",
+  "current_job_title": "3",
+  "aspiring_designation": "3",
+  "current_ctc": "2",
+  "expected_ctc": "33",
+  "aspiring_companies": "3",
+  "motivation": "e",
+  "expectations": "e",
+  "programming_rating": 5,
+  "linkedin_profile": "3",
+  "evaluator_rating": "5",
+  "native_city": "ss"
+}
+[2025-06-13T07:44:22.660Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-13T08:18:42.346Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit ambi",
+  "experience_years": "12",
+  "graduation_year": "2019",
+  "current_company": "2",
+  "current_job_title": "s",
+  "aspiring_designation": "s",
+  "current_ctc": "2",
+  "expected_ctc": "2",
+  "aspiring_companies": "s112",
+  "motivation": "s",
+  "expectations": "ss",
+  "programming_rating": 4,
+  "linkedin_profile": "s",
+  "evaluator_rating": "5",
+  "native_city": "s"
+}
+[2025-06-13T08:18:42.346Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-13T08:21:24.668Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit ambi",
+  "experience_years": "99292",
+  "graduation_year": "2018",
+  "current_company": "22",
+  "current_job_title": "ss",
+  "aspiring_designation": "ss",
+  "current_ctc": "12",
+  "expected_ctc": "22",
+  "aspiring_companies": "3",
+  "motivation": "s",
+  "expectations": "s",
+  "programming_rating": 5,
+  "linkedin_profile": "ss",
+  "evaluator_rating": "5",
+  "native_city": "jsjs"
+}
+[2025-06-13T08:21:24.668Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-13T09:20:48.403Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi new",
+  "experience_years": "3.2",
+  "graduation_year": "2019",
+  "current_company": "Learnbay",
+  "current_job_title": "software engineer",
+  "aspiring_designation": "lead",
+  "current_ctc": "12",
+  "expected_ctc": "18.9",
+  "aspiring_companies": "Google",
+  "motivation": "Sure! Here's a 100-word sample you can use for a **target company** answer, such as in a job application or career counseling form:\n\n---\n\nMy target companies are industry leaders known for innovation, employee development, and impactful work. I’m particularly aiming for organizations like **Google, Microsoft, Amazon, Deloitte, and TCS**, where I can apply my data science and AI skills in real-world projects. I admire these companies for their strong tech culture, global presence, and commitment to continuous learning. My goal is to contribute meaningfully in roles related to analytics, AI product development, or business intelligence. I’m also open to high-growth startups where I can work closely with cross-functional teams and grow into a leadership position over time.\n\n---\n\nLet me know if you'd like to personalize this further.\n",
+  "expectations": "Certainly! Here's a different 100-word version of a \"target company\" response with a fresh tone and structure:\n\n---\n\nI’m targeting companies that prioritize innovation, employee empowerment, and data-driven decision-making. Organizations like **Accenture, EY, Capgemini, Fractal Analytics, and ZS Associates** appeal to me due to their strong consulting backgrounds and cutting-edge work in AI and analytics. I’m looking for a place where I can work on real-world business problems, collaborate with talented teams, and continuously upskill. I value a dynamic work culture with mentorship, global exposure, and a clear path for career growth. I’m also drawn to companies that are transforming industries using technology and that encourage professionals to take ownership and lead with impact.\n\n---\n\nWould you like it tailored toward a specific domain (e.g., fintech, healthcare, product-based)?\n",
+  "programming_rating": 4,
+  "linkedin_profile": "n.a",
+  "evaluator_rating": "4",
+  "native_city": "Bangalore"
+}
+[2025-06-13T09:20:48.403Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-13T09:31:21.795Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi new",
+  "experience_years": "3.4",
+  "graduation_year": "2019",
+  "current_company": "learnbay",
+  "current_job_title": "s",
+  "aspiring_designation": "d",
+  "current_ctc": "12",
+  "expected_ctc": "18",
+  "aspiring_companies": "hshs",
+  "motivation": "dd",
+  "expectations": "dd",
+  "programming_rating": 5,
+  "linkedin_profile": "dd",
+  "evaluator_rating": "5",
+  "native_city": "Bnagalore"
+}
+[2025-06-13T09:31:21.795Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-13T09:45:55.471Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi new",
+  "experience_years": "3.2",
+  "graduation_year": "2018",
+  "current_company": "learnbay",
+  "current_job_title": "lead",
+  "aspiring_designation": "nw lead",
+  "current_ctc": "12.5",
+  "expected_ctc": "18.9",
+  "aspiring_companies": "google",
+  "motivation": "hi",
+  "expectations": "sss",
+  "programming_rating": 5,
+  "linkedin_profile": "gello",
+  "evaluator_rating": "4",
+  "native_city": "Bnagalore"
+}
+[2025-06-13T09:45:55.471Z] ✅ Sent to Discord. Status: 204
+
