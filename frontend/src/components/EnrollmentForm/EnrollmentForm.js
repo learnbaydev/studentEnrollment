@@ -136,28 +136,52 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
   const handleSubmit = async () => {
     setLoading(true);
     setError("");
-
+  
     try {
+      // 🔹 Step 1: Submit form data to backend
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/enroll`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
-
+  
       if (!response.ok) {
+        console.error("❌ Enrollment failed:", data);
         setError(data.message || "Failed to submit");
       } else {
+        console.log("✅ Enrollment successful. Now sending to Discord...");
+  
+        // 🔹 Step 2: Notify Discord
+        const discordRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notify-discord`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "mySecretDiscordToken123", // Optional, for backend auth
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        const discordData = await discordRes.json();
+        console.log("📡 Discord webhook response:", discordData);
+  
+        if (!discordRes.ok) {
+          console.warn("⚠️ Discord webhook failed:", discordData.message);
+        }
+  
         setIsSubmitted(true);
         onComplete();
       }
     } catch (err) {
+      console.error("🚨 Error submitting enrollment:", err);
       setError("Network error. Please try again later.");
     } finally {
       setLoading(false);
     }
   };
+  
+  
 
   const handleRatingClick = (rating) => {
     setFormData({ ...formData, programming_rating: rating });
