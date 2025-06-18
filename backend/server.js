@@ -16,6 +16,8 @@ const scheduleRoutes = require("./routes/scheduleRoutes");
 const paymentStatusRouter = require("./routes/payment-status");
 const authRoutes = require("./routes/authRoutes");
 const discordRoutes = require("./routes/discorRoutes");
+// require("./cron/discordWebhookCheck"); // schedule the hourly health check
+
 
 // Initialize express app
 const app = express();
