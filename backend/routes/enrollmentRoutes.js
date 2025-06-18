@@ -7,6 +7,7 @@ const {
   checkPaymentStatus,
   updateStepStatus,
   initiatePaymentStatus,
+  markTokenReceived,
   // updatePaymentStatus, // ✅ Add this
 } = require("../controllers/enrollmentController");
 
@@ -19,5 +20,7 @@ router.get("/enrollment/progress", getEnrollmentProgress); // ✅ Fixed
 router.get("/enrollment/check-payment", checkPaymentStatus)
 router.post("/enrollment/update-step", updateStepStatus);
 router.post("/enrollment/initiate-payment", initiatePaymentStatus);
+router.post("/enrollment/token-received", markTokenReceived); // ✅ Add this route
+
 
 module.exports = router;

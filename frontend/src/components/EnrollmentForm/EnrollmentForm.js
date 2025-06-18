@@ -255,9 +255,10 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 type="text"
                 name="full_name"
                 value={formData.full_name}
-                disabled
-                readOnly
-                className={styles.disabledInput}
+                  onChange={handleChange}
+                // disabled
+                // readOnly
+                // className={styles.disabledInput}
               />
             </div>
 
@@ -267,6 +268,8 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 type="email"
                 name="email"
                 value={formData.email}
+                // onChange={handleChange}
+
                 disabled
                 readOnly
                 className={styles.disabledInput}

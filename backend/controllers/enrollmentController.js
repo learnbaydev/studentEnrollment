@@ -7,7 +7,7 @@ const submitEnrollmentForm = async (req, res) => {
   const {
     email,
     full_name,
-    domain,
+    // domain,
     experience_years,
     graduation_year,
     current_company,
@@ -312,60 +312,6 @@ const getEnrollmentProgress = async (req, res) => {
   }
 };
 
-// Add this to your existing API routes file
-const checkPaymentStatus = async (req, res) => {
-  const { email } = req.query;
-  if (!email) {
-    return res.status(400).json({ message: "Email is required" });
-  }
-
-  try {
-    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
-    if (userRows.length === 0) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const [paymentRows] = await db.query(
-      "SELECT payment_status FROM user WHERE email = ?",
-      [email]
-    );
-
-    if (paymentRows.length === 0) {
-      return res.status(200).json({ payment_status: null }); // don't fallback
-    }
-
-    return res.status(200).json({ 
-      payment_status: paymentRows[0].payment_status  // no || 0 fallback
-    });
-
-  } catch (err) {
-    console.error("Payment status check error:", err);
-    return res.status(500).json({ message: "Server error" });
-  }
-};
-
-
-const initiatePaymentStatus = async (req, res) => {
-  const { email } = req.body;
-  if (!email) return res.status(400).json({ message: "Email is required" });
-
-  try {
-    const [result] = await db.query(
-      `UPDATE user SET payment_status = 0 WHERE email = ? AND (payment_status IS NULL OR payment_status = '')`,
-      [email]
-    );
-
-    if (result.affectedRows > 0) {
-      return res.status(200).json({ message: "Payment status set to in_progress (0)" });
-    } else {
-      return res.status(200).json({ message: "Payment status already set or user not found" });
-    }
-  } catch (err) {
-    console.error("Error updating payment_status to 0:", err);
-    return res.status(500).json({ message: "Server error" });
-  }
-};
-
 
 // In your enrollmentController.js
 const updateStepStatus = async (req, res) => {
@@ -386,6 +332,98 @@ const updateStepStatus = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
+const checkPaymentStatus = async (req, res) => {
+  const { email } = req.query;
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
+    if (userRows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const [paymentRows] = await db.query(
+      "SELECT payment_status FROM user WHERE email = ?",
+      [email]
+    );
+
+    if (paymentRows.length === 0) {
+      return res.status(200).json({ payment_status: null });
+    }
+
+    const statusRaw = paymentRows[0].payment_status;
+
+    let paymentStatus;
+
+    if (statusRaw === null) {
+      paymentStatus = null;
+    } else if (statusRaw === '') {
+      paymentStatus = '';
+    } else if (Number(statusRaw) === 0) {
+      paymentStatus = 0;
+    } else if (Number(statusRaw) === 1) {
+      paymentStatus = 1;
+    } else {
+      paymentStatus = null; // fallback if unexpected
+    }
+
+    return res.status(200).json({ payment_status: paymentStatus });
+
+  } catch (err) {
+    console.error("Payment status check error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
+const initiatePaymentStatus = async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: "Email is required" });
+
+  try {
+    const [result] = await db.query(
+      `UPDATE user SET payment_status = '' WHERE email = ? AND payment_status IS NULL`,
+      [email]
+    );
+
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ message: "Payment status set to processing ('')" });
+    } else {
+      return res.status(200).json({ message: "Payment already started or user not found" });
+    }
+  } catch (err) {
+    console.error("Error updating payment_status to '':", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+const markTokenReceived = async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: "Email is required" });
+
+  try {
+    const [result] = await db.query(
+      `UPDATE user SET payment_status = 0 WHERE email = ? AND payment_status = ''`,
+      [email]
+    );
+
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ message: "Payment status set to token received (0)" });
+    } else {
+      return res.status(200).json({ message: "User not in processing stage or not found" });
+    }
+  } catch (err) {
+    console.error("Error updating payment_status to 0:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+
 
 
 module.exports = {
@@ -396,7 +434,8 @@ module.exports = {
   checkPaymentStatus,
   
   updateStepStatus,
-  initiatePaymentStatus
+  initiatePaymentStatus,
+  markTokenReceived 
 
 };
 

@@ -60,7 +60,19 @@ function StepCard({
       cardBg: "#F9FAFB",
       descBg: "#F2F2F2",
     },
+
+    token_received: {
+      circleBg: "linear-gradient(90deg, #FFD700 0%, #FFA500 100%)", // Gold gradient
+      border: "0.945px solid #FFD700",
+      shadow: "-7px 7px 9.8px 8px rgba(255, 215, 0, 0.08)",
+      statusText: "💰 Registration Fee Received",
+      cardBg: "#FFFDE7",
+      descBg: "#FFF8DC",
+    },
+    
+    
   };
+
   
   const stepIcons = {
     1: {
@@ -85,8 +97,11 @@ function StepCard({
       pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_blue.webp",
       in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_org.webp",
       approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_green.webp",
-      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_lock.webp"
-    }
+      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_lock.webp",
+      token_received: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/yello_icon.webp",
+    },
+
+    
   };
 
   const currentStatus = statusColors[status] || statusColors.locked;
@@ -561,6 +576,15 @@ function StepCard({
             Complete Step {number - 1} first
           </button>
         )}
+
+{number === 4 && status === "token_received" && (
+  <div className={styles.paymentProcessing}>
+    <button className={`${styles.TokenButton} ${styles.TokenButton}`} disabled>
+     Registration Fee Received
+    </button>
+  </div>
+)}
+
       </div>
 
       {showTimer &&
@@ -641,7 +665,9 @@ export default function Steps({
       const paymentData = await paymentResponse.json();
       
       setMeetingData(meetingData);
-      setPaymentStatus(paymentData.payment_status === '1' ? 1 : 0);
+      // setPaymentStatus(paymentData.payment_status === '1' ? 1 : 0);
+      setPaymentStatus(paymentData.payment_status); // Accepts null, '', 0, or 1
+
 
       if (statusResponse.ok) {
         // Calculate progress based on all completed steps
@@ -829,11 +855,13 @@ export default function Steps({
       });
   
       const result = await res.json();
-      console.log("🚀 Backend response:", result);
   
+      console.log("🚀 Backend response:", result);
+
       if (!res.ok) {
-        throw new Error(result.message || "Failed to initiate payment");
+        throw new Error(result?.message || "Failed to initiate payment");
       }
+      
   
       const paymentWindow = window.open(
         "https://pages.razorpay.com/learnbay",
@@ -880,11 +908,14 @@ export default function Steps({
       return 'locked';
     }
     if (stepNumber === 4) {
-      if (paymentStatus === 1) return 'approved'; // ✅ Payment done
-      if (enrollmentStatus.step4 === 'in_progress') return 'in_progress'; // 🔄 In progress
-      if (enrollmentStatus.step3 === 'approved' || user?.offer_letter_path) return 'pending'; // 🕒 Eligible to pay
-      return 'locked'; // 🔒 Not ready
+      if (paymentStatus === 1) return 'approved';
+      if (paymentStatus === 0) return 'token_received';
+      if (paymentStatus === '') return 'in_progress'; // ✅ handles '' as "Processing"
+      if (paymentStatus === null && (enrollmentStatus.step3 === 'approved' || user?.offer_letter_path)) return 'pending';
+      return 'locked';
     }
+    
+    
     
     
     

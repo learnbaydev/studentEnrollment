@@ -124,3 +124,192 @@
 }
 [2025-06-13T09:45:55.471Z] ✅ Sent to Discord. Status: 204
 
+[2025-06-17T10:21:39.249Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "3.2",
+  "graduation_year": "2019",
+  "current_company": "s",
+  "current_job_title": "s",
+  "aspiring_designation": "s",
+  "current_ctc": "12",
+  "expected_ctc": "18",
+  "aspiring_companies": "s",
+  "motivation": "s",
+  "expectations": "ss",
+  "programming_rating": 5,
+  "linkedin_profile": "s",
+  "evaluator_rating": "5",
+  "native_city": "hello"
+}
+[2025-06-17T10:21:39.249Z] ❌ Error: Request failed with status code 404
+
+[2025-06-17T10:25:13.568Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "3.2",
+  "graduation_year": "2019",
+  "current_company": "hi",
+  "current_job_title": "s",
+  "aspiring_designation": "s",
+  "current_ctc": "23",
+  "expected_ctc": "16",
+  "aspiring_companies": "a",
+  "motivation": "s",
+  "expectations": "s",
+  "programming_rating": 5,
+  "linkedin_profile": "s",
+  "evaluator_rating": "5",
+  "native_city": "Hello"
+}
+[2025-06-17T10:25:13.568Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-17T10:46:00.470Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "233",
+  "graduation_year": "2019",
+  "current_company": "d2",
+  "current_job_title": "dd",
+  "aspiring_designation": "dd",
+  "current_ctc": "2",
+  "expected_ctc": "22",
+  "aspiring_companies": "2",
+  "motivation": "dd",
+  "expectations": "d",
+  "programming_rating": 5,
+  "linkedin_profile": "dd",
+  "evaluator_rating": "5",
+  "native_city": "dd"
+}
+[2025-06-17T10:46:00.470Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-17T10:47:42.449Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "33",
+  "graduation_year": "223",
+  "current_company": "d",
+  "current_job_title": "dd",
+  "aspiring_designation": "d",
+  "current_ctc": "22",
+  "expected_ctc": "22",
+  "aspiring_companies": "d",
+  "motivation": "d",
+  "expectations": "dd",
+  "programming_rating": 5,
+  "linkedin_profile": "dd",
+  "evaluator_rating": "5",
+  "native_city": "dd"
+}
+[2025-06-17T10:47:42.449Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-18T07:32:22.382Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "3.2",
+  "graduation_year": "2019",
+  "current_company": "ss",
+  "current_job_title": "ss",
+  "aspiring_designation": "ss",
+  "current_ctc": "22",
+  "expected_ctc": "22",
+  "aspiring_companies": "s",
+  "motivation": "s",
+  "expectations": "s",
+  "programming_rating": 5,
+  "linkedin_profile": "22",
+  "evaluator_rating": "",
+  "native_city": "hsjs"
+}
+[2025-06-18T07:32:22.382Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-18T10:01:02.600Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "3.2",
+  "graduation_year": "2019",
+  "current_company": "4jdjd",
+  "current_job_title": "s",
+  "aspiring_designation": "s",
+  "current_ctc": "4.3",
+  "expected_ctc": "198",
+  "aspiring_companies": "sjjs",
+  "motivation": "s",
+  "expectations": "jsjsj",
+  "programming_rating": 5,
+  "linkedin_profile": "s",
+  "evaluator_rating": "5",
+  "native_city": "bangalore"
+}
+[2025-06-18T10:01:02.600Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-18T10:03:32.356Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "222",
+  "graduation_year": "292",
+  "current_company": "ss",
+  "current_job_title": "ss",
+  "aspiring_designation": "s",
+  "current_ctc": "22",
+  "expected_ctc": "23",
+  "aspiring_companies": "ss",
+  "motivation": "s",
+  "expectations": "ss",
+  "programming_rating": 5,
+  "linkedin_profile": "s",
+  "evaluator_rating": "5",
+  "native_city": "22"
+}
+[2025-06-18T10:03:32.356Z] ❌ Error: Request failed with status code 401
+
+[2025-06-18T10:05:16.494Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "2.2",
+  "graduation_year": "2019",
+  "current_company": "dd",
+  "current_job_title": "ss",
+  "aspiring_designation": "s",
+  "current_ctc": "22",
+  "expected_ctc": "344",
+  "aspiring_companies": "sdsd",
+  "motivation": "s",
+  "expectations": "ss",
+  "programming_rating": 5,
+  "linkedin_profile": "ss",
+  "evaluator_rating": "4",
+  "native_city": "Bnagalore"
+}
+[2025-06-18T10:05:16.494Z] ✅ Sent to Discord. Status: 204
+
+[2025-06-18T10:35:43.489Z] ▶️ Incoming Discord Notification:
+{
+  "email": "amit@learnbay.co",
+  "full_name": "Amit Ambi",
+  "experience_years": "2",
+  "graduation_year": "2019",
+  "current_company": "s",
+  "current_job_title": "ss",
+  "aspiring_designation": "s",
+  "current_ctc": "1223",
+  "expected_ctc": "22",
+  "aspiring_companies": "s",
+  "motivation": "ss",
+  "expectations": "ss",
+  "programming_rating": 5,
+  "linkedin_profile": "ss",
+  "evaluator_rating": "5",
+  "native_city": "sjsjs"
+}
+[2025-06-18T10:35:43.489Z] ✅ Sent to Discord. Status: 204
+
