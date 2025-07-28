@@ -9,11 +9,13 @@ require("dotenv").config();
 const app = express();
 connectDB();
 // Session setup if needed
-app.use(session({
-  secret: 'your_secret',
-  resave: false,
-  saveUninitialized: true,
-}));
+app.use(
+  session({
+    secret: "your_secret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // Passport initialization
 app.use(passport.initialize());
@@ -23,10 +25,12 @@ app.use(passport.session());
 require("./config/passport"); // Make sure this file contains the GoogleStrategy registration
 
 // ✅ Enable CORS
-app.use(cors({
-  origin: "http://localhost:3000",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 // Body parser
 app.use(express.json());
