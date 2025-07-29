@@ -201,3 +201,77 @@
 .logo:hover {
   transform: scale(1.05);
 }
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.features {
+  font-size: 0.95rem;
+  color: #475569;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+  padding: 0 1rem;
+}
+
+.contact {
+  margin-top: 2rem;
+  font-size: 0.95rem;
+  color: #64748b;
+}
+
+.contact a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+}
+
+.contact a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #3b82f6;
+  transition: width 0.3s ease;
+}
+
+.contact a:hover::after {
+  width: 100%;
+}
+
+.contactOptions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.whatsappLink {
+  transition: all 0.3s ease;
+}
+
+.whatsappIcon {
+  color: #25d366;
+  font-size: 2.2rem;
+  transition: all 0.3s ease;
+}
+
+.whatsappLink:hover .whatsappIcon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.calendlyImage {
+  transition: all 0.3s ease;
+}
+
+.calendlyImage:hover {
+  transform: scale(1.05);
+}
