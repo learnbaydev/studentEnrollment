@@ -3,8 +3,9 @@ import styles from "./RegisterNewUser.module.css";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Image from "next/image";
 
-const RegisterNewUser = ({ user = "" }) => {
+const RegisterNewUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [statusError, setStatusError] = useState("");
@@ -49,6 +50,18 @@ const RegisterNewUser = ({ user = "" }) => {
 
   const handleLogin = () => {
     router.push("/login");
+  };
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
@@ -168,93 +181,126 @@ const RegisterNewUser = ({ user = "" }) => {
   ];
 
   return (
-    <>
-      {!isSuccess ? (
-        <div className={styles.formContainer}>
-          <div className={styles.stepContent}>
-            <form onSubmit={handleSubmit}>
-              <h2 className={styles.step}>Start Your Application</h2>
-              <div className={styles.labelInput}>
-                <label htmlFor="name">Full Name *</label>
-                <input
-                  type="text"
-                  name="full_name"
-                  placeholder="Your Name"
-                  value={formData.full_name}
-                  onChange={handleChange}
-                />
-              </div>
+    <div className={styles.container}>
+      <motion.div
+        className={styles.card}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div className={styles.logo} whileHover={{ scale: 1.05 }}>
+          <Image
+            src="/learnbaylogos.webp"
+            alt="LearnBay Logo"
+            width={150}
+            height={40}
+            loading="lazy"
+            priority={false}
+          />
+        </motion.div>
 
-              <div className={styles.labelInput}>
-                <label htmlFor="email">Email *</label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
+        <>
+          {!isSuccess ? (
+            <motion.div>
+              <motion.div className={styles.stepContent}>
+                <motion.form onSubmit={handleSubmit}>
+                  <motion.h2 className={styles.title} variants={itemVariants}>
+                    Start Your Application{" "}
+                  </motion.h2>
+                  <motion.div className={styles.labelInput}>
+                    <motion.label htmlFor="name">Full Name *</motion.label>
+                    <motion.input
+                      type="text"
+                      name="full_name"
+                      placeholder="Your Name"
+                      value={formData.full_name}
+                      onChange={handleChange}
+                    />
+                  </motion.div>
 
-              <div className={styles.labelInput}>
-                <label htmlFor="mobile">Mobile *</label>
-                <input
-                  type="number"
-                  name="mobile"
-                  placeholder="Your Mobile"
-                  value={formData.mobile}
-                  onChange={handleChange}
-                />
-              </div>
+                  <motion.div className={styles.labelInput}>
+                    <motion.label htmlFor="email">Email *</motion.label>
+                    <motion.input
+                      type="email"
+                      name="email"
+                      placeholder="Your Email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </motion.div>
 
-              <div className={styles.labelInput}>
-                <label htmlFor="program">Program *</label>
-                <select
-                  name="program"
-                  placeholder="Select Program"
-                  value={formData.program}
-                  onChange={handleChange}
-                >
-                  <option value="">Select your program</option>
-                  {programs?.map((course) => (
-                    <option value={course.Course_Name} key={course.Course_ID}>
-                      {course.Course_Name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <motion.div className={styles.labelInput}>
+                    <motion.label htmlFor="mobile">Mobile *</motion.label>
+                    <motion.input
+                      type="number"
+                      name="mobile"
+                      placeholder="Your Mobile"
+                      value={formData.mobile}
+                      onChange={handleChange}
+                    />
+                  </motion.div>
 
-              <button
-                type="submit"
-                className={styles.nextBtn}
-                style={{ marginTop: "20px" }}
-              >
-                Submit
-              </button>
-            </form>
+                  <motion.div className={styles.labelInput}>
+                    <motion.label htmlFor="program">Program *</motion.label>
+                    <motion.select
+                      name="program"
+                      placeholder="Select Program"
+                      value={formData.program}
+                      onChange={handleChange}
+                    >
+                      <motion.option value="">
+                        Select your program
+                      </motion.option>
+                      {programs?.map((course) => (
+                        <motion.option
+                          value={course.Course_Name}
+                          key={course.Course_ID}
+                        >
+                          {course.Course_Name}
+                        </motion.option>
+                      ))}
+                    </motion.select>
+                  </motion.div>
 
-            {error && <p className={styles.error}>{error}</p>}
-          </div>
-        </div>
-      ) : (
-        <div className={styles.formContainer}>
-          <div className={styles.stepContent}>
-            <h2 className={styles.step}>
-              Your Registration successful please login
-            </h2>
-            <motion.button
-              className={styles.button}
-              onClick={handleLogin}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              variants={itemVariants}
+                  <motion.button
+                    type="submit"
+                    className={styles.nextBtn}
+                    style={{ marginTop: "20px" }}
+                  >
+                    Submit
+                  </motion.button>
+                </motion.form>
+
+                {error && <p className={styles.error}>{error}</p>}
+              </motion.div>
+            </motion.div>
+          ) : (
+            <motion.div
+              className={styles.formContainer}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              Login Now
-            </motion.button>
-          </div>
-        </div>
-      )}
-    </>
+              <motion.div className={styles.stepContent}>
+                <motion.h2 className={styles.step}>
+                  Your Registration successful please login
+                </motion.h2>
+
+                <motion.button
+                  className={styles.button}
+                  onClick={handleLogin}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
+                  variants={itemVariants}
+                >
+                  Login Now
+                </motion.button>
+              </motion.div>
+            </motion.div>
+          )}
+        </>
+      </motion.div>
+    </div>
   );
 };
 
