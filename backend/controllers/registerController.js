@@ -17,7 +17,7 @@ const submitRegisterFrom = async (req, res) => {
     }
     // 2. TODO: Check if user already exists with this email
     const [existingUsers] = await db.query(
-      "SELECT id FROM users WHERE email = ?",
+      "SELECT id FROM user WHERE email = ?",
       [email]
     );
 
@@ -31,7 +31,7 @@ const submitRegisterFrom = async (req, res) => {
 
     // 3. TODO: Write data to the user table
     const [result] = await db.query(
-      "INSERT INTO users (email, name, mobile, program_name, application_time, user_creation_time, discount, status, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO user (email, name, mobile, program_name, application_time, user_creation_time, discount, status, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         email,
         full_name,

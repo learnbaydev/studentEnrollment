@@ -9,7 +9,7 @@ const RegisterNewUser = ({ user = "" }) => {
   const [error, setError] = useState("");
   const [statusError, setStatusError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
-  const [isSecuss, setIsSecuss] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     full_name: "",
@@ -44,7 +44,7 @@ const RegisterNewUser = ({ user = "" }) => {
         formData
       );
     } catch (error) {}
-    setIsSecuss(true);
+    setIsSuccess(true);
   };
 
   const handleLogin = () => {
@@ -166,75 +166,95 @@ const RegisterNewUser = ({ user = "" }) => {
       Course_Code: "Gen-AI",
     },
   ];
+
   return (
-    <div className={styles.formContainer}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <h2 className={styles.step}>Start Your Application</h2>
-        <div className={styles.labelInput}>
-          <label>Full Name *</label>
-          <input
-            type="text"
-            name="full_name"
-            value={formData.full_name}
-            onChange={handleChange}
-          />
-        </div>
+    <>
+      {!isSuccess ? (
+        <div className={styles.formContainer}>
+          <div className={styles.stepContent}>
+            <form onSubmit={handleSubmit}>
+              <h2 className={styles.step}>Start Your Application</h2>
+              <div className={styles.labelInput}>
+                <label htmlFor="name">Full Name *</label>
+                <input
+                  type="text"
+                  name="full_name"
+                  placeholder="Your Name"
+                  value={formData.full_name}
+                  onChange={handleChange}
+                />
+              </div>
 
-        <div className={styles.labelInput}>
-          <label>Email *</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
+              <div className={styles.labelInput}>
+                <label htmlFor="email">Email *</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
 
-        <div className={styles.labelInput}>
-          <label>Mobile *</label>
-          <input
-            type="number"
-            name="mobile"
-            value={formData.mobile}
-            onChange={handleChange}
-          />
-        </div>
+              <div className={styles.labelInput}>
+                <label htmlFor="mobile">Mobile *</label>
+                <input
+                  type="number"
+                  name="mobile"
+                  placeholder="Your Mobile"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                />
+              </div>
 
-        <div className={styles.labelInput}>
-          <label>Program *</label>
-          <select
-            name="program"
-            value={formData.program}
-            onChange={handleChange}
-          >
-            <option value="">Select your program</option>
-            {programs?.map((course) => {
-              return (
-                <option value={course.Course_Name} key={course.Course_ID}>
-                  {course.Course_Name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <button type="submit" className={styles.nextBtn}>
-          Submit
-        </button>
-      </form>
+              <div className={styles.labelInput}>
+                <label htmlFor="program">Program *</label>
+                <select
+                  name="program"
+                  placeholder="Select Program"
+                  value={formData.program}
+                  onChange={handleChange}
+                >
+                  <option value="">Select your program</option>
+                  {programs?.map((course) => (
+                    <option value={course.Course_Name} key={course.Course_ID}>
+                      {course.Course_Name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-      {error && <p className={styles.error}>{error}</p>}
-      {isSecuss && (
-        <motion.button
-          className={styles.button}
-          onClick={handleLogin}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.98 }}
-          variants={itemVariants}
-        >
-          Login Now
-        </motion.button>
+              <button
+                type="submit"
+                className={styles.nextBtn}
+                style={{ marginTop: "20px" }}
+              >
+                Submit
+              </button>
+            </form>
+
+            {error && <p className={styles.error}>{error}</p>}
+          </div>
+        </div>
+      ) : (
+        <div className={styles.formContainer}>
+          <div className={styles.stepContent}>
+            <h2 className={styles.step}>
+              Your Registration successful please login
+            </h2>
+            <motion.button
+              className={styles.button}
+              onClick={handleLogin}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              variants={itemVariants}
+            >
+              Login Now
+            </motion.button>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
