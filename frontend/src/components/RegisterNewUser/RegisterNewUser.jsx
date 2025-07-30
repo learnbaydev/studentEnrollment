@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./RegisterNewUser.module.css";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -6,7 +6,7 @@ import axios from "axios";
 import { FaWhatsappSquare } from "react-icons/fa";
 import Image from "next/image";
 
-const RegisterNewUser = () => {
+const RegisterNewUser = ({ email }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [statusError, setStatusError] = useState("");
@@ -18,7 +18,14 @@ const RegisterNewUser = () => {
     mobile: "",
     program: "",
   });
-
+  useEffect(() => {
+    if (email && formData.email !== email) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        email: email
+      }));
+    }
+  }, [email, formData.email]);
   const router = useRouter();
 
   const handleChange = (e) => {
@@ -239,6 +246,7 @@ const RegisterNewUser = () => {
                       placeholder="Your Email"
                       value={formData.email}
                       onChange={handleChange}
+                      disabled={true}
                     />
                   </motion.div>
 
