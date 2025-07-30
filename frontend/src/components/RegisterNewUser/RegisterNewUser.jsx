@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { FaWhatsappSquare } from "react-icons/fa";
 import Image from "next/image";
+import GoogleLoginButton from "../googleAuthButton/GoogleLoginButton";
 
 const RegisterNewUser = ({ email }) => {
   const [loading, setLoading] = useState(false);
@@ -20,13 +21,19 @@ const RegisterNewUser = ({ email }) => {
   });
   useEffect(() => {
     if (email && formData.email !== email) {
-      setFormData(prevFormData => ({
+      setFormData((prevFormData) => ({
         ...prevFormData,
-        email: email
+        email: email,
       }));
     }
   }, [email, formData.email]);
   const router = useRouter();
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/successful");
+    }
+  }, [isSuccess]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,6 +69,11 @@ const RegisterNewUser = ({ email }) => {
           "Something went wrong! Please try again."
       );
       setLoading(false);
+      if (
+        error?.response?.data?.error === "User with this email already exists."
+      ) {
+        router.push("/login");
+      }
     }
   };
 
@@ -217,160 +229,86 @@ const RegisterNewUser = ({ email }) => {
         </motion.div>
 
         <>
-          {!isSuccess ? (
-            <motion.div>
-              <motion.div className={styles.stepContent}>
-                <motion.form onSubmit={handleSubmit}>
-                  <motion.div>
-                    {error && <p className={styles.error}>{error}</p>}
-                  </motion.div>
-                  <motion.h2 className={styles.title} variants={itemVariants}>
-                    Start Your Application{" "}
-                  </motion.h2>
-                  <motion.div className={styles.labelInput}>
-                    <motion.label htmlFor="name">Full Name *</motion.label>
-                    <motion.input
-                      type="text"
-                      name="full_name"
-                      placeholder="Your Name"
-                      value={formData.full_name}
-                      onChange={handleChange}
-                    />
-                  </motion.div>
-
-                  <motion.div className={styles.labelInput}>
-                    <motion.label htmlFor="email">Email *</motion.label>
-                    <motion.input
-                      type="email"
-                      name="email"
-                      placeholder="Your Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      disabled={true}
-                    />
-                  </motion.div>
-
-                  <motion.div className={styles.labelInput}>
-                    <motion.label htmlFor="mobile">Mobile *</motion.label>
-                    <motion.input
-                      type="number"
-                      name="mobile"
-                      placeholder="Your Mobile"
-                      value={formData?.mobile}
-                      onChange={handleChange}
-                    />
-                  </motion.div>
-
-                  <motion.div className={styles.labelInput}>
-                    <motion.label htmlFor="program">Program *</motion.label>
-                    <motion.select
-                      name="program"
-                      placeholder="Select Program"
-                      value={formData.program}
-                      onChange={handleChange}
-                    >
-                      <motion.option value="">
-                        Select your program
-                      </motion.option>
-                      {programs?.map((course) => (
-                        <motion.option
-                          value={course.Course_Name}
-                          key={course.Course_ID}
-                        >
-                          {course.Course_Name}
-                        </motion.option>
-                      ))}
-                    </motion.select>
-                  </motion.div>
-                  <motion.div className={styles.center}>
-                    <motion.button
-                      type="submit"
-                      className={styles.button}
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                      variants={itemVariants}
-                      disabled={loading}
-                    >
-                      Submit
-                    </motion.button>
-                  </motion.div>
-                </motion.form>
-              </motion.div>
-            </motion.div>
-          ) : (
-            <motion.div
-              className={styles.formContainer}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <motion.div className={styles.stepContent}>
-                <motion.h2 className={styles.step}>
-                  Your Registration successful please login
+          <motion.div>
+            <motion.div className={styles.stepContent}>
+              <motion.form onSubmit={handleSubmit}>
+                <motion.div>
+                  {error && <p className={styles.error}>{error}</p>}
+                </motion.div>
+                <motion.h2 className={styles.title} variants={itemVariants}>
+                  Start Your Application{" "}
                 </motion.h2>
+                <motion.div className={styles.labelInput}>
+                  <motion.label htmlFor="name">Full Name *</motion.label>
+                  <motion.input
+                    type="text"
+                    name="full_name"
+                    placeholder="Your Name"
+                    value={formData.full_name}
+                    onChange={handleChange}
+                    autocomplete="off"
+                  />
+                </motion.div>
+
+                <motion.div className={styles.labelInput}>
+                  <motion.label htmlFor="email">Email *</motion.label>
+                  <motion.input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    disabled={true}
+                  />
+                </motion.div>
+
+                <motion.div className={styles.labelInput}>
+                  <motion.label htmlFor="mobile">Mobile *</motion.label>
+                  <motion.input
+                    type="number"
+                    name="mobile"
+                    minLength={10}
+                    maxLength={10}
+                    placeholder="Your Mobile"
+                    value={formData?.mobile}
+                    onChange={handleChange}
+                  />
+                </motion.div>
+
+                <motion.div className={styles.labelInput}>
+                  <motion.label htmlFor="program">Program *</motion.label>
+                  <motion.select
+                    name="program"
+                    placeholder="Select Program"
+                    value={formData.program}
+                    onChange={handleChange}
+                  >
+                    <motion.option value="">Select your program</motion.option>
+                    {programs?.map((course) => (
+                      <motion.option
+                        value={course.Course_Name}
+                        key={course.Course_ID}
+                      >
+                        {course.Course_Name}
+                      </motion.option>
+                    ))}
+                  </motion.select>
+                </motion.div>
                 <motion.div className={styles.center}>
                   <motion.button
+                    type="submit"
                     className={styles.button}
-                    onClick={handleLogin}
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.98 }}
                     variants={itemVariants}
+                    disabled={loading}
                   >
-                    Login Now
+                    Submit
                   </motion.button>
                 </motion.div>
-                <motion.p className={styles.features} variants={itemVariants}>
-                  Unlock your Personalized Dashboard, Evaluation Form, Screening
-                  Access, and Program details
-                </motion.p>
-
-                <motion.div className={styles.contact} variants={itemVariants}>
-                  <p>
-                    Still Need Help?{" "}
-                    <a
-                      href="https://api.whatsapp.com/send?phone=917349222263"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.open(
-                          "https://api.whatsapp.com/send?phone=917349222263",
-                          "_blank"
-                        );
-                      }}
-                    >
-                      Connect now
-                    </a>
-                  </p>
-
-                  <div className={styles.contactOptions}>
-                    <motion.div
-                      className={styles.calendlyImage}
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      <a href="https://calendly.com/" target="_blank">
-                        <Image
-                          src="/Calendly.png"
-                          alt="Calendly"
-                          width={130}
-                          height={60}
-                          loading="lazy"
-                        />
-                      </a>
-                    </motion.div>
-
-                    <motion.a
-                      href="https://api.whatsapp.com/send?phone=917349222263"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.whatsappLink}
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      <FaWhatsappSquare className={styles.whatsappIcon} />
-                    </motion.a>
-                  </div>
-                </motion.div>
-              </motion.div>
+              </motion.form>
             </motion.div>
-          )}
+          </motion.div>
         </>
       </motion.div>
     </div>

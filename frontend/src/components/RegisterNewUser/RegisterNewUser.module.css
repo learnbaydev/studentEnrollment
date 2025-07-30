@@ -275,3 +275,37 @@
 .calendlyImage:hover {
   transform: scale(1.05);
 }
+
+.mobileGoogleButton {
+  width: 100%;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.googleBox {
+  padding: 20px 40px;
+}
+
+.sinHead {
+  color: #040404;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(134, 134, 134, 0.15);
+  font-size: 14.995px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 148.5%;
+  padding-bottom: 20px;
+}
+
+.notediv {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.notediv img {
+  width: 16px;
+  height: auto;
+}
