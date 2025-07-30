@@ -140,6 +140,10 @@
   gap: 8px;
 }
 
+.labelInput label {
+  margin-top: 15px;
+}
+
 .completedStep {
   color: #2ecc71;
 }

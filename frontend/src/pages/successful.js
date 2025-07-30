@@ -30,19 +30,9 @@ const SuccessFull = () => {
     },
   };
   return (
-    <div style={{ backgroundColor: "#f8fafc" , paddingTop: "100px",}}>
-      <div
-        style={{
-          width: "35%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: "1px solid grey",
-          padding: "30px",
-          textAlign: "center",
-          borderRadius: "10px",
-          margin: "auto",
-        }}
+    <div className={styles.container}>
+      <div 
+        className={styles.card}
       >
         <motion.div
           className={styles.formContainer}
@@ -52,7 +42,7 @@ const SuccessFull = () => {
         >
           <motion.div className={styles.stepContent}>
             <motion.h2 className={styles.step}>
-              Your Registration successful please login
+            Your Account has been created Successful
             </motion.h2>
             <motion.div className={styles.center}>
               <div className={styles.mobileGoogleButton}>
