@@ -31,9 +31,7 @@ const SuccessFull = () => {
   };
   return (
     <div className={styles.container}>
-      <div 
-        className={styles.card}
-      >
+      <div className={styles.card}>
         <motion.div
           className={styles.formContainer}
           initial={{ opacity: 0, y: 20 }}
@@ -41,15 +39,18 @@ const SuccessFull = () => {
           transition={{ duration: 0.5 }}
         >
           <motion.div className={styles.stepContent}>
-            <motion.h2 className={styles.step}>
-            Your Account has been created Successful
+            <motion.h2 className={styles.step} style={{ textAlign: "center" }}>
+              Your Account has been created Successful
             </motion.h2>
             <motion.div className={styles.center}>
               <div className={styles.mobileGoogleButton}>
                 <div className={styles.googleBox}>
-                  <p className={styles.sinHead}>Sign in to continue</p>
+                  <p className={styles.sinHead}>proceed to Login</p>
                   <GoogleLoginButton />
-                  <div className={styles.notediv}>
+                  <div
+                    className={styles.notediv}
+                    style={{ textAlign: "center" }}
+                  >
                     <Image
                       src="../secure-icon.svg"
                       alt="Secure"
@@ -63,12 +64,20 @@ const SuccessFull = () => {
                 </div>
               </div>
             </motion.div>
-            <motion.p className={styles.features} variants={itemVariants}>
+            <motion.p
+              className={styles.features}
+              variants={itemVariants}
+              style={{ textAlign: "center" }}
+            >
               Unlock your Personalized Dashboard, Evaluation Form, Screening
               Access, and Program details
             </motion.p>
 
-            <motion.div className={styles.contact} variants={itemVariants}>
+            <motion.div
+              className={styles.contact}
+              variants={itemVariants}
+              style={{ textAlign: "center" }}
+            >
               <p>
                 Still Need Help?{" "}
                 <a

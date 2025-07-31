@@ -22,6 +22,7 @@ const submitEnrollmentForm = async (req, res) => {
     linkedin_profile,
     evaluator_rating,
     native_city,
+    college_name,
   } = req.body;
 
   const requiredFields = {
@@ -36,29 +37,38 @@ const submitEnrollmentForm = async (req, res) => {
     expected_ctc,
     aspiring_companies,
     motivation,
-    expectations
+    expectations,
   };
-  
+
   const missingFields = Object.entries(requiredFields).filter(
     ([_, value]) => !value || value.toString().trim() === ""
   );
-  
+
   if (missingFields.length > 0) {
     return res.status(400).json({
-      message: `Missing required fields: ${missingFields.map(([key]) => key).join(", ")}`
+      message: `Missing required fields: ${missingFields
+        .map(([key]) => key)
+        .join(", ")}`,
     });
   }
-  
+
   try {
-    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
+    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [
+      email,
+    ]);
 
     if (userRows.length === 0) {
-      return res.status(404).json({ message: "User with this email does not exist" });
+      return res
+        .status(404)
+        .json({ message: "User with this email does not exist" });
     }
 
     const userId = userRows[0].id;
 
-    const [enrollmentRows] = await db.query("SELECT id FROM enrollment_details WHERE user_id = ?", [userId]);
+    const [enrollmentRows] = await db.query(
+      "SELECT id FROM enrollment_details WHERE user_id = ?",
+      [userId]
+    );
 
     if (enrollmentRows.length > 0) {
       return res.status(409).json({ message: "User already enrolled" });
@@ -72,9 +82,9 @@ const submitEnrollmentForm = async (req, res) => {
  current_company, current_job_title, aspiring_designation, current_ctc, 
  expected_ctc, aspiring_companies, motivation, expectations, 
  enrollment_status, created_at, programming_rating, linkedin_profile, 
- evaluator_rating, native_city)
+ evaluator_rating, native_city, college_name)
 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
     `;
 
     const [result] = await db.query(insertQuery, [
@@ -98,6 +108,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       linkedin_profile || null,
       evaluator_rating || null,
       native_city || null,
+      college_name || null,
     ]);
 
     return res.status(201).json({
@@ -110,7 +121,6 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   }
 };
 
-
 // Check if user is already enrolled
 const checkEnrollmentStatus = async (req, res) => {
   const { email } = req.query;
@@ -118,7 +128,9 @@ const checkEnrollmentStatus = async (req, res) => {
   if (!email) return res.status(400).json({ message: "Email is required" });
 
   try {
-    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
+    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [
+      email,
+    ]);
 
     if (userRows.length === 0) {
       return res.status(404).json({ message: "User not found" });
@@ -126,7 +138,10 @@ const checkEnrollmentStatus = async (req, res) => {
 
     const userId = userRows[0].id;
 
-    const [enrollmentRows] = await db.query("SELECT id FROM enrollment_details WHERE user_id = ?", [userId]);
+    const [enrollmentRows] = await db.query(
+      "SELECT id FROM enrollment_details WHERE user_id = ?",
+      [userId]
+    );
 
     const alreadyEnrolled = enrollmentRows.length > 0;
 
@@ -142,8 +157,11 @@ const getEnrollmentSteps = async (req, res) => {
   const { email } = req.query;
   if (!email) return res.status(400).json({ message: "Email is required" });
   try {
-    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
-    if (userRows.length === 0) return res.status(404).json({ message: "User not found" });
+    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [
+      email,
+    ]);
+    if (userRows.length === 0)
+      return res.status(404).json({ message: "User not found" });
 
     const userId = userRows[0].id;
     const [rows] = await db.query(
@@ -152,7 +170,12 @@ const getEnrollmentSteps = async (req, res) => {
     );
 
     if (rows.length === 0)
-      return res.status(200).json({ step1: "pending", step2: "pending", step3: "pending", step4: "pending" });
+      return res.status(200).json({
+        step1: "pending",
+        step2: "pending",
+        step3: "pending",
+        step4: "pending",
+      });
 
     return res.status(200).json(rows[0]);
   } catch (err) {
@@ -190,7 +213,9 @@ cron.schedule("* * * * *", async () => {
     `);
 
     if (result.affectedRows > 0) {
-      console.log(`✅ Auto-approved ${result.affectedRows} enrollments after 2 minutes`);
+      console.log(
+        `✅ Auto-approved ${result.affectedRows} enrollments after 2 minutes`
+      );
     }
   } catch (err) {
     console.error("❌ Error in auto-approval cron job:", err);
@@ -257,8 +282,11 @@ const getEnrollmentProgress = async (req, res) => {
   if (!email) return res.status(400).json({ message: "Email is required" });
 
   try {
-    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
-    if (userRows.length === 0) return res.status(404).json({ message: "User not found" });
+    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [
+      email,
+    ]);
+    if (userRows.length === 0)
+      return res.status(404).json({ message: "User not found" });
 
     const userId = userRows[0].id;
     const [rows] = await db.query(
@@ -281,12 +309,15 @@ const getEnrollmentProgress = async (req, res) => {
     // Calculate time elapsed since creation
     const createdAt = moment(created_at);
     const now = moment();
-    const secondsElapsed = now.diff(createdAt, 'seconds');
+    const secondsElapsed = now.diff(createdAt, "seconds");
 
     // If status is pending and less than 2 minutes have passed, consider it in_progress
-    const adjustedStep1 = step1 === 'pending' && secondsElapsed < 120 ? 'in_progress' : 
-                         step1 === 'pending' && secondsElapsed >= 120 ? 'approved' : 
-                         step1;
+    const adjustedStep1 =
+      step1 === "pending" && secondsElapsed < 120
+        ? "in_progress"
+        : step1 === "pending" && secondsElapsed >= 120
+        ? "approved"
+        : step1;
 
     // Calculate progress
     let completedSteps = 0;
@@ -304,14 +335,13 @@ const getEnrollmentProgress = async (req, res) => {
       step4,
       progress,
       created_at, // Send this to frontend for timer calculation
-      step1_timestamp: step1_timestamp || created_at // Use step1_timestamp if available, otherwise created_at
+      step1_timestamp: step1_timestamp || created_at, // Use step1_timestamp if available, otherwise created_at
     });
   } catch (err) {
     console.error("Progress API error:", err);
     return res.status(500).json({ message: "Server error" });
   }
 };
-
 
 // In your enrollmentController.js
 const updateStepStatus = async (req, res) => {
@@ -339,7 +369,9 @@ const checkPaymentStatus = async (req, res) => {
   }
 
   try {
-    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [email]);
+    const [userRows] = await db.query("SELECT id FROM user WHERE email = ?", [
+      email,
+    ]);
     if (userRows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -359,8 +391,8 @@ const checkPaymentStatus = async (req, res) => {
 
     if (statusRaw === null) {
       paymentStatus = null;
-    } else if (statusRaw === '') {
-      paymentStatus = '';
+    } else if (statusRaw === "") {
+      paymentStatus = "";
     } else if (Number(statusRaw) === 0) {
       paymentStatus = 0;
     } else if (Number(statusRaw) === 1) {
@@ -370,14 +402,11 @@ const checkPaymentStatus = async (req, res) => {
     }
 
     return res.status(200).json({ payment_status: paymentStatus });
-
   } catch (err) {
     console.error("Payment status check error:", err);
     return res.status(500).json({ message: "Server error" });
   }
 };
-
-
 
 const initiatePaymentStatus = async (req, res) => {
   const { email } = req.body;
@@ -390,16 +419,19 @@ const initiatePaymentStatus = async (req, res) => {
     );
 
     if (result.affectedRows > 0) {
-      return res.status(200).json({ message: "Payment status set to processing ('')" });
+      return res
+        .status(200)
+        .json({ message: "Payment status set to processing ('')" });
     } else {
-      return res.status(200).json({ message: "Payment already started or user not found" });
+      return res
+        .status(200)
+        .json({ message: "Payment already started or user not found" });
     }
   } catch (err) {
     console.error("Error updating payment_status to '':", err);
     return res.status(500).json({ message: "Server error" });
   }
 };
-
 
 const markTokenReceived = async (req, res) => {
   const { email } = req.body;
@@ -412,9 +444,13 @@ const markTokenReceived = async (req, res) => {
     );
 
     if (result.affectedRows > 0) {
-      return res.status(200).json({ message: "Payment status set to token received (0)" });
+      return res
+        .status(200)
+        .json({ message: "Payment status set to token received (0)" });
     } else {
-      return res.status(200).json({ message: "User not in processing stage or not found" });
+      return res
+        .status(200)
+        .json({ message: "User not in processing stage or not found" });
     }
   } catch (err) {
     console.error("Error updating payment_status to 0:", err);
@@ -422,20 +458,14 @@ const markTokenReceived = async (req, res) => {
   }
 };
 
-
-
-
-
 module.exports = {
   submitEnrollmentForm,
   checkEnrollmentStatus,
   getEnrollmentSteps,
   getEnrollmentProgress,
   checkPaymentStatus,
-  
+
   updateStepStatus,
   initiatePaymentStatus,
-  markTokenReceived 
-
+  markTokenReceived,
 };
-

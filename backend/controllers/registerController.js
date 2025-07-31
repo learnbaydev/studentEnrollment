@@ -31,7 +31,7 @@ const submitRegisterFrom = async (req, res) => {
 
     // 3. TODO: Write data to the user table
     const [result] = await db.query(
-      "INSERT INTO user (email, name, mobile, program_name, application_time, user_creation_time, discount, status, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO user (email, name, mobile, program_name, application_time, user_creation_time, discount, status, password ,login_type ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
       [
         email,
         full_name,
@@ -42,6 +42,7 @@ const submitRegisterFrom = async (req, res) => {
         0.0,
         "Active",
         "pass@123",
+        "self_registration",
       ]
     );
 
