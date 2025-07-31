@@ -235,11 +235,24 @@ const RegisterNewUser = ({ email }) => {
                 <motion.div>
                   {error && <p className={styles.error}>{error}</p>}
                 </motion.div>
-                <motion.h2 className={styles.title} variants={itemVariants}>
-                  Start Your Application{" "}
+                <motion.h2
+                  className={""}
+                  variants={itemVariants}
+                  style={{ textAlign: "center" }}
+                >
+                  {" "}
+                  <u>
+                    <span className={styles.highlight}> Start </span> Your
+                    Application
+                  </u>
                 </motion.h2>
                 <motion.div className={styles.labelInput}>
-                  <motion.label htmlFor="name">Full Name *</motion.label>
+                  <motion.label
+                    htmlFor="name"
+                    style={{ fontWeight: "bold", fontSize: "14px" }}
+                  >
+                    Full Name *
+                  </motion.label>
                   <motion.input
                     type="text"
                     name="full_name"
@@ -251,7 +264,12 @@ const RegisterNewUser = ({ email }) => {
                 </motion.div>
 
                 <motion.div className={styles.labelInput}>
-                  <motion.label htmlFor="email">Email *</motion.label>
+                  <motion.label
+                    htmlFor="email"
+                    style={{ fontWeight: "bold", fontSize: "14px" }}
+                  >
+                    Email *
+                  </motion.label>
                   <motion.input
                     type="email"
                     name="email"
@@ -263,7 +281,12 @@ const RegisterNewUser = ({ email }) => {
                 </motion.div>
 
                 <motion.div className={styles.labelInput}>
-                  <motion.label htmlFor="mobile">Mobile *</motion.label>
+                  <motion.label
+                    htmlFor="mobile"
+                    style={{ fontWeight: "bold", fontSize: "14px" }}
+                  >
+                    Mobile *
+                  </motion.label>
                   <motion.input
                     type="number"
                     name="mobile"
@@ -276,7 +299,12 @@ const RegisterNewUser = ({ email }) => {
                 </motion.div>
 
                 <motion.div className={styles.labelInput}>
-                  <motion.label htmlFor="program">Program *</motion.label>
+                  <motion.label
+                    htmlFor="program"
+                    style={{ fontWeight: "bold", fontSize: "14px" }}
+                  >
+                    Program *
+                  </motion.label>
                   <motion.select
                     name="program"
                     placeholder="Select Program"
@@ -298,7 +326,7 @@ const RegisterNewUser = ({ email }) => {
                   <motion.button
                     type="submit"
                     className={styles.button}
-                    whileHover={{ scale: 1.03 }}
+                    whileHover={{ scale: 0.9 }}
                     whileTap={{ scale: 0.98 }}
                     variants={itemVariants}
                     disabled={loading}

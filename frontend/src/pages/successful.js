@@ -38,14 +38,34 @@ const SuccessFull = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <motion.div className={styles.logo} whileHover={{ scale: 1.05 }}>
+            <Image
+              src="/learnbaylogos.webp"
+              alt="LearnBay Logo"
+              width={150}
+              height={40}
+              loading="lazy"
+              priority={false}
+            />
+          </motion.div>
           <motion.div className={styles.stepContent}>
-            <motion.h2 className={styles.step} style={{ textAlign: "center" }}>
-              Your Account has been created Successful
+            <motion.h2
+              className={styles.step}
+              style={{ textAlign: "center", fontSize: "22px" }}
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                type: "spring",
+                damping: 10,
+                stiffness: 100,
+              }}
+            >
+              Your account has been created successfully.
             </motion.h2>
             <motion.div className={styles.center}>
               <div className={styles.mobileGoogleButton}>
                 <div className={styles.googleBox}>
-                  <p className={styles.sinHead}>proceed to Login</p>
+                  <p className={styles.sinHead}>Proceed to login ...</p>
                   <GoogleLoginButton />
                   <div
                     className={styles.notediv}
