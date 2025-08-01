@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from "react";
 import styles from "./RegisterNewUser.module.css";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
-import { FaWhatsappSquare } from "react-icons/fa";
 import Image from "next/image";
-import GoogleLoginButton from "../googleAuthButton/GoogleLoginButton";
 
-const RegisterNewUser = ({ email }) => {
+const RegisterNewUser = () => {
+  const searchParams = useSearchParams();
+
+  const initialEmailProp = searchParams.get("email");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [statusError, setStatusError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
+    email: initialEmailProp || "",
     full_name: "",
     mobile: "",
     program: "",
   });
-  useEffect(() => {
-    if (email && formData.email !== email) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        email: email,
-      }));
-    }
-  }, [email, formData.email]);
+  // useEffect(() => {
+  //   if (email && formData.email !== email) {
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       email: email,
+  //     }));
+  //   }
+  // }, [email, formData.email]);
   const router = useRouter();
 
   useEffect(() => {
@@ -75,10 +76,6 @@ const RegisterNewUser = ({ email }) => {
         router.push("/login");
       }
     }
-  };
-
-  const handleLogin = () => {
-    router.push("/login");
   };
 
   // Animation variants
@@ -276,7 +273,6 @@ const RegisterNewUser = ({ email }) => {
                     placeholder="Your Email"
                     value={formData.email}
                     onChange={handleChange}
-                    disabled={true}
                   />
                 </motion.div>
 

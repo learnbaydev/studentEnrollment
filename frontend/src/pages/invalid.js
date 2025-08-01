@@ -14,7 +14,7 @@ export default function InvalidPage() {
   const email = searchParams.get("email");
 
   const handleLogin = () => {
-    router.push("/register");
+    router.push("/confirmation");
   };
 
   // Animation variants
