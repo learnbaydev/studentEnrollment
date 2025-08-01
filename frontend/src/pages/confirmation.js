@@ -8,8 +8,8 @@ const confirmation = () => {
   const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  
-    const email = searchParams.get("email");
+
+  const email = searchParams.get("email");
   const handleIntersted = () => {
     router.push("/register?email=" + email);
     // router.push("/register");
@@ -61,7 +61,7 @@ const confirmation = () => {
           >
             You are not registered with us.
           </h3>
-          <p className={styles.subtitle} style={{ padding: "0px 50px" }}>
+          <p className={styles.subtitle} style={{ padding: isMobile? "0px 2.5rem" : "0px 5rem" }}>
             Do you want to create your application?
           </p>
         </div>
@@ -70,27 +70,14 @@ const confirmation = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            gap: isMobile ? "0px" : "15px",
-            flexDirection: isMobile ? "column" : "row",
           }}
         >
           <button
             className={styles.button}
-            style={{ padding: "12px", margin: isMobile ? "1rem 0" : "0" }}
+            style={{ padding: "12px" }}
             onClick={handleIntersted}
           >
             Start Application
-          </button>
-          <button
-            className={styles.button}
-            style={{
-              padding: "12px",
-              background: "#808080",
-              margin: isMobile ? "1rem 0" : "0",
-            }}
-            onClick={handleNotIntersted}
-          >
-            Not Interested
           </button>
         </div>
       </motion.div>

@@ -273,6 +273,7 @@ const RegisterNewUser = () => {
                     placeholder="Your Email"
                     value={formData.email}
                     onChange={handleChange}
+                    autocomplete="off"
                   />
                 </motion.div>
 
