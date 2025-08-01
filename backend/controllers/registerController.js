@@ -31,24 +31,54 @@ const submitRegisterFrom = async (req, res) => {
 
     // 3. TODO: Write data to the user table
     const [result] = await db.query(
-      "INSERT INTO user (email, name, mobile, program_name, application_time, user_creation_time, discount, status, password ,login_type ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)",
+      `INSERT INTO user (
+      email, 
+      name, 
+      mobile, 
+      program_name, 
+      application_time, 
+      user_creation_time, 
+      discount, 
+      status, 
+      password,
+      login_type,
+      ism_name,
+      ism_email,
+      manager_name,
+      manager_email,
+      manager_name_I,
+      manager_email_I,
+      manager_name_II,
+      manager_email_II,
+      manager_name_III,
+      manager_email_III 
+         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         email,
         full_name,
         mobile,
         program,
-        currentTime,
+        "12:00:00",
         currentTime,
         0.0,
         "Active",
         "pass@123",
         "self_registration",
+        "Abhishek Omar",
+        "abhishek.omar@learnbay.co",
+        "Akriti Gupta",
+        "akriti.gupta1@learnbay.co",
+        "Abhihsek Gupta",
+        "abhihsek.gupta1@learnbay.co",
+        "Krishna Kumar",
+        "krishna.kumar@learnbay.co",
+        "Aaditya Kumar",
+        "aaditya@learnbay.co",
       ]
     );
 
     // Check if the insertion was successful
     if (result.affectedRows === 0) {
-      throw new Error("Failed to insert user into database.");
       return res.status(500).json({ error: "Error in registering student" });
     }
 
