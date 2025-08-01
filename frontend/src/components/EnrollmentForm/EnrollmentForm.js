@@ -13,7 +13,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
 
   const [formData, setFormData] = useState({
     email: user?.email || "",
-    full_name: user?.name|| "",
+    full_name: user?.name || "",
     // domain: "",
     experience_years: "",
     graduation_year: "",
@@ -28,7 +28,8 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     programming_rating: "",
     linkedin_profile: "",
     evaluator_rating: "",
-    native_city: ""
+    native_city: "",
+    college_name: "",
   });
 
   const [step, setStep] = useState(1);
@@ -46,7 +47,11 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
       setLoadingStatus(true);
       setStatusError("");
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/enroll/status?email=${encodeURIComponent(formData.email)}`);
+        const res = await fetch(
+          `${
+            process.env.NEXT_PUBLIC_API_URL
+          }/api/enroll/status?email=${encodeURIComponent(formData.email)}`
+        );
         if (!res.ok) {
           throw new Error("Failed to fetch enrollment status");
         }
@@ -67,11 +72,11 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    
+
     // Clear error when user starts typing
     if (fieldErrors[name]) {
-      setFieldErrors(prev => {
-        const newErrors = {...prev};
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
       });
@@ -83,8 +88,13 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     let isValid = true;
 
     if (step === 1) {
-      const requiredFields = ["email", "full_name",  "experience_years", "graduation_year"];
-      requiredFields.forEach(field => {
+      const requiredFields = [
+        "email",
+        "full_name",
+        "experience_years",
+        "graduation_year",
+      ];
+      requiredFields.forEach((field) => {
         if (!formData[field]) {
           errors[field] = "This field is required";
           isValid = false;
@@ -93,8 +103,13 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     }
 
     if (step === 2) {
-      const requiredFields = ["current_company", "current_job_title", "current_ctc", "expected_ctc"];
-      requiredFields.forEach(field => {
+      const requiredFields = [
+        "current_company",
+        "current_job_title",
+        "current_ctc",
+        "expected_ctc",
+      ];
+      requiredFields.forEach((field) => {
         if (!formData[field]) {
           errors[field] = "This field is required";
           isValid = false;
@@ -103,8 +118,8 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
     }
 
     if (step === 3) {
-      const requiredFields = [ "motivation", "expectations"];
-      requiredFields.forEach(field => {
+      const requiredFields = ["motivation", "expectations"];
+      requiredFields.forEach((field) => {
         if (!formData[field]) {
           errors[field] = "This field is required";
           isValid = false;
@@ -136,40 +151,46 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
   const handleSubmit = async () => {
     setLoading(true);
     setError("");
-  
+
     try {
       // 🔹 Step 1: Submit form data to backend
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/enroll`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-  
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/enroll`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
       const data = await response.json();
-  
+
       if (!response.ok) {
         console.error("❌ Enrollment failed:", data);
         setError(data.message || "Failed to submit");
       } else {
         console.log("✅ Enrollment successful. Now sending to Discord...");
-  
+
         // 🔹 Step 2: Notify Discord
-        const discordRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notify-discord`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": "mySecretDiscordToken123", // Optional, for backend auth
-          },
-          body: JSON.stringify(formData),
-        });
-  
+        const discordRes = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/notify-discord`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "mySecretDiscordToken123", // Optional, for backend auth
+            },
+            body: JSON.stringify(formData),
+          }
+        );
+
         const discordData = await discordRes.json();
         console.log("📡 Discord webhook response:", discordData);
-  
+
         if (!discordRes.ok) {
           console.warn("⚠️ Discord webhook failed:", discordData.message);
         }
-  
+
         setIsSubmitted(true);
         onComplete();
       }
@@ -180,8 +201,6 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
       setLoading(false);
     }
   };
-  
-  
 
   const handleRatingClick = (rating) => {
     setFormData({ ...formData, programming_rating: rating });
@@ -194,7 +213,9 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
   const progressPercent = (step / 3) * 100;
 
   if (loadingStatus) {
-    return <div className={styles.formContainer}>Checking enrollment status...</div>;
+    return (
+      <div className={styles.formContainer}>Checking enrollment status...</div>
+    );
   }
 
   if (statusError) {
@@ -206,7 +227,9 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
       <div className={styles.formContainer}>
         <h2>You are already enrolled!</h2>
         <p>{status.message || "Thank you for your application."}</p>
-        <button className={styles.nextBtn} onClick={onClose}>Close</button>
+        <button className={styles.nextBtn} onClick={onClose}>
+          Close
+        </button>
       </div>
     );
   }
@@ -214,28 +237,45 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.step}>Start Your Application</h2>
-      <p className={styles.para}>Complete this 3-step form to begin your personalized learning journey.</p>
-      
+      <p className={styles.para}>
+        Complete this 3-step form to begin your personalized learning journey.
+      </p>
+
       <div className={styles.progressWrapper}>
         <div className={styles.stepLabels}>
-          <div className={`${styles.stepLabel} ${step >= 1 ? styles.activeStep : ""} ${isSubmitted ? styles.completedStep : ""}`}>
+          <div
+            className={`${styles.stepLabel} ${
+              step >= 1 ? styles.activeStep : ""
+            } ${isSubmitted ? styles.completedStep : ""}`}
+          >
             <FaUser className={styles.stepIcon} />
             <span>Personal Information</span>
           </div>
 
-          <div className={`${styles.stepLabel} ${step >= 2 ? styles.activeStep : ""}`}>
+          <div
+            className={`${styles.stepLabel} ${
+              step >= 2 ? styles.activeStep : ""
+            }`}
+          >
             <FaBriefcase className={styles.stepIcon} />
             <span>Professional Experience</span>
           </div>
 
-          <div className={`${styles.stepLabel} ${step >= 3 ? styles.activeStep : ""}`}>
+          <div
+            className={`${styles.stepLabel} ${
+              step >= 3 ? styles.activeStep : ""
+            }`}
+          >
             <FaStar className={styles.stepIcon} />
             <span>Skills & Aspirations</span>
           </div>
         </div>
 
         <div className={styles.progressBar}>
-          <div className={styles.progressFill} style={{ width: `${progressPercent}%` }}></div>
+          <div
+            className={styles.progressFill}
+            style={{ width: `${progressPercent}%` }}
+          ></div>
         </div>
       </div>
 
@@ -255,7 +295,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 type="text"
                 name="full_name"
                 value={formData.full_name}
-                  onChange={handleChange}
+                onChange={handleChange}
                 // disabled
                 // readOnly
                 // className={styles.disabledInput}
@@ -276,7 +316,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
               />
             </div>
           </div>
-          
+
           <div className={styles.eName}>
             {/* <div className={styles.labelInput}>
               <label>Domain *</label>
@@ -294,55 +334,52 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
               </select>
               {fieldErrors.domain && <span className={styles.errorText}>{fieldErrors.domain}</span>}
             </div> */}
-     <div className={styles.labelInput}>
-  <label>Graduation Year *</label>
-  <input
-    type="number"
-    placeholder="Graduation year (ex: 2012)"
-    name="graduation_year"
-    value={formData.graduation_year}
-    onChange={(e) => {
-      const year = e.target.value;
+            <div className={styles.labelInput}>
+              <label>Graduation Year *</label>
+              <input
+                type="number"
+                placeholder="Graduation year (ex: 2012)"
+                name="graduation_year"
+                value={formData.graduation_year}
+                onChange={(e) => {
+                  const year = e.target.value;
 
-      // Allow only 4-digit numbers
-      if (year.length <= 4 && /^[0-9]*$/.test(year)) {
-        handleChange(e);
-      }
-    }}
-    min="1900"
-    max={new Date().getFullYear()}
-    className={fieldErrors.graduation_year ? styles.errorField : ""}
-  />
-  {fieldErrors.graduation_year && (
-    <span className={styles.errorText}>{fieldErrors.graduation_year}</span>
-  )}
-</div>
+                  // Allow only 4-digit numbers
+                  if (year.length <= 4 && /^[0-9]*$/.test(year)) {
+                    handleChange(e);
+                  }
+                }}
+                min="1900"
+                max={new Date().getFullYear()}
+                className={fieldErrors.graduation_year ? styles.errorField : ""}
+              />
+              {fieldErrors.graduation_year && (
+                <span className={styles.errorText}>
+                  {fieldErrors.graduation_year}
+                </span>
+              )}
+            </div>
 
-
-<div className={styles.labelInput}>
-  <label>Years of Experience *</label>
-  <input
-    type="number"
-    step="0.1"
-    min="0"
-    placeholder="Enter years of experience (e.g. 2 or 3.5)"
-    name="experience_years"
-    value={formData.experience_years}
-    onChange={handleChange}
-    className={fieldErrors.experience_years ? styles.errorField : ""}
-  />
-  {fieldErrors.experience_years && (
-    <span className={styles.errorText}>
-      {fieldErrors.experience_years}
-    </span>
-  )}
-</div>
-
+            <div className={styles.labelInput}>
+              <label>College Name *</label>
+              <input
+                type="text"
+                step="0.1"
+                placeholder="Enter your college name e.g. XYZ College"
+                name="college_name"
+                value={formData.college_name}
+                onChange={handleChange}
+                className={fieldErrors.college_name ? styles.errorField : ""}
+              />
+              {fieldErrors.college_name && (
+                <span className={styles.errorText}>
+                  {fieldErrors.college_name}
+                </span>
+              )}
+            </div>
           </div>
-          
+
           <div className={styles.eName}>
-     
-            
             <div className={styles.labelInput}>
               <label>Native City</label>
               <input
@@ -352,6 +389,26 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 value={formData.native_city}
                 onChange={handleChange}
               />
+            </div>
+            <div className={styles.labelInput}>
+              <label>Years of Experience *</label>
+              <input
+                type="number"
+                step="0.1"
+                min="0"
+                placeholder="Enter years of experience (e.g. 2 or 3.5)"
+                name="experience_years"
+                value={formData.experience_years}
+                onChange={handleChange}
+                className={
+                  fieldErrors.experience_years ? styles.errorField : ""
+                }
+              />
+              {fieldErrors.experience_years && (
+                <span className={styles.errorText}>
+                  {fieldErrors.experience_years}
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -370,63 +427,74 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 placeholder="e.g. current company..."
                 className={fieldErrors.current_company ? styles.errorField : ""}
               />
-              {fieldErrors.current_company && <span className={styles.errorText}>{fieldErrors.current_company}</span>}
+              {fieldErrors.current_company && (
+                <span className={styles.errorText}>
+                  {fieldErrors.current_company}
+                </span>
+              )}
             </div>
 
             <div className={styles.labelInput}>
-            <label>Aspiring Companies *</label>
-            <input
-              type="text"
-              name="aspiring_companies"
-              value={formData.aspiring_companies}
-              onChange={handleChange}
-              placeholder="e.g., Your Dream Companies"
-              className={fieldErrors.aspiring_companies ? styles.errorField : ""}
-            />
-            {fieldErrors.aspiring_companies && <span className={styles.errorText}>{fieldErrors.aspiring_companies}</span>}
-          </div>
-
-           
+              <label>Aspiring Companies *</label>
+              <input
+                type="text"
+                name="aspiring_companies"
+                value={formData.aspiring_companies}
+                onChange={handleChange}
+                placeholder="e.g., Your Dream Companies"
+                className={
+                  fieldErrors.aspiring_companies ? styles.errorField : ""
+                }
+              />
+              {fieldErrors.aspiring_companies && (
+                <span className={styles.errorText}>
+                  {fieldErrors.aspiring_companies}
+                </span>
+              )}
+            </div>
           </div>
 
           <div className={`${styles.eName} ${styles.secondf}`}>
-          <div className={styles.labelInput}>
-  <label>Your current CTC (in LPA) *</label>
-  <input
-    type="number"
-    name="current_ctc"
-    value={formData.current_ctc}
-    onChange={handleChange}
-    min="0"
-    step="0.01"
-    placeholder="e.g. 12.5"
-    className={fieldErrors.current_ctc ? styles.errorField : ""}
-  />
-  {fieldErrors.current_ctc && (
-    <span className={styles.errorText}>{fieldErrors.current_ctc}</span>
-  )}
-</div>
+            <div className={styles.labelInput}>
+              <label>Your current CTC (in LPA) *</label>
+              <input
+                type="number"
+                name="current_ctc"
+                value={formData.current_ctc}
+                onChange={handleChange}
+                min="0"
+                step="0.01"
+                placeholder="e.g. 12.5"
+                className={fieldErrors.current_ctc ? styles.errorField : ""}
+              />
+              {fieldErrors.current_ctc && (
+                <span className={styles.errorText}>
+                  {fieldErrors.current_ctc}
+                </span>
+              )}
+            </div>
 
-<div className={styles.labelInput}>
-  <label>Aspiring CTC (in LPA) *</label>
-  <input
-    type="number"
-    name="expected_ctc"
-    value={formData.expected_ctc}
-    onChange={handleChange}
-    min="0"
-    step="0.01"
-    placeholder="e.g. 15.75"
-    className={fieldErrors.expected_ctc ? styles.errorField : ""}
-  />
-  {fieldErrors.expected_ctc && (
-    <span className={styles.errorText}>{fieldErrors.expected_ctc}</span>
-  )}
-</div>
-
+            <div className={styles.labelInput}>
+              <label>Aspiring CTC (in LPA) *</label>
+              <input
+                type="number"
+                name="expected_ctc"
+                value={formData.expected_ctc}
+                onChange={handleChange}
+                min="0"
+                step="0.01"
+                placeholder="e.g. 15.75"
+                className={fieldErrors.expected_ctc ? styles.errorField : ""}
+              />
+              {fieldErrors.expected_ctc && (
+                <span className={styles.errorText}>
+                  {fieldErrors.expected_ctc}
+                </span>
+              )}
+            </div>
           </div>
           <div className={`${styles.eName} ${styles.secondf}`}>
-          <div className={styles.labelInput}>
+            <div className={styles.labelInput}>
               <label>Your Current Designation *</label>
               <input
                 type="text"
@@ -434,21 +502,26 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 value={formData.current_job_title}
                 onChange={handleChange}
                 placeholder="e.g. current job title..."
-                className={fieldErrors.current_job_title ? styles.errorField : ""}
+                className={
+                  fieldErrors.current_job_title ? styles.errorField : ""
+                }
               />
-              {fieldErrors.current_job_title && <span className={styles.errorText}>{fieldErrors.current_job_title}</span>}
+              {fieldErrors.current_job_title && (
+                <span className={styles.errorText}>
+                  {fieldErrors.current_job_title}
+                </span>
+              )}
             </div>
-          <div className={styles.labelInput}>
-            <label>Your Aspiring Designation (if any)</label>
-            <input
-              type="text"
-              name="aspiring_designation"
-              value={formData.aspiring_designation}
-              onChange={handleChange}
-              placeholder="e.g. your desired job title..."
-            />
-          </div>
-        
+            <div className={styles.labelInput}>
+              <label>Your Aspiring Designation (if any)</label>
+              <input
+                type="text"
+                name="aspiring_designation"
+                value={formData.aspiring_designation}
+                onChange={handleChange}
+                placeholder="e.g. your desired job title..."
+              />
+            </div>
           </div>
 
           <div className={styles.labelInput}>
@@ -465,10 +538,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
       )}
 
       {step === 3 && (
-  <div className={styles.stepContent} data-step="3">
-
-        
-
+        <div className={styles.stepContent} data-step="3">
           <div className={styles.labelInput}>
             <label>Why are you specifically targeting these companies? *</label>
             <textarea
@@ -479,7 +549,9 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
               rows="3"
               className={fieldErrors.motivation ? styles.errorField : ""}
             />
-            {fieldErrors.motivation && <span className={styles.errorText}>{fieldErrors.motivation}</span>}
+            {fieldErrors.motivation && (
+              <span className={styles.errorText}>{fieldErrors.motivation}</span>
+            )}
           </div>
 
           <div className={styles.labelInput}>
@@ -501,13 +573,19 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 </span>
               ))}
               <span className={styles.ratingText}>
-                {formData.programming_rating ? `${formData.programming_rating} star${formData.programming_rating > 1 ? 's' : ''}` : "Not rated"}
+                {formData.programming_rating
+                  ? `${formData.programming_rating} star${
+                      formData.programming_rating > 1 ? "s" : ""
+                    }`
+                  : "Not rated"}
               </span>
             </div>
           </div>
 
           <div className={styles.labelInput}>
-            <label>Rate your conversation with your profile Evaluator out of 5</label>
+            <label>
+              Rate your conversation with your profile Evaluator out of 5
+            </label>
             <div className={styles.ratingContainer}>
               {[1, 2, 3, 4, 5].map((star) => (
                 <span
@@ -517,7 +595,8 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                   onMouseLeave={() => setHoverEvaluatorRating(0)}
                   onClick={() => handleEvaluatorRatingClick(star)}
                 >
-                  {star <= (hoverEvaluatorRating || formData.evaluator_rating) ? (
+                  {star <=
+                  (hoverEvaluatorRating || formData.evaluator_rating) ? (
                     <FaStar className={styles.filledStar} />
                   ) : (
                     <FaRegStar className={styles.emptyStar} />
@@ -525,13 +604,19 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
                 </span>
               ))}
               <span className={styles.ratingText}>
-                {formData.evaluator_rating ? `${formData.evaluator_rating} star${formData.evaluator_rating > 1 ? 's' : ''}` : "Not rated"}
+                {formData.evaluator_rating
+                  ? `${formData.evaluator_rating} star${
+                      formData.evaluator_rating > 1 ? "s" : ""
+                    }`
+                  : "Not rated"}
               </span>
             </div>
           </div>
 
           <div className={styles.labelInput}>
-            <label>Why do you want join this program? (Describe in 100 words in SOP)*</label>
+            <label>
+              Why do you want join this program? (Describe in 100 words in SOP)*
+            </label>
             <textarea
               name="expectations"
               value={formData.expectations}
@@ -540,7 +625,11 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
               rows="5"
               className={fieldErrors.expectations ? styles.errorField : ""}
             />
-            {fieldErrors.expectations && <span className={styles.errorText}>{fieldErrors.expectations}</span>}
+            {fieldErrors.expectations && (
+              <span className={styles.errorText}>
+                {fieldErrors.expectations}
+              </span>
+            )}
           </div>
         </div>
       )}
@@ -559,7 +648,13 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
           disabled={loading}
           className={styles.nextBtn}
         >
-          {step === 3 ? (loading ? "Submitting..." : "Submit") : (
+          {step === 3 ? (
+            loading ? (
+              "Submitting..."
+            ) : (
+              "Submit"
+            )
+          ) : (
             <>
               Next <ArrowRight size={18} style={{ marginLeft: "8px" }} />
             </>

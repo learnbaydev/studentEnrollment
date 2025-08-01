@@ -16,8 +16,9 @@ const scheduleRoutes = require("./routes/scheduleRoutes");
 const paymentStatusRouter = require("./routes/payment-status");
 const authRoutes = require("./routes/authRoutes");
 const discordRoutes = require("./routes/discorRoutes");
-// require("./cron/discordWebhookCheck"); // schedule the hourly health check
+const registerRoutes = require("./routes/registerRoutes");
 
+// require("./cron/discordWebhookCheck"); // schedule the hourly health check
 
 // Initialize express app
 const app = express();
@@ -50,7 +51,8 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === "production", // HTTPS-only in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Required for cross-site cookies
-      domain: process.env.NODE_ENV === "production" ? "app.learnbay.co" : undefined, // Allow subdomains
+      domain:
+        process.env.NODE_ENV === "production" ? "app.learnbay.co" : undefined, // Allow subdomains
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       httpOnly: true, // Prevent client-side JS access
     },
@@ -66,7 +68,7 @@ app.use(
 // );
 
 const corsOptions = {
-  origin: process.env.CLIENT_URL || 'http://localhost:3000', // default to common React port
+  origin: process.env.CLIENT_URL || "http://localhost:3000", // default to common React port
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -88,6 +90,7 @@ app.use(passport.session());
 })();
 
 // ✅ Routes
+app.use("/api/register", registerRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/offer", offerLetterRoutes);
 app.use("/api", enrollmentRoutes);
@@ -95,7 +98,6 @@ app.use("/api/schedule", scheduleRoutes);
 app.use("/api/payment-status", paymentStatusRouter);
 app.use("/pdfs", express.static(path.join(__dirname, "public/pdfs")));
 app.use("/api", discordRoutes);
-
 
 // ✅ Check Auth Status API
 app.get("/api/check-auth", (req, res) => {
