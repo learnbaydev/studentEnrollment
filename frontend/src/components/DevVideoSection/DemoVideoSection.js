@@ -17,7 +17,7 @@ const DemoSessions = () => {
     { id: 'PythonandStatistics', name: 'Python & Statistics' },
     { id: 'Cloud', name: 'Cloud Computing & DevOps' },
 
-    { id: 'CyberSecurity', name: 'projects' },
+    { id: 'CyberSecurity', name: 'Projects' },
     // { id: 'DSA', name: 'Data Structures & Algorithms' },
   ];
 
