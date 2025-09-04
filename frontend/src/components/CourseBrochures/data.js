@@ -204,68 +204,11 @@ export const courses = [
   },
   // Cloud & DevOps Courses
   {
-    id: 11,
-    title: "Executive Certification in Cloud and Devops - IIT - Guwahati",
-    category: "Cloud & DevOps",
-    duration: "8 months",
-    projects: "5+",
-    certification: "Global Certification",
-    for: "Designed by industry experts",
-    image:
-      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_gen.webp",
-    certificationBadges: [
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/aws.png",
-    ],
-    brochureLink:
-      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/IIT%2Bcloud%2Band%2Bdevops_p_comp.pdf",
-    detailsLink:
-      "https://www.learnbay.co/cloud&devops/executive-program-in-cloud-and-devops-by-iit-guwahati",
-  },
-  {
-    id: 12,
-    title: "Advanced Cloud Computing & DevOps Certification Program",
-    category: "Cloud & DevOps",
-    duration: "6 months",
-    projects: "3",
-    certification: "Global Certification",
-    for: "Designed by industry experts",
-    image:
-      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_s.webp",
-    certificationBadges: [
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
-    ],
-    brochureLink:
-      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/Cloud-and-Devops-Certification-Program+(8)_comp.pdf",
-    detailsLink:
-      "https://www.learnbay.co/cloud&devops/cloud-computing-and-devOps-certification-program",
-  },
-
-  // DSA & System Design Courses
-  {
-    id: 13,
-    title: "Professional Certificate in AWS Cloud Computing & Devops",
-    category: "Cloud & DevOps",
-    duration: "18 months",
-    projects: "3+",
-    certification: "Microsoft Certification",
-    for: "Designed by industry experts",
-
-    image:
-      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/aws.webp",
-    certificationBadges: [
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
-    ],
-    brochureLink:
-      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/AWS-Cloud-and-Devops-Certification-Program.pdf",
-    detailsLink:
-      "https://www.learnbay.co/cloud&devops/cloud-computing-and-devOps-certification-program",
-  },
-  {
     id: 14,
     title: "Cloud and DevOps Engineering Masters Certification Program",
     category: "Cloud & DevOps",
     duration: "8 months",
-    projects: "3",
+    projects: "5",
     certification: "IBM Certification",
     for: "Designed by industry experts",
 
@@ -279,6 +222,63 @@ export const courses = [
     detailsLink:
       "https://www.learnbay.co/cloud&devops/cloud-computing-and-devOps-certification-program",
   },
+  {
+    id: 12,
+    title: "Advanced Cloud Computing & DevOps Certification Program",
+    category: "Cloud & DevOps",
+    duration: "6 months",
+    projects: "5",
+    certification: "Global Certification",
+    for: "Designed by industry experts",
+    image:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_s.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
+    ],
+    brochureLink:
+      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/Cloud-and-Devops-Certification-Program+(8)_comp.pdf",
+    detailsLink:
+      "https://www.learnbay.co/cloud&devops/cloud-computing-and-devOps-certification-program",
+  },
+  {
+    id: 11,
+    title: "Executive Certification in Cloud and Devops - IIT - Guwahati",
+    category: "Cloud & DevOps",
+    duration: "6 months",
+    projects: "5",
+    certification: "Global Certification",
+    for: "Designed by industry experts",
+    image:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_gen.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/aws.png",
+    ],
+    brochureLink:
+      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/IIT%2Bcloud%2Band%2Bdevops_p_comp.pdf",
+    detailsLink:
+      "https://www.learnbay.co/cloud&devops/executive-program-in-cloud-and-devops-by-iit-guwahati",
+  },
+
+  {
+    id: 13,
+    title: "AWS Cloud Computing & Devops",
+    category: "Cloud & DevOps",
+    duration: "4 months",
+    projects: "3",
+    certification: "Microsoft Certification",
+    for: "Designed by industry experts",
+
+    image:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/aws.webp",
+    certificationBadges: [
+      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
+    ],
+    brochureLink:
+      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/AWS-Cloud-and-Devops-Certification-Program.pdf",
+    detailsLink:
+      "https://www.learnbay.co/cloud&devops/cloud-computing-and-devOps-certification-program",
+  },
+
   {
     id: 14,
     title: "HR Analytics Certification Program",
