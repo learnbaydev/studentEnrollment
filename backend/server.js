@@ -133,6 +133,6 @@ const io = socketIO(server, {
 });
 
 // ✅ Start app
-server.listen(process.env.PORT || 5000, () => {
+server.listen(process.env.PORT || 5050, () => {
   console.log(`🚀 Server started on ${process.env.SERVER_URL}`);
 });

@@ -1,8 +1,7 @@
 // pages/login.js
-import { useEffect, useState } from 'react';
-import styles from '../styles/Login.module.css';
-import GoogleLoginButton from '@/components/googleAuthButton/GoogleLoginButton';
-
+import { useEffect, useState } from "react";
+import styles from "../styles/Login.module.css";
+import GoogleLoginButton from "@/components/googleAuthButton/GoogleLoginButton";
 
 const testimonials = [
   // {
@@ -18,33 +17,37 @@ const testimonials = [
     name: "Shravanthi A",
     role: "Data Scientist",
     rating: "⭐⭐⭐⭐",
-    quote: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training.",
-    image: "/Testimoals/testin_1.webp"
+    quote:
+      "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training.",
+    image: "/Testimoals/testin_1.webp",
   },
   {
     id: 3,
     name: "Preksha Mishra",
     role: "Lead Data Scientist",
     rating: "⭐⭐⭐⭐⭐",
-    quote: "The course structure is excellent with emphasis on concept building and tools & software at the same time.",
-    image: "/Testimoals/test_2.webp"
+    quote:
+      "The course structure is excellent with emphasis on concept building and tools & software at the same time.",
+    image: "/Testimoals/test_2.webp",
   },
   {
     id: 4,
     name: "Mohamod Israr",
     role: "Data Scientist",
     rating: "⭐⭐⭐⭐",
-    quote: "Thanks to the LearnBay data science course & excellent guidance. I was able to crack the TCS interview and secure a job with a 397% pay raise.",
-    image: "/Testimoals/test_3.webp"
+    quote:
+      "Thanks to the LearnBay data science course & excellent guidance. I was able to crack the TCS interview and secure a job with a 397% pay raise.",
+    image: "/Testimoals/test_3.webp",
   },
   {
     id: 5,
     name: "Rahul Sharma",
     role: "Machine Learning Engineer",
     rating: "⭐⭐⭐⭐⭐",
-    quote: "The hands-on projects and industry-relevant curriculum helped me transition from a software developer to ML engineer.",
-    image: "/Testimoals/test_4.webp"
-  }
+    quote:
+      "The hands-on projects and industry-relevant curriculum helped me transition from a software developer to ML engineer.",
+    image: "/Testimoals/test_4.webp",
+  },
 ];
 const Login = () => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -57,7 +60,6 @@ const Login = () => {
     return () => clearInterval(interval);
   }, []);
 
-
   return (
     <div className={styles.main}>
       <div className={styles.container}>
@@ -65,28 +67,38 @@ const Login = () => {
           <div className={styles.leftPanel}>
             <div>
               <div className={styles.logoDiv}>
-                <img src="/learnbaylogos.webp" alt="Learnbay Logo" className={styles.logo} />
+                <img
+                  src="/learnbaylogos.webp"
+                  alt="Learnbay Logo"
+                  className={styles.logo}
+                />
                 <h2>Launch Your Tech. Master In-Demand Skills</h2>
               </div>
-           <div className={styles.mobileonly}>
+              <div className={styles.mobileonly}>
+                {/* Mobile-only Google login button */}
+                <h2>
+                  Your Personalised{" "}
+                  <span className={styles.highlight}>Admission</span>
+                </h2>
+                <p className={styles.smallhead}>
+                  Access your Learnbay dashboard, course materials, and career
+                  support
+                </p>
 
-               
-              {/* Mobile-only Google login button */}
-              <h2>Your Personalised <span className={styles.highlight}>Admission</span></h2>
-            <p className={styles.smallhead}>Access your Learnbay dashboard, course materials, and career support</p>
-            
-              <div className={styles.mobileGoogleButton}>
-                <div className={styles.googleBox}>
-                  <p className={styles.sinHead}>Sign in to continue</p>
-                  <GoogleLoginButton />
-                  <div className={styles.notediv}>
-                    <img src="/secure-icon.svg" alt="Secure" />
-                    <p className={styles.note}>Your information is securely encrypted</p>
+                <div className={styles.mobileGoogleButton}>
+                  <div className={styles.googleBox}>
+                    <p className={styles.sinHead}>Sign in to continue</p>
+                    <GoogleLoginButton />
+                    <div className={styles.notediv}>
+                      <img src="/secure-icon.svg" alt="Secure" />
+                      <p className={styles.note}>
+                        Your information is securely encrypted
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-           </div>
-              
+
               <h3 className={styles.h3}>Why Top Professional Choose Us</h3>
             </div>
             <div className={styles.featuresMain}>
@@ -104,21 +116,34 @@ const Login = () => {
                 <div className={styles.featureBox}>
                   <img src="/icons/icon-03.webp" alt="Live Classes" />
                   <p>Live Classes</p>
-                  <span>Interactive sessions with real-time doubt clearing</span>
+                  <span>
+                    Interactive sessions with real-time doubt clearing
+                  </span>
                 </div>
                 <div className={styles.featureBox}>
                   <img src="/icons/icon-04.webp" alt="Job Assistance" />
                   <p>Job Assistance</p>
-                  <span>Placement support for Data Science & Software Dev roles.</span>
+                  <span>
+                    Placement support for Data Science & Software Dev roles.
+                  </span>
                 </div>
               </div>
             </div>
             <div className={styles.certificationBoxMain}>
               <div className={styles.certificationBox}>
-                <div><img src="/icons/icon-5.webp" alt="" /></div>
                 <div>
-                  <p><strong>Domain Specialised Project Certification</strong></p>
-                  <span>Program Specially Designed for Professionals from BFSI, Retail, Healthcare, Automotive domains to transition in data science. Work on real industry project and get project certification.</span>
+                  <img src="/icons/icon-5.webp" alt="" />
+                </div>
+                <div>
+                  <p>
+                    <strong>Domain Specialised Project Certification</strong>
+                  </p>
+                  <span>
+                    Program Specially Designed for Professionals from BFSI,
+                    Retail, Healthcare, Automotive domains to transition in data
+                    science. Work on real industry project and get project
+                    certification.
+                  </span>
                 </div>
               </div>
             </div>
@@ -127,40 +152,56 @@ const Login = () => {
 
         <div className={styles.right}>
           <div className={styles.rightPanel}>
-            <h2 className={styles.desktophighlets}>Your Personalised <span className={` ${styles.highlight}`}>Admission</span></h2>
-            <p className={ `${styles.smallhead} ${styles.paras}` }>Access your Learnbay dashboard, course materials, and career support</p>
-            
+            <h2 className={styles.desktophighlets}>
+              Your Personalised{" "}
+              <span className={` ${styles.highlight}`}>Admission</span>
+            </h2>
+            <p className={`${styles.smallhead} ${styles.paras}`}>
+              Access your Learnbay dashboard, course materials, and career
+              support
+            </p>
+
             {/* This will be hidden on mobile */}
             <div className={styles.googleBox}>
               <p className={styles.sinHead}>Sign in to continue</p>
               <GoogleLoginButton />
               <div className={styles.notediv}>
                 <img src="/secure-icon.svg" alt="Secure" />
-                <p className={styles.note}>Your information is securely encrypted</p>
+                <p className={styles.note}>
+                  Your information is securely encrypted
+                </p>
               </div>
             </div>
-            
-       {/* Testimonial Slider */}
-       <div className={styles.testimonialContainer}>
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={testimonial.id}
-                className={`${styles.testimonial} ${index === currentTestimonial ? styles.active : ''}`}
-              >
-                <img 
-                  src={testimonial.image} 
-                  alt={testimonial.name} 
-                  className={styles.userImg} 
-                />
-                <p className={styles.testper}>
-                  <strong>{testimonial.name}</strong><br />{testimonial.role}
-                </p>
-                <p>{testimonial.rating}</p>
-                <p className={styles.quote}>"{testimonial.quote}"</p>
-              </div>
-            ))}
-          </div>
-            <p className={styles.terms}>By signing in, you agree to Learnbay's <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a></p>
+
+            {/* Testimonial Slider */}
+            <div className={styles.testimonialContainer}>
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={testimonial.id}
+                  className={`${styles.testimonial} ${
+                    index === currentTestimonial ? styles.active : ""
+                  }`}
+                >
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className={styles.userImg}
+                  />
+                  <p className={styles.testper}>
+                    <strong>{testimonial.name}</strong>
+                    <br />
+                    {testimonial.role}
+                  </p>
+                  <p>{testimonial.rating}</p>
+                  <p className={styles.quote}>"{testimonial.quote}"</p>
+                </div>
+              ))}
+            </div>
+            <p className={styles.terms}>
+              By signing in, you agree to Learnbay's{" "}
+              <a href="/terms">Terms of Service</a> and{" "}
+              <a href="/privacy">Privacy Policy</a>
+            </p>
           </div>
         </div>
       </div>
