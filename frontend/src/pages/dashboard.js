@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router'; // ✅ added
-import useAuth from '../hooks/hooks'; // ✅ updated hook path
-import Sidebar from '../components/sidebar/SideBar';
-import Navbar from '@/components/Navbar/Navbar';
-import Modal from '../components/Model/Model';
-import EnrollmentForm from '../components/EnrollmentForm/EnrollmentForm';
-import Steps from '../components/Steps/Steps';
-import styles from '../styles/Dashboard.module.css';
-import axios from 'axios';
-import UserInfo from '@/components/UserInfo/UserInfo';
-import SuccessStories from '@/components/SuccessStories/SuccessStories';
-import DownloadOfferLetter from '@/components/DownloadOfferLetter/DownloadOfferLetter';
-import CourseBrochures from '@/components/CourseBrochures/CourseBrochures';
-import ThemeToggle from '@/components/ThemeToggle';
-import FeaturesSection from '@/components/Features/Features';
-import DemoVideoSection from '@/components/DevVideoSection/DemoVideoSection';
-import Head from 'next/head';
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router"; // ✅ added
+import useAuth from "../hooks/hooks"; // ✅ updated hook path
+import Sidebar from "../components/sidebar/SideBar";
+import Navbar from "@/components/Navbar/Navbar";
+import Modal from "../components/Model/Model";
+import EnrollmentForm from "../components/EnrollmentForm/EnrollmentForm";
+import Steps from "../components/Steps/Steps";
+import styles from "../styles/Dashboard.module.css";
+import axios from "axios";
+import UserInfo from "@/components/UserInfo/UserInfo";
+import SuccessStories from "@/components/SuccessStories/SuccessStories";
+import DownloadOfferLetter from "@/components/DownloadOfferLetter/DownloadOfferLetter";
+import CourseBrochures from "@/components/CourseBrochures/CourseBrochures";
+import ThemeToggle from "@/components/ThemeToggle";
+import FeaturesSection from "@/components/Features/Features";
+import DemoVideoSection from "@/components/DevVideoSection/DemoVideoSection";
+import Head from "next/head";
 
 export default function Dashboard() {
   const { loading, user } = useAuth();
@@ -25,7 +25,7 @@ export default function Dashboard() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [enrollmentStatus, setEnrollmentStatus] = useState(null);
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeSection, setActiveSection] = useState("dashboard");
   const [step1Completed, setStep1Completed] = useState(false);
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
@@ -35,10 +35,12 @@ export default function Dashboard() {
   const fetchEnrollmentStatus = async () => {
     if (!user?.email) return;
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/enroll/check?email=${user.email}`);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/enroll/check?email=${user.email}`
+      );
       const status = response.data?.status;
       setEnrollmentStatus(status);
-      setCurrentStep(status === 'approved' ? 2 : 1);
+      setCurrentStep(status === "approved" ? 2 : 1);
     } catch (err) {
       console.error("Failed to fetch enrollment status", err);
     }
@@ -57,12 +59,12 @@ export default function Dashboard() {
   // ✅ client-side redirect if unauthenticated
   useEffect(() => {
     if (!loading && !user) {
-      router.replace('/login');
+      router.replace("/login");
     }
   }, [loading, user, router]);
 
   // ✅ show spinner while loading or waiting to redirect
-  if (loading || (!user && typeof window !== 'undefined')) {
+  if (loading || (!user && typeof window !== "undefined")) {
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.loadingSpinner}></div>
@@ -75,21 +77,25 @@ export default function Dashboard() {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar 
-        user={user} 
-        toggleSidebar={toggleSidebar} 
+      <Navbar
+        user={user}
+        toggleSidebar={toggleSidebar}
         isSidebarOpen={isSidebarOpen}
       />
       <div className={styles.mainContent}>
-        <Sidebar 
-          selected={activeSection} 
-          onSelect={setActiveSection} 
+        <Sidebar
+          selected={activeSection}
+          onSelect={setActiveSection}
           user={user}
           isOpen={isSidebarOpen}
         />
 
-        <div className={`${styles.contentArea} ${isSidebarOpen ? styles.withSidebar : ''}`}>
-          {activeSection === 'dashboard' && (
+        <div
+          className={`${styles.contentArea} ${
+            isSidebarOpen ? styles.withSidebar : ""
+          }`}
+        >
+          {activeSection === "dashboard" && (
             <>
               <Steps
                 currentStep={currentStep}
@@ -102,42 +108,45 @@ export default function Dashboard() {
             </>
           )}
 
-          {activeSection === 'testimonials' && (
+          {activeSection === "testimonials" && (
             <div className={styles.tesimonals}>
               <SuccessStories />
             </div>
           )}
 
-          {activeSection === 'brochure' && (
+          {activeSection === "brochure" && (
             <div className={styles.sectionContainer}>
               <CourseBrochures />
               <ThemeToggle />
             </div>
           )}
 
-          {activeSection === 'demo' && (
+          {activeSection === "demo" && (
             <div className={styles.sectionContainer}>
               <DemoVideoSection />
             </div>
           )}
 
-          {activeSection === 'features' && (
+          {activeSection === "features" && (
             <div className={styles.sectionContainer}>
               <FeaturesSection />
             </div>
           )}
 
-          {activeSection === 'support' && (
+          {activeSection === "support" && (
             <div className={styles.sectionContainer}>
               <h3>Help & Support</h3>
               <div className={styles.supportCard}>
                 <p>Need help? Our support team is available 24/7</p>
                 <div className={styles.contactMethods}>
-                  <a href="mailto:support@example.com" className={styles.contactLink}>
-                    support@example.com
+                  <a
+                    href="mailto:contacts@learnbay.co"
+                    className={styles.contactLink}
+                  >
+                    contacts@learnbay.co
                   </a>
-                  <a href="tel:+1234567890" className={styles.contactLink}>
-                    +1 (234) 567-890
+                  <a href="tel:+91 7795687988" className={styles.contactLink}>
+                    (+91) 7795687988
                   </a>
                 </div>
               </div>
@@ -160,20 +169,23 @@ export default function Dashboard() {
 
 // ✅ server-side protection
 export async function getServerSideProps(context) {
-  const cookie = context.req.headers.cookie || '';
+  const cookie = context.req.headers.cookie || "";
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/check-auth`, {
-    headers: {
-      cookie,
-    },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/check-auth`,
+    {
+      headers: {
+        cookie,
+      },
+    }
+  );
 
   const data = await res.json();
 
   if (!data.isAuthenticated) {
     return {
       redirect: {
-        destination: '/login',
+        destination: "/login",
         permanent: false,
       },
     };
