@@ -117,7 +117,7 @@ export default function Dashboard() {
           {activeSection === "brochure" && (
             <div className={styles.sectionContainer}>
               <CourseBrochures />
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
             </div>
           )}
 
