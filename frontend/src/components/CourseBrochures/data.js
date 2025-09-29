@@ -6,7 +6,7 @@ export const categories = [
   "Cloud & DevOps",
   "HR/BFSI",
   "Cyber Security",
-  "Gen-AI",
+  // "Gen-AI",
 ];
 
 export const courses = [
@@ -240,24 +240,24 @@ export const courses = [
     detailsLink:
       "https://www.learnbay.co/cloud&devops/cloud-computing-and-devOps-certification-program",
   },
-  {
-    id: 11,
-    title: "Executive Certification in Cloud and Devops - IIT - Guwahati",
-    category: "Cloud & DevOps",
-    duration: "6 months",
-    projects: "5",
-    certification: "Global Certification",
-    for: "Designed by industry experts",
-    image:
-      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_gen.webp",
-    certificationBadges: [
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/aws.png",
-    ],
-    brochureLink:
-      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/IIT%2Bcloud%2Band%2Bdevops_p_comp.pdf",
-    detailsLink:
-      "https://www.learnbay.co/cloud&devops/executive-program-in-cloud-and-devops-by-iit-guwahati",
-  },
+  // {
+  //   id: 11,
+  //   title: "Executive Certification in Cloud and Devops - IIT - Guwahati",
+  //   category: "Cloud & DevOps",
+  //   duration: "6 months",
+  //   projects: "5",
+  //   certification: "Global Certification",
+  //   for: "Designed by industry experts",
+  //   image:
+  //     "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_gen.webp",
+  //   certificationBadges: [
+  //     "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/aws.png",
+  //   ],
+  //   brochureLink:
+  //     "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/IIT%2Bcloud%2Band%2Bdevops_p_comp.pdf",
+  //   detailsLink:
+  //     "https://www.learnbay.co/cloud&devops/executive-program-in-cloud-and-devops-by-iit-guwahati",
+  // },
 
   {
     id: 13,
@@ -352,59 +352,59 @@ export const courses = [
       "https://www.learnbay.co/cyber-security/executive-program-in-cyber-security-and-ethical-hacking-by-iit-roorkee",
   },
 
-  {
-    id: 17,
-    title: "Cloud Computing & DevOps Certification Program",
-    category: "Gen-AI",
-    duration: "10 months",
-    projects: "3",
-    certification: "Global Certification",
-    for: "Designed by industry experts",
-    image:
-      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_gen.webp",
-    certificationBadges: [
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
-    ],
-    brochureLink:
-      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/IIT-cloud-devops.pdf",
-    detailsLink:
-      "https://www.learnbay.co/cloud&devops/executive-program-in-cloud-and-devops-by-iit-guwahati",
-  },
+  // {
+  //   id: 17,
+  //   title: "Cloud Computing & DevOps Certification Program",
+  //   category: "Gen-AI",
+  //   duration: "10 months",
+  //   projects: "3",
+  //   certification: "Global Certification",
+  //   for: "Designed by industry experts",
+  //   image:
+  //     "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/cloud_gen.webp",
+  //   certificationBadges: [
+  //     "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
+  //   ],
+  //   brochureLink:
+  //     "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/IIT-cloud-devops.pdf",
+  //   detailsLink:
+  //     "https://www.learnbay.co/cloud&devops/executive-program-in-cloud-and-devops-by-iit-guwahati",
+  // },
 
-  {
-    id: 17,
-    title: "GenAI Certification for Managers & Tech Leaders",
-    category: "Gen-AI",
-    duration: "4 months",
-    projects: "2",
-    certification: "Project Certification form Guwahati",
-    for: "For Managers & Tech Leaders",
-    image:
-      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/Gen_ai_cer.webp",
-    certificationBadges: [
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
-    ],
-    brochureLink: "#",
-    detailsLink:
-      "https://www.learnbay.co/datascience/generative-ai-course-for-manager",
-  },
+  // {
+  //   id: 17,
+  //   title: "GenAI Certification for Managers & Tech Leaders",
+  //   category: "Gen-AI",
+  //   duration: "4 months",
+  //   projects: "2",
+  //   certification: "Project Certification form Guwahati",
+  //   for: "For Managers & Tech Leaders",
+  //   image:
+  //     "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/Gen_ai_cer.webp",
+  //   certificationBadges: [
+  //     "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
+  //   ],
+  //   brochureLink: "#",
+  //   detailsLink:
+  //     "https://www.learnbay.co/datascience/generative-ai-course-for-manager",
+  // },
 
-  {
-    id: 17,
-    title: "GenAI Developer Certification for Professionals",
-    category: "Gen-AI",
-    duration: "3 months",
-    projects: "2",
-    certification: "Project Certification form IIT Guwahati",
-    for: "For Working Professional",
-    image:
-      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/Gen_ai_tech_le.webp",
-    certificationBadges: [
-      "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
-    ],
-    brochureLink:
-      "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/GenAI-Managers-Tech-Leaders-iits.pdf",
-    detailsLink:
-      "https://www.learnbay.co/fullstack/generative-ai-course-for-professional",
-  },
+  // {
+  //   id: 17,
+  //   title: "GenAI Developer Certification for Professionals",
+  //   category: "Gen-AI",
+  //   duration: "3 months",
+  //   projects: "2",
+  //   certification: "Project Certification form IIT Guwahati",
+  //   for: "For Working Professional",
+  //   image:
+  //     "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/courseCard/Gen_ai_tech_le.webp",
+  //   certificationBadges: [
+  //     "https://learnbay-wb.s3.ap-south-1.amazonaws.com/main/course.learnbay.co/microsoft.png",
+  //   ],
+  //   brochureLink:
+  //     "https://brochureslearnbay.s3.ap-south-1.amazonaws.com/NewCourseBrochure/GenAI-Managers-Tech-Leaders-iits.pdf",
+  //   detailsLink:
+  //     "https://www.learnbay.co/fullstack/generative-ai-course-for-professional",
+  // },
 ];
