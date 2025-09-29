@@ -3,172 +3,180 @@ import styles from "./SuccessStories.module.css";
 import Image from "next/image";
 
 const testimonials = [
- 
   {
     name: "Mohamod Israr",
     role: "Data Scientist",
-    review: "Thanks to the LearnBay data science course & excellent guidance. I was able to crack the TCS interview and secure a job with a 397% pay raise. The real-world projects helped me develop my concepts as a data scientist.",
+    review:
+      "Thanks to the LearnBay data science course & excellent guidance. I was able to crack the TCS interview and secure a job with a 397% pay raise. The real-world projects helped me develop my concepts as a data scientist.",
     domain: "Sales Domain",
     company: "Teleperformance",
-    salaryHike: "397%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/md.webp",
+    salaryHike: "110%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/md.webp",
     comIcons: "/company-logos/teleperformance.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/x_EmBJ-h7DE"
+    videoUrl: "https://www.youtube.com/embed/x_EmBJ-h7DE",
   },
   {
     name: "Preksha Mishra",
     role: "Lead Data Scientist",
-    review: "Learnbay’s Data Science course helped me switch careers confidently, even from a non-tech background. The real-world projects and expert guidance made all the difference.",
+    review:
+      "Learnbay’s Data Science course helped me switch careers confidently, even from a non-tech background. The real-world projects and expert guidance made all the difference.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "848%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/prekhasss.webp",
+    salaryHike: "120%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/prekhasss.webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/vSjfKdIzUjY"
+    videoUrl: "https://www.youtube.com/embed/vSjfKdIzUjY",
   },
 
   {
     name: "Antony Isarel",
     role: "Data Science & ML specialist",
-    review: "Transitioning from civil engineering to data science seemed daunting, but Learnbay's comprehensive course and dedicated mentorship made it achievable. The hands-on projects and real-world applications provided the confidence I needed to secure a role in data science.",
+    review:
+      "Transitioning from civil engineering to data science seemed daunting, but Learnbay's comprehensive course and dedicated mentorship made it achievable. The hands-on projects and real-world applications provided the confidence I needed to secure a role in data science.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "848%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/one+(1).webp",
+    salaryHike: "180%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/one+(1).webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 4,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/VAqTQpvr7_g?si=nnIg21pOyQlipFmH"
+    videoUrl: "https://www.youtube.com/embed/VAqTQpvr7_g?si=nnIg21pOyQlipFmH",
   },
 
   {
     name: "Venkata Uday Kumar",
     role: "Data Scientist",
-    review: "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
+    review:
+      "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "848%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/two+(1).webp",
+    salaryHike: "140%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/two+(1).webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 4,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/QZMhmUcRIP8?si=fmpHaCdVVM246fNN"
+    videoUrl: "https://www.youtube.com/embed/QZMhmUcRIP8?si=fmpHaCdVVM246fNN",
   },
 
   {
     name: "Nachiket Dixit",
     role: "Data Science specialist",
-    review: "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
+    review:
+      "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "848%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/three+(1).webp",
+    salaryHike: "165%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/three+(1).webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/1Zj9PnOzHzA?si=727PkhdVcTCoar-F"
+    videoUrl: "https://www.youtube.com/embed/1Zj9PnOzHzA?si=727PkhdVcTCoar-F",
   },
 
   {
     name: "Ajay Dobliyal",
     role: "Business Analyst",
-    review: "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
+    review:
+      "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "848%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/four+(1).webp",
+    salaryHike: "131%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/four+(1).webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/CaxtNOWgzWs?si=ss8HY5Gn1j1KNe1Y"
+    videoUrl: "https://www.youtube.com/embed/CaxtNOWgzWs?si=ss8HY5Gn1j1KNe1Y",
   },
-
 
   {
     name: "Chandrika",
     role: "data science engineer",
-    review: "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
+    review:
+      "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "848%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/five+(1).webp",
+    salaryHike: "170%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/five+(1).webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/yAfsDFsqW10?si=UK42OD6__tYvF0tM"
+    videoUrl: "https://www.youtube.com/embed/yAfsDFsqW10?si=UK42OD6__tYvF0tM",
   },
 
   {
     name: "Shravanthi A",
     role: "Data Scientist",
-    review: "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team.",
+    review:
+      "LearnBay has helped me a lot to learn data science applications in the e-commerce industry. The live class concept was really helpful in receiving proper DS training. Thanks to all my mentors and the placement team.",
     domain: "Mechanical Domain",
     company: "Ford",
-    salaryHike: "161%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/sharvann.webp",
+    salaryHike: "120%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/sharvann.webp",
     comIcons: "/company-logos/ford.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/ford-testimonial"
+    videoUrl: "https://www.youtube.com/embed/ford-testimonial",
   },
 
   {
     name: "Salvi Harshada",
     role: "business analyst",
-    review: "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
+    review:
+      "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "848%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/six+(1).webp",
+    salaryHike: "190%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/six+(1).webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/qpg_FysX9Z4?si=ulhmiH97qJgHzoqU"
+    videoUrl: "https://www.youtube.com/embed/qpg_FysX9Z4?si=ulhmiH97qJgHzoqU",
   },
 
   {
     name: "Khush Narula",
     role: "business analyst",
-    review: "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
+    review:
+      "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "848%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/seven+(1).webp",
+    salaryHike: "162%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/seven+(1).webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/dU6eLmZFpHM?si=omlVONZFNC8zBnna"
+    videoUrl: "https://www.youtube.com/embed/dU6eLmZFpHM?si=omlVONZFNC8zBnna",
   },
-
 
   {
     name: "Swathi",
     role: "Power BI Developer",
-    review: "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
+    review:
+      "From working as a Data Analyst to upskilling and becoming a Battery Data Scientist at Fluence; hear from Venkata Uday Kumar, his journey into the tech world with Learnbay.",
     domain: "Telecom Domain",
     company: "HCL",
-    salaryHike: "84%",
-    profile: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/eight+(1).webp",
+    salaryHike: "170%",
+    profile:
+      "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/testimonals/eight+(1).webp",
     comIcons: "/company-logos/hcl.webp",
     rating: 5,
     video: true,
-    videoUrl: "https://www.youtube.com/embed/ghJ1f8huDUI?si=Z0HRXDcKuhUbGiwC"
+    videoUrl: "https://www.youtube.com/embed/ghJ1f8huDUI?si=Z0HRXDcKuhUbGiwC",
   },
-
-
-
-
-
-
-
-
-
-
-
 
   // {
   //   name: "Shubham Kumar",
@@ -212,28 +220,6 @@ const testimonials = [
   //   videoUrl: "https://www.youtube.com/embed/hewBtR_WoDM"
   // },
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // {
   //   name: "Laxmi Sushmita",
   //   role: "business Analyst",
@@ -248,10 +234,6 @@ const testimonials = [
   //   videoUrl: "https://www.youtube.com/embed/myRKzYu1N5E"
   // },
 
-
- 
- 
- 
   // {
   //   name: "Rahul Sharma",
   //   role: "Machine Learning Engineer",
@@ -372,12 +354,35 @@ const testimonials = [
 ];
 
 const VideoIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
-    <mask id="mask0_63_1373" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="21">
-      <rect x="0.76123" y="0.756592" width="20.177" height="20.177" fill="#D9D9D9"/>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="21"
+    height="21"
+    viewBox="0 0 21 21"
+    fill="none"
+  >
+    <mask
+      id="mask0_63_1373"
+      style={{ maskType: "alpha" }}
+      maskUnits="userSpaceOnUse"
+      x="0"
+      y="0"
+      width="21"
+      height="21"
+    >
+      <rect
+        x="0.76123"
+        y="0.756592"
+        width="20.177"
+        height="20.177"
+        fill="#D9D9D9"
+      />
     </mask>
     <g mask="url(#mask0_63_1373)">
-      <path d="M9.16805 12.5265L14.2123 9.16365L9.16805 5.80082V12.5265ZM2.44238 19.2521V4.1194C2.44238 3.65701 2.60702 3.26118 2.9363 2.9319C3.26558 2.60263 3.66141 2.43799 4.1238 2.43799H17.5751C18.0375 2.43799 18.4333 2.60263 18.7626 2.9319C19.0919 3.26118 19.2565 3.65701 19.2565 4.1194V14.2079C19.2565 14.6703 19.0919 15.0661 18.7626 15.3954C18.4333 15.7247 18.0375 15.8893 17.5751 15.8893H5.80521L2.44238 19.2521ZM5.09061 14.2079H17.5751V4.1194H4.1238V15.1537L5.09061 14.2079Z" fill="#F91500"/>
+      <path
+        d="M9.16805 12.5265L14.2123 9.16365L9.16805 5.80082V12.5265ZM2.44238 19.2521V4.1194C2.44238 3.65701 2.60702 3.26118 2.9363 2.9319C3.26558 2.60263 3.66141 2.43799 4.1238 2.43799H17.5751C18.0375 2.43799 18.4333 2.60263 18.7626 2.9319C19.0919 3.26118 19.2565 3.65701 19.2565 4.1194V14.2079C19.2565 14.6703 19.0919 15.0661 18.7626 15.3954C18.4333 15.7247 18.0375 15.8893 17.5751 15.8893H5.80521L2.44238 19.2521ZM5.09061 14.2079H17.5751V4.1194H4.1238V15.1537L5.09061 14.2079Z"
+        fill="#F91500"
+      />
     </g>
   </svg>
 );
@@ -385,7 +390,10 @@ const VideoIcon = () => (
 const VideoPopup = ({ videoUrl, onClose }) => {
   return (
     <div className={styles.videoPopupOverlay} onClick={onClose}>
-      <div className={styles.videoPopupContainer} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={styles.videoPopupContainer}
+        onClick={(e) => e.stopPropagation()}
+      >
         <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
@@ -423,47 +431,48 @@ const SuccessStories = () => {
     setVisibleTestimonials(6);
   };
 
-const getInitials = (name) => {
-  const names = name.split(' ');
-  let initials = names[0].substring(0, 1).toUpperCase();
-  
-  if (names.length > 1) {
-    initials += names[names.length - 1].substring(0, 1).toUpperCase();
-  }
-  
-  return initials;
-};
+  const getInitials = (name) => {
+    const names = name.split(" ");
+    let initials = names[0].substring(0, 1).toUpperCase();
 
-const Avatar = ({ name, profile, width, height }) => {
-  const [imageError, setImageError] = useState(false);
-  
-  if (profile && !imageError) {
+    if (names.length > 1) {
+      initials += names[names.length - 1].substring(0, 1).toUpperCase();
+    }
+
+    return initials;
+  };
+
+  const Avatar = ({ name, profile, width, height }) => {
+    const [imageError, setImageError] = useState(false);
+
+    if (profile && !imageError) {
+      return (
+        <Image
+          className={styles.avatarPlaceholder}
+          src={profile}
+          width={width}
+          height={height}
+          alt={name}
+          onError={() => setImageError(true)}
+        />
+      );
+    }
+
     return (
-      <Image 
-        className={styles.avatarPlaceholder} 
-        src={profile} 
-        width={width} 
-        height={height} 
-        alt={name}
-        onError={() => setImageError(true)}
-      />
+      <div className={styles.avatarInitials} style={{ width, height }}>
+        {getInitials(name)}
+      </div>
     );
-  }
-
-
-  return (
-    <div className={styles.avatarInitials} style={{ width, height }}>
-      {getInitials(name)}
-    </div>
-  );
-};
-  
+  };
 
   return (
     <section className={styles.successSection}>
       <div className={styles.header}>
         <h2>Student Success Stories</h2>
-        <p>See how Learning has transformed careers and created life-changing opportunities for our students</p>
+        <p>
+          See how Learning has transformed careers and created life-changing
+          opportunities for our students
+        </p>
         <div className={styles.stats}>
           <div className={styles.statBox}>
             <span className={styles.statNumber}>500+</span>
@@ -480,54 +489,64 @@ const Avatar = ({ name, profile, width, height }) => {
         </div>
       </div>
 
-    <div className={styles.testimonialsContainer}>
+      <div className={styles.testimonialsContainer}>
         <h2 className={styles.testimonialsTitle}>Student Testimonials</h2>
         <div className={styles.testimonials}>
           {testimonials.slice(0, visibleTestimonials).map((item, index) => (
             <div className={styles.card} key={index}>
               <div className={styles.profile}>
-             <div className={styles.newprofile}> 
-
-             {/* <Avatar 
+                <div className={styles.newprofile}>
+                  {/* <Avatar 
                   name={item.name} 
                   profile={item.profile} 
                   width={60} 
                   height={60} 
                 /> */}
-                <Image src={item.profile} width={120} height={120} loading="lazy" className={styles.profile}/>
-                <div className={styles.profileInfo}>
-                  <h4>{item.name}</h4>
-                  <p>{item.role}</p>
-                  <div className={styles.rating}>{"⭐".repeat(item.rating)}</div>
+                  <Image
+                    src={item.profile}
+                    width={120}
+                    height={120}
+                    loading="lazy"
+                    className={styles.profile}
+                  />
+                  <div className={styles.profileInfo}>
+                    <h4>{item.name}</h4>
+                    <p>{item.role}</p>
+                    <div className={styles.rating}>
+                      {"⭐".repeat(item.rating)}
+                    </div>
+                  </div>
                 </div>
-             </div>
-            <div>
-            {item.video && (
-                  <button 
-                    className={styles.videoTag} 
-                    onClick={() => openVideo(item.videoUrl)}
-                    aria-label={`Watch ${item.name}'s video testimonial`}
-                  >
-                    <VideoIcon /> Watch Video
-                  </button>
-                )}
-            </div>
+                <div>
+                  {item.video && (
+                    <button
+                      className={styles.videoTag}
+                      onClick={() => openVideo(item.videoUrl)}
+                      aria-label={`Watch ${item.name}'s video testimonial`}
+                    >
+                      <VideoIcon /> Watch Video
+                    </button>
+                  )}
+                </div>
               </div>
               <p className={styles.review}>"{item.review}"</p>
               <div className={styles.cardFooter}>
                 <div className={styles.footerInner}>
-             <p className={styles.pss}>   {item.domain}    →  <strong>{item.role}</strong></p> 
+                  <p className={styles.pss}>
+                    {" "}
+                    {item.domain} → <strong>{item.role}</strong>
+                  </p>
                   {/* <Image src={item.comIcons} width={50} height={20} alt={item.company} /> */}
                 </div>
-                <hr className={styles.hr}/>
-                <span className={styles.salaryHike}>{item.salaryHike} Salary Hike</span>
+                <hr className={styles.hr} />
+                <span className={styles.salaryHike}>
+                  {item.salaryHike} Salary Hike
+                </span>
               </div>
             </div>
           ))}
-       
-           
         </div>
-        
+
         <div className={styles.loadMoreContainer}>
           {visibleTestimonials < testimonials.length ? (
             <button className={styles.loadMoreButton} onClick={loadMore}>
@@ -541,7 +560,9 @@ const Avatar = ({ name, profile, width, height }) => {
         </div>
       </div>
 
-      {currentVideo && <VideoPopup videoUrl={currentVideo} onClose={closeVideo} />}
+      {currentVideo && (
+        <VideoPopup videoUrl={currentVideo} onClose={closeVideo} />
+      )}
     </section>
   );
 };
