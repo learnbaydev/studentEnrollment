@@ -1,6 +1,6 @@
 // data.js
 export const categories = [
-  "Popular Programs",
+  "Popular Program",
   "GenAI & Agentic AI",
   "Cloud & DevOps",
   "Master Certification",
