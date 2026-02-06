@@ -22,20 +22,22 @@ export default function Home({ user }) {
     );
   }
 
-  return <div>Loading...</div>;  
+  return <div>Loading...</div>;
 }
 
 export async function getServerSideProps(context) {
   const cookie = context.req.headers.cookie || "";
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/check-auth`, {
-    headers: {
-      cookie,
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/check-auth`,
+    {
+      headers: {
+        cookie,
+      },
     },
-  });
+  );
 
   const data = await res.json();
-
 
   if (data.isAuthenticated) {
     return {
@@ -45,7 +47,6 @@ export async function getServerSideProps(context) {
       },
     };
   }
-
 
   if (!data.isAuthenticated) {
     return {
