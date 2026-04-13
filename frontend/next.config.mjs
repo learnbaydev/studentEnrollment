@@ -129,15 +129,15 @@ export default {
   async headers() {
     return [
       // ✅ GLOBAL PROTECTION (THIS IS THE MAIN FIX)
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "X-Robots-Tag",
-            value: "noindex, nofollow, noarchive",
-          },
-        ],
-      },
+      // {
+      //   source: "/:path*",
+      //   headers: [
+      //     {
+      //       key: "X-Robots-Tag",
+      //       value: "noindex, nofollow, noarchive",
+      //     },
+      //   ],
+      // },
 
       // existing rule (keep it)
       {
