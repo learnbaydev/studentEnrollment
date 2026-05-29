@@ -14,7 +14,7 @@ app.use(
     secret: "your_secret",
     resave: false,
     saveUninitialized: true,
-  })
+  }),
 );
 
 // Passport initialization
@@ -29,9 +29,12 @@ app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
-  })
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-api-key"],
+  }),
 );
 
+app.options("*", cors());
 // Body parser
 app.use(express.json());
 
