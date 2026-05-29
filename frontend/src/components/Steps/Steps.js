@@ -6,7 +6,7 @@ import Modal from "../Model/Model";
 import EnrollmentForm from "../EnrollmentForm/EnrollmentForm";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from 'moment-timezone';
+import moment from "moment-timezone";
 
 function StepCard({
   number,
@@ -25,7 +25,7 @@ function StepCard({
   isStep1Locked,
   openModal,
   handlePaymentClick,
-  setEnrollmentStatus
+  setEnrollmentStatus,
 }) {
   const statusColors = {
     pending: {
@@ -69,39 +69,51 @@ function StepCard({
       cardBg: "#FFFDE7",
       descBg: "#FFF8DC",
     },
-    
-    
   };
 
-  
   const stepIcons = {
     1: {
-      pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/steps_1_blue.webp",
-      in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_org.webp",
-      approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_green.webp",
-      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_lock.webp"
+      pending:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/steps_1_blue.webp",
+      in_progress:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_org.webp",
+      approved:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_green.webp",
+      locked:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_1_lock.webp",
     },
     2: {
-      pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_blue.webp",
-      in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_org.webp",
-      approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_green.webp",
-      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_lock.webp"
+      pending:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_blue.webp",
+      in_progress:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_org.webp",
+      approved:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_green.webp",
+      locked:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_2_lock.webp",
     },
     3: {
-      pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_blue.webp",
-      in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_org.webp",
-      approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_green.webp",
-      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_lock.webp"
+      pending:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_blue.webp",
+      in_progress:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_org.webp",
+      approved:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_green.webp",
+      locked:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_3_lock.webp",
     },
     4: {
-      pending: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_blue.webp",
-      in_progress: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_org.webp",
-      approved: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_green.webp",
-      locked: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_lock.webp",
-      token_received: "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/yello_icon.webp",
+      pending:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_blue.webp",
+      in_progress:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_org.webp",
+      approved:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_green.webp",
+      locked:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/step_4_lock.webp",
+      token_received:
+        "https://student-enrollment-bucket.s3.ap-south-1.amazonaws.com/icons/yello_icon.webp",
     },
-
-    
   };
 
   const currentStatus = statusColors[status] || statusColors.locked;
@@ -137,7 +149,7 @@ function StepCard({
   };
 
   useEffect(() => {
-    if (number === 2 && status === 'in_progress' && meetingData?.meeting_time) {
+    if (number === 2 && status === "in_progress" && meetingData?.meeting_time) {
       const calculateTimeUntilMeeting = () => {
         const meetingTime = new Date(meetingData.meeting_time);
         const now = new Date();
@@ -153,28 +165,27 @@ function StepCard({
 
   const filterPassedTime = (time) => {
     const now = new Date();
-  
+
     // Check if selected date is today
     const selectedDate = new Date(time);
     const isToday =
       now.getDate() === selectedDate.getDate() &&
       now.getMonth() === selectedDate.getMonth() &&
       now.getFullYear() === selectedDate.getFullYear();
-  
+
     if (isToday) {
       return time.getTime() > now.getTime(); // Only allow times later than now
     }
-  
+
     // Allow all times on future days
     return true;
   };
-  
 
   const fetchMeetingLink = async () => {
     try {
       setIsFetchingMeetingLink(true);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/schedule/get-meeting?email=${userEmail}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/schedule/get-meeting?email=${userEmail}`,
       );
       const data = await response.json();
 
@@ -205,6 +216,28 @@ function StepCard({
     }
   };
 
+  const crmStageUpdate = async (crmStageData) => {
+    try {
+      const crmStageResponse = await fetch(
+        `https://crmplus.lbayms.in/api/external/leads`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.CRM_STAGE_CHANGE_API_TOKEN,
+          },
+          body: JSON.stringify(crmStageData),
+        },
+      );
+      const crmStageResponseData = await crmStageResponse.json();
+      console.log("===== crmStageResponseData ====>", {
+        crmStageResponseData,
+      });
+    } catch (error) {
+      console.warn(error);
+    }
+  };
+
   const handleScheduleSubmit = async () => {
     if (!selectedDateTime || !userEmail) {
       alert("Please select date and time");
@@ -224,7 +257,7 @@ function StepCard({
             dateTime: moment(selectedDateTime).tz("Asia/Kolkata").format(),
             email: userEmail,
           }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -235,6 +268,12 @@ function StepCard({
 
       await fetchData();
       setShowSuccessPopup(true);
+      const crmStageData = {
+        email: formData.email,
+        stageName: "Screening Call Scheduled",
+      };
+
+      await crmStageUpdate(crmStageData);
     } catch (error) {
       console.error("Error:", error);
       alert(`Error: ${error.message}`);
@@ -243,9 +282,9 @@ function StepCard({
     }
   };
 
-  const shouldShowScheduleButton = 
-    number === 2 && 
-    status === 'pending' && 
+  const shouldShowScheduleButton =
+    number === 2 &&
+    status === "pending" &&
     (!localMeetingData || !localMeetingData.exists);
 
   return (
@@ -263,16 +302,26 @@ function StepCard({
         <div className={styles.successPopupOverlay}>
           <div className={styles.successPopup}>
             <div className={styles.successIcon}>
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" fill="#4CAF50"/>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z"
+                  fill="#4CAF50"
+                />
               </svg>
             </div>
             <h3>Evaluation Scheduled Successfully!</h3>
             <p>Your profile evaluation has been scheduled for:</p>
             <div className={styles.scheduledTime}>
-              {moment(selectedDateTime).tz("Asia/Kolkata").format("dddd, MMMM D, YYYY [at] h:mm A")} (IST)
+              {moment(selectedDateTime)
+                .tz("Asia/Kolkata")
+                .format("dddd, MMMM D, YYYY [at] h:mm A")}{" "}
+              (IST)
             </div>
-            <button 
+            <button
               onClick={() => {
                 setShowSuccessPopup(false);
                 setShowTooltip(false);
@@ -297,27 +346,28 @@ function StepCard({
             </button>
           </div>
           <div className={styles.tooltipContent}>
-          <p className={styles.tooltipMessage}>
-  Select a convenient date and time for your evaluation session. Our expert will review your profile and help you move forward in the admission process.
-</p>
+            <p className={styles.tooltipMessage}>
+              Select a convenient date and time for your evaluation session. Our
+              expert will review your profile and help you move forward in the
+              admission process.
+            </p>
 
             <div className={styles.dateTimePicker}>
-            <DatePicker
-  selected={selectedDateTime}
-  onChange={(date) => setSelectedDateTime(date)}
-  showTimeSelect
-  timeFormat="HH:mm"
-  timeIntervals={30}
-  dateFormat="MMMM d, yyyy h:mm aa"
-  minDate={new Date()}
-  // filterDate={isWeekday}
-  filterTime={filterPassedTime} // ✅ ensure this is passed
-  placeholderText="Select date and time (IST)"
-  className={styles.datePickerInput}
-  timeCaption="Time (IST)"
-  utcOffset={5.5 * 60}
-/>
-
+              <DatePicker
+                selected={selectedDateTime}
+                onChange={(date) => setSelectedDateTime(date)}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={30}
+                dateFormat="MMMM d, yyyy h:mm aa"
+                minDate={new Date()}
+                // filterDate={isWeekday}
+                filterTime={filterPassedTime} // ✅ ensure this is passed
+                placeholderText="Select date and time (IST)"
+                className={styles.datePickerInput}
+                timeCaption="Time (IST)"
+                utcOffset={5.5 * 60}
+              />
             </div>
 
             <div className={styles.tooltipFooter}>
@@ -361,27 +411,35 @@ function StepCard({
 
       <div className={styles.stepContent}>
         <div className={styles.iconDivs}>
-          <Image 
-            src={icon} 
-            width={50} 
-            height={50} 
-            alt={`Step ${number} ${status}`} 
-            loading="lazy" 
+          <Image
+            src={icon}
+            width={50}
+            height={50}
+            alt={`Step ${number} ${status}`}
+            loading="lazy"
           />
           <h3>{title}</h3>
         </div>
-        <p className={styles.desc} style={{ backgroundColor: currentStatus.descBg }}>{description} </p>
+        <p
+          className={styles.desc}
+          style={{ backgroundColor: currentStatus.descBg }}
+        >
+          {description}{" "}
+        </p>
 
         {children}
 
         {number === 1 && status === "locked" && isStep1Locked && (
           <div className={styles.contactCounselor}>
-            <p>⏰ Time's up! Please contact your evaluator to Unlock your evaluation form.</p>
-            <a 
-              href="mailto:counselor@learnbay.co" 
+            <p>
+              ⏰ Time's up! Please contact your evaluator to Unlock your
+              evaluation form.
+            </p>
+            <a
+              href="mailto:counselor@learnbay.co"
               className={styles.contactButton}
             >
-              Contact Evaluator 
+              Contact Evaluator
             </a>
           </div>
         )}
@@ -394,7 +452,7 @@ function StepCard({
 
         {number === 2 && (
           <>
-            {status === 'locked' ? (
+            {status === "locked" ? (
               <button className={styles.lockedButton} disabled>
                 Complete Step 1 first
               </button>
@@ -406,27 +464,27 @@ function StepCard({
               <div className={styles.meetingInfo}>
                 <p>
                   <strong>Scheduled:</strong>{" "}
-                  {new Date(meetingData.meeting_time).toLocaleString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
+                  {new Date(meetingData.meeting_time).toLocaleString("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    hour12: true,
                   })}
                 </p>
-                <button 
+                <button
                   onClick={handleJoinMeeting}
                   className={styles.joinButton}
                   disabled={isFetchingMeetingLink}
                 >
-                  {isFetchingMeetingLink ? 'Loading...' : 'Join Meeting'}
+                  {isFetchingMeetingLink ? "Loading..." : "Join Meeting"}
                 </button>
               </div>
-            ) : status === 'pending' ? (
-              <button 
-                onClick={() => setShowTooltip(true)} 
+            ) : status === "pending" ? (
+              <button
+                onClick={() => setShowTooltip(true)}
                 className={styles.enrollButton}
               >
                 Schedule Screening
@@ -435,27 +493,30 @@ function StepCard({
           </>
         )}
 
-        {number === 3 && status === 'in_progress' && meetingData?.meeting_time && (
-          <div className={styles.meetingContainer}>
-            {meetingTimeLeft > 0 ? (
-              <div className={styles.meetingTimer}>
-                <p className={styles.timerText}>
-                  <span>⏱</span> Meeting starts in: {formatTime(meetingTimeLeft)}
-                </p>
-              </div>
-            ) : (
-              <div className={styles.meetingAction}>
-                <button 
-                  onClick={handleJoinMeeting}
-                  className={styles.joinButton}
-                  disabled={isFetchingMeetingLink}
-                >
-                  {isFetchingMeetingLink ? 'Loading...' : 'Join Meeting Now'}
-                </button>
-              </div>
-            )}
-          </div>
-        )}
+        {number === 3 &&
+          status === "in_progress" &&
+          meetingData?.meeting_time && (
+            <div className={styles.meetingContainer}>
+              {meetingTimeLeft > 0 ? (
+                <div className={styles.meetingTimer}>
+                  <p className={styles.timerText}>
+                    <span>⏱</span> Meeting starts in:{" "}
+                    {formatTime(meetingTimeLeft)}
+                  </p>
+                </div>
+              ) : (
+                <div className={styles.meetingAction}>
+                  <button
+                    onClick={handleJoinMeeting}
+                    className={styles.joinButton}
+                    disabled={isFetchingMeetingLink}
+                  >
+                    {isFetchingMeetingLink ? "Loading..." : "Join Meeting Now"}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
 
         {showTimer && (status === "pending" || status === "in_progress") && (
           <div className={styles.timerSection}>
@@ -469,7 +530,9 @@ function StepCard({
                     ? "Expired"
                     : `${Math.round(calculateProgress(timeLeft))}% completed`}
                 </p> */}
-                <p className={styles.gren}>Your request is under review – approval is in progress.</p>
+                <p className={styles.gren}>
+                  Your request is under review – approval is in progress.
+                </p>
               </>
             ) : (
               ""
@@ -486,10 +549,7 @@ function StepCard({
         )}
 
         {number === 1 && status === "pending" && (
-          <button
-            onClick={openModal}
-            className={styles.enrollButton}
-          >
+          <button onClick={openModal} className={styles.enrollButton}>
             Start Your Application
           </button>
         )}
@@ -532,13 +592,13 @@ function StepCard({
                     steps: ["step3"],
                     status: "approved",
                   }),
-                }
+                },
               );
             }}
           />
         )}
 
-        {number === 3 && status === 'pending' && (
+        {number === 3 && status === "pending" && (
           <div className={styles.hintBubble}>
             <span>✅ Step 2 completed!</span>
             <p>You can now download your offer letter</p>
@@ -546,18 +606,17 @@ function StepCard({
         )}
 
         {number === 4 && status === "pending" && (
-          <button 
-            onClick={handlePaymentClick}
-            className={styles.enrollButton}
-          >
+          <button onClick={handlePaymentClick} className={styles.enrollButton}>
             Block your seat
           </button>
         )}
 
         {number === 4 && status === "in_progress" && (
           <div className={styles.paymentProcessing}>
-            <button 
-              onClick={() => window.open("https://pages.razorpay.com/learnbay", "_blank")}
+            <button
+              onClick={() =>
+                window.open("https://pages.razorpay.com/learnbay", "_blank")
+              }
               className={styles.retryButton}
             >
               Open Payment Again
@@ -577,27 +636,28 @@ function StepCard({
           </button>
         )}
 
-{number === 4 && status === "token_received" && (
-  <div className={styles.paymentProcessing}>
-    <button className={`${styles.TokenButton} ${styles.TokenButton}`} disabled>
-     Registration Fee Received
-    </button>
-  </div>
-)}
-
+        {number === 4 && status === "token_received" && (
+          <div className={styles.paymentProcessing}>
+            <button
+              className={`${styles.TokenButton} ${styles.TokenButton}`}
+              disabled
+            >
+              Registration Fee Received
+            </button>
+          </div>
+        )}
       </div>
 
       {showTimer &&
         (status === "pending" || status === "in_progress") &&
-        (formSubmitted || status === "in_progress") && (
-          // <div className={styles.progressBarContainer}>
-          //   <div
-          //     className={styles.progressBarFill}
-          //     style={{ width: `${calculateProgress(timeLeft)}%` }}
-          //   ></div>
-          // </div>
-          ''
-        )}
+        (formSubmitted || status === "in_progress") &&
+        // <div className={styles.progressBarContainer}>
+        //   <div
+        //     className={styles.progressBarFill}
+        //     style={{ width: `${calculateProgress(timeLeft)}%` }}
+        //   ></div>
+        // </div>
+        ""}
     </div>
   );
 }
@@ -636,11 +696,11 @@ export default function Steps({
 
   const calculateTimeLeft = () => {
     if (!deadline) return 0;
-    
+
     const now = new Date();
     const deadlineTime = new Date(deadline);
     const diffInSeconds = Math.floor((deadlineTime - now) / 1000);
-    
+
     return Math.max(0, diffInSeconds);
   };
 
@@ -648,26 +708,25 @@ export default function Steps({
     try {
       // Fetch enrollment status
       const statusResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/progress?email=${userEmail}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/progress?email=${userEmail}`,
       );
       const statusData = await statusResponse.json();
-  
+
       // Fetch meeting data
       const meetingResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/schedule/get-meeting?email=${userEmail}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/schedule/get-meeting?email=${userEmail}`,
       );
       const meetingData = await meetingResponse.json();
 
       // Fetch payment status
       const paymentResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/check-payment?email=${userEmail}`
+        `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/check-payment?email=${userEmail}`,
       );
       const paymentData = await paymentResponse.json();
-      
+
       setMeetingData(meetingData);
       // setPaymentStatus(paymentData.payment_status === '1' ? 1 : 0);
       setPaymentStatus(paymentData.payment_status); // Accepts null, '', 0, or 1
-
 
       if (statusResponse.ok) {
         // Calculate progress based on all completed steps
@@ -675,81 +734,85 @@ export default function Steps({
         const totalSteps = 4;
 
         // Step 1 completed
-        if (statusData.step1 === 'approved') completedSteps++;
-        
+        if (statusData.step1 === "approved") completedSteps++;
+
         // Step 2 completed (meeting completed)
         if (meetingData?.completed) completedSteps++;
-        
+
         // Step 3 completed (offer letter exists or status approved)
-        if (statusData.step3 === 'approved' || user?.offer_letter_path) completedSteps++;
-        
+        if (statusData.step3 === "approved" || user?.offer_letter_path)
+          completedSteps++;
+
         // Step 4 completed (payment completed)
-        if (paymentData.payment_status === '1') {
+        if (paymentData.payment_status === "1") {
           completedSteps++;
         }
-        
-        const progressPercentage = Math.round((completedSteps / totalSteps) * 100);
+
+        const progressPercentage = Math.round(
+          (completedSteps / totalSteps) * 100,
+        );
         const progress = `${progressPercentage}%`;
-        
+
         setEnrollmentStatus((prev) => ({
           ...prev,
           ...statusData,
           progress,
           step4:
-          paymentData.payment_status === '1'
-            ? 'approved'
-            : paymentData.payment_status === '0'
-              ? 'in_progress'
-              : (statusData.step3 === 'approved' || user?.offer_letter_path)
-                ? 'pending'
-                : 'locked',
-            
+            paymentData.payment_status === "1"
+              ? "approved"
+              : paymentData.payment_status === "0"
+                ? "in_progress"
+                : statusData.step3 === "approved" || user?.offer_letter_path
+                  ? "pending"
+                  : "locked",
+
           timestamps: {
             ...prev.timestamps,
             ...(statusData.timestamps || {}),
-            step1: statusData.step1_timestamp
+            step1: statusData.step1_timestamp,
           },
         }));
 
         // Calculate deadline based on user_creation_time and application_time
         if (user?.user_creation_time && user?.application_time) {
           const creationTime = new Date(user.user_creation_time);
-          const [hours, minutes, seconds] = user.application_time.split(':').map(Number);
-        
+          const [hours, minutes, seconds] = user.application_time
+            .split(":")
+            .map(Number);
+
           const deadlineDate = new Date(creationTime);
           deadlineDate.setHours(creationTime.getHours() + hours);
           deadlineDate.setMinutes(creationTime.getMinutes() + minutes);
           deadlineDate.setSeconds(creationTime.getSeconds() + seconds);
-        
+
           // ✅ Subtract 5:30 manually
           deadlineDate.setHours(deadlineDate.getHours() - 5);
           deadlineDate.setMinutes(deadlineDate.getMinutes() - 30);
-        
+
           // ✅ Add logging
           // console.log("🕒 Adjusted Deadline:", deadlineDate.toISOString());
-        
+
           const now = new Date();
           const initialTimeLeft = Math.floor((deadlineDate - now) / 1000);
           // console.log("⏱ Time left (seconds):", initialTimeLeft);
-        
+
           setDeadline(deadlineDate);
           setTimeLeft(Math.max(0, initialTimeLeft));
-        
-          if (initialTimeLeft <= 0 && getStepStatus(1) === 'pending') {
+
+          if (initialTimeLeft <= 0 && getStepStatus(1) === "pending") {
             setIsStep1Locked(true);
-            setEnrollmentStatus(prev => ({
+            setEnrollmentStatus((prev) => ({
               ...prev,
-              step1: "locked"
+              step1: "locked",
             }));
           }
         }
-        
-          
+
         //   // Calculate initial time left
         //   const now = new Date();
         //   const initialTimeLeft = Math.floor((deadlineDate - now) / 1000);
         //   setTimeLeft(Math.max(0, initialTimeLeft));
-          
+
         //   // Check if we should lock step 1
         //   if (initialTimeLeft <= 0 && getStepStatus(1) === 'pending') {
         //     setIsStep1Locked(true);
@@ -764,8 +827,8 @@ export default function Steps({
           const approvalTime = new Date(statusData.step1_timestamp);
           const now = new Date();
           const elapsedSeconds = Math.floor((now - approvalTime) / 1000);
-          
-          if (statusData.step1 === 'approved') {
+
+          if (statusData.step1 === "approved") {
             setFormSubmitted(true);
             setTimeLeft(0);
           } else if (statusData.created_at) {
@@ -793,21 +856,26 @@ export default function Steps({
   }, [userEmail]);
 
   useEffect(() => {
-    if (deadline && getStepStatus(1) === "pending" && !formSubmitted && !isStep1Locked) {
+    if (
+      deadline &&
+      getStepStatus(1) === "pending" &&
+      !formSubmitted &&
+      !isStep1Locked
+    ) {
       const timer = setInterval(() => {
         const newTimeLeft = calculateTimeLeft();
         setTimeLeft(newTimeLeft);
-        
+
         if (newTimeLeft <= 0) {
           setIsStep1Locked(true);
-          setEnrollmentStatus(prev => ({
+          setEnrollmentStatus((prev) => ({
             ...prev,
-            step1: "locked"
+            step1: "locked",
           }));
           clearInterval(timer);
         }
       }, 1000);
-      
+
       return () => clearInterval(timer);
     }
   }, [deadline, formSubmitted, isStep1Locked]);
@@ -840,86 +908,87 @@ export default function Steps({
   };
   const handlePaymentClick = async () => {
     try {
-      setEnrollmentStatus(prev => ({
+      setEnrollmentStatus((prev) => ({
         ...prev,
-        step4: "in_progress"
+        step4: "in_progress",
       }));
-  
+
       console.log("⏳ Initiating payment status update...");
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/initiate-payment`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/enrollment/initiate-payment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: userEmail }),
         },
-        body: JSON.stringify({ email: userEmail })
-      });
-  
+      );
+
       const result = await res.json();
-  
+
       console.log("🚀 Backend response:", result);
 
       if (!res.ok) {
         throw new Error(result?.message || "Failed to initiate payment");
       }
-      
-  
+
       const paymentWindow = window.open(
         "https://pages.razorpay.com/learnbay",
-        "_blank"
+        "_blank",
       );
-  
+
       // continue polling logic here...
     } catch (error) {
       console.error("❌ Error handling payment:", error);
     }
   };
-  
 
   const getStepStatus = (stepNumber) => {
     const stepKey = `step${stepNumber}`;
     let currentStatus = enrollmentStatus[stepKey];
-  
+
     if (stepNumber === 1) {
-      if (isStep1Locked) return 'locked';
-      if (currentStatus === 'pending' && enrollmentStatus.timestamps?.step1) {
+      if (isStep1Locked) return "locked";
+      if (currentStatus === "pending" && enrollmentStatus.timestamps?.step1) {
         const createdAt = new Date(enrollmentStatus.timestamps.step1);
         const now = new Date();
         const elapsedSeconds = Math.floor((now - createdAt) / 1000);
-        
+
         if (elapsedSeconds >= 120) {
-          return 'approved';
+          return "approved";
         }
-        return 'in_progress';
+        return "in_progress";
       }
-      return currentStatus || 'pending';
+      return currentStatus || "pending";
     }
-  
+
     if (stepNumber === 2) {
-      if (enrollmentStatus.step1 !== 'approved') return 'locked';
-      if (meetingData?.completed) return 'approved';
-      if (meetingData?.exists) return 'in_progress';
-      return 'pending';
+      if (enrollmentStatus.step1 !== "approved") return "locked";
+      if (meetingData?.completed) return "approved";
+      if (meetingData?.exists) return "in_progress";
+      return "pending";
     }
-  
+
     if (stepNumber === 3) {
-      if (user?.offer_letter_path) return 'approved';
-      if (enrollmentStatus.step3 === 'approved') return 'approved';
-      if (meetingData?.completed) return 'pending';
-      return 'locked';
+      if (user?.offer_letter_path) return "approved";
+      if (enrollmentStatus.step3 === "approved") return "approved";
+      if (meetingData?.completed) return "pending";
+      return "locked";
     }
     if (stepNumber === 4) {
-      if (paymentStatus === 1) return 'approved';
-      if (paymentStatus === 0) return 'token_received';
-      if (paymentStatus === '') return 'in_progress'; // ✅ handles '' as "Processing"
-      if (paymentStatus === null && (enrollmentStatus.step3 === 'approved' || user?.offer_letter_path)) return 'pending';
-      return 'locked';
+      if (paymentStatus === 1) return "approved";
+      if (paymentStatus === 0) return "token_received";
+      if (paymentStatus === "") return "in_progress"; // ✅ handles '' as "Processing"
+      if (
+        paymentStatus === null &&
+        (enrollmentStatus.step3 === "approved" || user?.offer_letter_path)
+      )
+        return "pending";
+      return "locked";
     }
-    
-    
-    
-    
-    
-    return 'locked';
+
+    return "locked";
   };
 
   const steps = [
@@ -955,14 +1024,14 @@ export default function Steps({
     },
   ];
 
-if (loading) {
-  return (
-    <div className={styles.loaderWrapper}>
-      <div className={styles.spinner}></div>
-      <p>Loading enrollment status...</p>
-    </div>
-  );
-}
+  if (loading) {
+    return (
+      <div className={styles.loaderWrapper}>
+        <div className={styles.spinner}></div>
+        <p>Loading enrollment status...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
@@ -977,7 +1046,8 @@ if (loading) {
         {steps.map((step, idx) => {
           const number = idx + 1;
           const status = getStepStatus(number);
-          const icon = status === "locked" ? step.iconInactive : step.iconActive;
+          const icon =
+            status === "locked" ? step.iconInactive : step.iconActive;
           const stepTimeLeft = number === 1 ? timeLeft : null;
 
           return (

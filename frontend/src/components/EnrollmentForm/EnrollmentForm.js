@@ -50,7 +50,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
         const res = await fetch(
           `${
             process.env.NEXT_PUBLIC_API_URL
-          }/api/enroll/status?email=${encodeURIComponent(formData.email)}`
+          }/api/enroll/status?email=${encodeURIComponent(formData.email)}`,
         );
         if (!res.ok) {
           throw new Error("Failed to fetch enrollment status");
@@ -160,7 +160,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
-        }
+        },
       );
 
       const data = await response.json();
@@ -181,7 +181,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
               "x-api-key": "mySecretDiscordToken123", // Optional, for backend auth
             },
             body: JSON.stringify(formData),
-          }
+          },
         );
 
         const discordData = await discordRes.json();
@@ -193,12 +193,42 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
 
         setIsSubmitted(true);
         onComplete();
+
+        // 🔹 Step3: update the stage on sales CRM
+        const crmStageData = {
+          email: formData.email,
+          stageName: "Evaluation Form Filled",
+        };
+
+        await crmStageUpdate(crmStageData);
       }
     } catch (err) {
       console.error("🚨 Error submitting enrollment:", err);
       setError("Network error. Please try again later.");
     } finally {
       setLoading(false);
+    }
+  };
+  // TODO:
+  const crmStageUpdate = async (crmStageData) => {
+    try {
+      const crmStageResponse = await fetch(
+        `https://crmplus.lbayms.in/api/external/leads`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": process.env.CRM_STAGE_CHANGE_API_TOKEN,
+          },
+          body: JSON.stringify(crmStageData),
+        },
+      );
+      const crmStageResponseData = await crmStageResponse.json();
+      console.log("===== crmStageResponseData ====>", {
+        crmStageResponseData,
+      });
+    } catch (error) {
+      console.warn(error);
     }
   };
 
