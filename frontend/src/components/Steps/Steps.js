@@ -219,12 +219,12 @@ function StepCard({
   const crmStageUpdate = async (crmStageData) => {
     try {
       const crmStageResponse = await fetch(
-        `https://crmplus.lbayms.in/api/external/leads`,
+        `http://localhost:5000/api/external/leads`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": process.env.CRM_STAGE_CHANGE_API_TOKEN,
+            "x-api-key": process.env.NEXT_PUBLIC_CRM_STAGE_CHANGE_API_TOKEN,
           },
           body: JSON.stringify(crmStageData),
         },

@@ -218,7 +218,7 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": process.env.CRM_STAGE_CHANGE_API_TOKEN,
+            "x-api-key": `${process.env.NEXT_PUBLIC_CRM_STAGE_CHANGE_API_TOKEN}`,
           },
           body: JSON.stringify(crmStageData),
         },
@@ -231,7 +231,14 @@ export default function EnrollmentForm({ onClose, onComplete, user }) {
       console.warn(error);
     }
   };
-
+  console.log(
+    "==================================>",
+    process.env.NEXT_PUBLIC_CRM_STAGE_CHANGE_API_TOKEN,
+    {
+      public_link: process.env.NEXT_PUBLIC_API_URL,
+      token: process.env.NEXT_PUBLIC_CRM_STAGE_CHANGE_API_TOKEN,
+    },
+  );
   const handleRatingClick = (rating) => {
     setFormData({ ...formData, programming_rating: rating });
   };
