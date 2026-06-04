@@ -224,7 +224,7 @@ function StepCard({
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": process.env.CRM_STAGE_CHANGE_API_TOKEN,
+            "x-api-key": process.env.NEXT_PUBLIC_CRM_STAGE_CHANGE_API_TOKEN,
           },
           body: JSON.stringify(crmStageData),
         },
